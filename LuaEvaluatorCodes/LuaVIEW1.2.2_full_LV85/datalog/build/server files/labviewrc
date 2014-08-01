@@ -1,0 +1,29 @@
+# Unfortunately, LabVIEW GUIs do not cope well with
+# changing font sizes. To avoid ugliness, we force
+# the font used to lay out the various GUIs. This was
+# done using the Tahoma Windows font. Under Linux
+# that font can be had in a package of MicroSoft
+# TrueType fonts, but the 13pt Windows point size
+# seems to equate 10pt under Linux. Might be screen
+# resolution dependent. If things don't fit proper,
+# tinker witht the size. If the font is not installed,
+# just set it to "0" which yields the Linux default
+# font, but that looks a little cramped.
+server.appFont:	"microsoft-tahoma" 10
+server.dialogFont:	"microsoft-tahoma" 10
+# The locale of some countries uses ',' instead of '.' as
+# the decimal point separator. LuaVIEW overrides this both
+# on the Lua side as well as by forcing '.' on the LabVIEW
+# side whenever format codes are used. However, this is easy
+# to forget when adding customisations. To make doubly sure,
+# the False setting below is will globally cause LabVIEW to
+# ignore the locale settings for the decimal point.
+server.useLocaleDecimalPt:	False
+# To be able to build a minimal server executable that loads
+# as much as possible dynamically, specify search paths that
+# allow the application to load any VIs that cannot be located
+# via relative paths, in particular the vi.lib and instr.lib
+# VIs. The simplest solution is to point to the vi.lib and
+# instr.lib directories of the LabVIEW distribution, or copies
+# thereof.
+server.viSearchPath:   "/usr/local/lv70/vi.lib/*:/usr/local/lv70/instr.lib/*"

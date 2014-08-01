@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Organization of LuaVIEW</title>
+</head>
+
+<body>
+
+<h3>Organization of the LuaVIEW distribution</h3>
+<p>The organization of the files and directories of the unpacked LuaVIEW
+distribution is as follows:</p>
+<dl>
+  <dt>clientsrv/*</dt>
+  <dd>By default this directory contains stubs that disable the client-server functionality.
+    When you have installed the <a href="clientsrv_manual.html">client-server
+    example framework</a>, the directory will instead the framework VIs and
+    scripts.</dd>
+  <dt>library/*</dt>
+  <dd>SubVIs of general utility. Not part of the API.</dd>
+  <dt>luaview/*</dt>
+  <dd>All files related to scripting.</dd>
+  <dt>luaview/examples/*</dt>
+  <dd>Example VIs and scripts.</dd>
+  <dt>luaview/examples/VI templates/*</dt>
+  <dd>Templates of LuaVIEW building blocks ready to be reviewed and specialized.</dd>
+  <dt>luaview/html/*</dt>
+  <dd>Documentation of LuaVIEW, including this manual. Note that the online
+    version of the manual will always describe the latest LuaVIEW release and
+    may therefore mention functionality not yet present in earlier releases. To
+    avoid confusion, always refer to the documentation included with the release
+    being used.</dd>
+  <dt>luaview/subvis/*</dt>
+  <dd>API VIs.</dd>
+  <dt>luaview/objects/*</dt>
+  <dd>API VIs that operate on retained state. Such VIs have a "obj_*"
+    prefix.</dd>
+  <dt>*/dynamic/*</dt>
+  <dd>Dynamically loaded and instantiated VIs and templates. Their VI
+    descriptions specify to what functionality they belong. When building an
+    application that includes that functionality, make sure to include the
+    corresponding dynamic file via the &quot;Add Dynamic VI&quot; button of the
+    application builder. Alternatively, the VIs can be included via a static
+    reference somewhere inside the hierarchy of the top-level VI. This does not
+    work for templates.&nbsp;</dd>
+  <dt>*/functions/*</dt>
+  <dd>A directory holding LuaVIEW functions. These VIs have a "*_lua.vi"
+    postfix so as to allow them to be automatically registered even when built
+    into an executable or llb. To reduce application size, include only required
+    functions in the build script.</dd>
+  <dt>*/private/*</dt>
+  <dd> Do not use nor mind, these VIs concern internal functionality and are
+    likely to change in future releases.</dd>
+  <dt>*/served/*</dt>
+  <dd>Remote calling wrappers for user interface VIs. When you choose to build one or more of the provided
+    user interfaces into an application executable, check which of these are
+    required. Since these VIs are dynamically loaded, they must be specifically
+    included in the application builder script. By exclusively accessing
+    the scripting subsystem through VI-server calls on these wrapper VIs, the
+    user interfaces were made client-server capable. These VIs have a &quot;*_srv.vi&quot;
+    postfix so that VI-server can easily be configured to limit remote calls to only
+    this subset of VIs. Also, all these VIs have a certificate input which
+    allows for server-side access checks: client-side checks are intrinsically
+    insecure. Some of these VIs aggregate multiple API actions so as to minimize
+    network latency overhead.&nbsp;</dd>
+  <dt>*/unit tests/*</dt>
+  <dd>The VIs and scripts in such directories are assumed to be tests designed
+    for running by the "Unit Tester". They are automatically collected
+    when the "Unit Tester" is run.</dd>
+  <dt>re_*.vi</dt>
+  <dd>Reentrant VIs.</dd>
+  <dt>glb_*.vi</dt>
+  <dd>Configuration globals. These have been given reasonable default values so
+    that LuaVIEW functionality works without further configuration under the
+    LabVIEW development environment. When creating an application that uses
+    LuaVIEW you may wish to customise some of these values. Only change the
+    configuration values when the application starts, not while it runs. This
+    can be done via a <a href="API.html#LuaVIEW Bootstrap.vi">bootstrap</a>
+    script.</dd>
+  <dt>tui_*.vi and ui_*.vi</dt>
+  <dd>User-interface VIs.</dd>
+  <dt>*.lua</dt>
+  <dd>Lua scripts.</dd>
+</dl>
+
+<hr>
+<p><a href="manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

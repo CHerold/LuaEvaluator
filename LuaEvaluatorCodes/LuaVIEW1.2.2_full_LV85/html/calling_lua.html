@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Calling Lua</title>
+</head>
+
+<body>
+
+<h3>Calling Lua</h3>
+
+<p>This
+appendix details how to create LabVIEW-callable Lua functions. This capability
+allows Lua to be chosen as the implementation language for some self-contained
+subVI or VI object (LabVIEW 2 style global). This is of value because Lua and
+LabVIEW have quite different strengths and weaknesses: an algorithm that is
+difficult to implement in LabVIEW may well be easy in Lua, and vice versa.</p>
+<ul>
+  <li><a href="#Restrictions">Restrictions</a></li>
+  <li><a href="#How to wire function calls">How to wire function calls</a></li>
+  <li><a href="#Defining functions">Defining functions</a></li>
+  <li><a href="#Handling multiple calls and callers">Handling multiple calls and callers</a></li>
+  <li><a href="#Example: converting data to/from text">Example: converting data to/from text</a></li>
+  <li><a href="#Example: expression evaluation">Example: expression evaluation</a></li>
+  <li><a href="#Errors and the stack">Errors and the stack</a></li>
+</ul>
+<h4><a name="Restrictions">Restrictions</a></h4>
+
+<p>LabVIEW-callable Lua functions cannot call back into LabVIEW. This restriction allows a
+standard Lua calling mechanism to be used which results in better performance
+and a simpler API. A future LuaVIEW release may add a separate mechanism that
+does allow for LabVIEW-callable Lua functions to call back into LabVIEW.&nbsp;
+LabVIEW-callable Lua functions can use the functions in the various C libraries.
+A small set of C functions in the &quot;lv&quot; C library that involve
+interruption of the virtual machine cannot be used. These functions are <a href="lv_c-library_functions.html#exit"><code>exit</code></a>,
+<a href="lv_c-library_functions.html#wait"><code>wait</code></a>, <a href="lv_c-library_functions.html#lv.addcleanup"><code>lv.addcleanup</code></a>, <a href="lv_c-library_functions.html#lv.setyielding"><code>lv.setyielding</code></a>,
+and <a href="lv_c-library_functions.html#lv.getyielding"><code>lv.getyielding</code></a>. As opposed to scripts, execution
+of function calls is not interrupted regularly to allow for cooperative thread
+scheduling. Thus, a LabVIEW to Lua call consumes a thread for its duration.
+Typically, this is not a problem since LabVIEW has multiple threads per
+execution system. When running LabVIEW in single-threading mode, or when calling
+Lua from the one-and-only user-interface thread, thread contention can occur.
+In such cases it is advisable to implement only brief functions.</p>
+
+<h4><a name="How to wire function calls">How to wire function calls</a></h4>
+<p>To call Lua, use the <a href="API.html#LuaVIEW Push _poly_.vi">Push</a>, <a href="API.html#re_LuaVIEW Call.vi">Call</a>,
+and <a href="API.html#LuaVIEW Pull _poly_.vi">Pull</a> API VIs as follows:</p>
+
+<p><img border="0" src="pics/calling_lua.png" width="438" height="137"></p>
+
+<p> Both the push and pull API VIs are polymorphic. The
+supported data types and their representations and conversions are <a href="datatypes.html">detailed
+here</a>.</p>
+
+<h4> <a name="Defining functions"> Defining functions</a></h4>
+
+<p>Lua functions must be defined prior to being called from LabVIEW. Use <a href="API.html#LuaVIEW Open Base State.vi">Open
+Base State</a> to obtain a LuaVIEW state suited for calling and subsequently <a href="API.html#LuaVIEW Compile.vi">Compile</a>
+and <a href="API.html#re_LuaVIEW Execute.vi">Execute</a> one or more scripts containing function definitions:</p>
+
+<p><img border="0" src="pics/defining_functions.png" width="329" height="105"></p>
+
+<p>Scripts containing function definitions are subject to the same <a href="#Restrictions">restrictions</a>
+as the functions themselves.</p>
+
+<h4><a name="Handling multiple calls and callers">Handling multiple calls and
+callers</a></h4>
+
+<p>For performance reasons and to allow data that persists between calls, it is
+desirable to avoid having to redefine functions for each call. This can be done
+by caching the LuaVIEW reference for which function definitions were made. Also,
+a Lua virtual machine instance as specified via a LuaVIEW reference supports
+only a single operation at any one time. Consequently, no simultaneous calls can
+be performed on the same LuaVIEW state. When you want to implement some utility
+subVI or VI object using Lua that must be available to multiple callers, some
+extra work is required to serialize calls.</p>
+
+<p>Both requirements can be met by bundling all functionality for a particular
+Lua function or set of Lua functions into a non-reentrant subVI containing an
+unitialized shift register that holds the LuaVIEW reference. The implementations
+of the examples discussed in the next sections show how to do so.</p>
+
+<h4><a name="Example: converting data to/from text">Example: converting data
+to/from text</a></h4>
+
+<p>LuaVIEW can automatically convert between Lua and LabVIEW data types. The Lua
+compiler can read text-based data definitions. Thus, almost all requirements for
+automatically converting LabVIEW data to and from text are met. All that is
+required in addition is a means of exporting Lua data as text. The
+luaview/examples/Serialization.vi example demonstrates how Lua functions, called
+through subVIs, can be used to perform one-step conversions in either direction.
+Note that the conversion to text is relatively simple only by virtue of a
+recursive implementation, which is easy to do in Lua.</p>
+
+<h4><a name="Example: expression evaluation">Example: expression evaluation</a></h4>
+
+<p>Since part of the job of the Lua parser/compiler is to parse arithmetic
+expressions, Lua can be abused as an expression evaluator. The luaview/examples/Calculator.vi
+example demonstrates a simple implementation thereof. It is notable for what is
+does <i>not</i> do:</p>
+
+<ul>
+  <li>It does not allow variables to be set, retrieved, or assigned from an
+    expression.</li>
+  <li>It does not allow for custom defined functions.</li>
+  <li>It does not cache parsed expressions for efficient repeated evaluation.</li>
+</ul>
+<p>The luaview/examples/Expression Demo.vi example shows how to dress-up
+expression evaluation to do all of the above. It makes use of a VI (luaview/examples/calling
+lua/Caching Expression Evaluator.vi) that can be used in the very same manner as
+a VI object (LabVIEW 2 style global): it has multiple methods and operates on
+retained state. Only when examining the diagram of the VI does it become evident
+that Lua instead of LabVIEW is used to implement the methods and retain state.
+Note that a Lua table is used as the expression cache. Lua tables allow for the
+easy implementation of efficient dynamic data structures: they can be
+interlinked by reference and grow automagically as elements are added without
+becoming slow to access.</p>
+
+<h4><a name="Errors and the stack">Errors and the stack</a></h4>
+
+<p>When reusing a LuaVIEW reference, you must make sure that the stack is empty
+at the end of the operations associated with a call, otherwise the next call
+will pass wrong arguments. Normally, this is not an issue: an
+error that occurs during the function call, or while pushing arguments or
+pulling results, causes the stack to be automatically cleared. However, when you
+place some other subVI that can output an error between the first push and the
+last pull surrounding a call, there is a risk that the stack does not get
+cleared. For this reason, it is advisable to not interleave the push, call, and
+pull sequence. Otherwise, it is mandatory to call <a href="API.html#LuaVIEW Clear Stack.vi">Clear
+Stack</a> in case of an error.</p>
+
+<p>Sometimes you cannot be sure of the number of results returned by a Lua
+function, in particular when you allow other programmers or the application user
+to implement the function. In such a case, or simply as an additional check, it
+is possible to specify the required number of results when using the <a href="API.html#re_LuaVIEW Call.vi">Call</a>
+API VI. This is done by wiring the optional <b>required results</b> input. Any
+mismatch between the number of required and returned results will cause a
+descriptive error to be thrown, and the stack to be cleared. When the function
+is allowed to return a variable number of results, query the number of <a href="API.html#LuaVIEW Stack Elements.vi">Stack
+Elements</a>
+ on completion of the call and pull results accordingly.</p>
+
+<hr>
+<p><a href="manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

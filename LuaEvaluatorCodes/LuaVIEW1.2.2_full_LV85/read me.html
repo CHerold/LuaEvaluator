@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Read Me First</title>
+</head>
+
+<body>
+
+<p>
+This is the full LuaVIEW 1.2.1 release that includes the client-server framework and SCADA/datalogging
+add-on. The VIs were patched for and recompiled with LabVIEW version 8.5.1. In addition,
+some additional unit tests for the data logger and project files for building a client and
+server executables are included.
+</p>
+
+<p>
+This distribution was created to provide an easy download that shows off all the
+LuaVIEW and SCADA features under LabVIEW 8.5 or higher while also providing an
+example of how to build client and server executables. To this end, two project files
+are included: Client.lvproj and Server.lvproj.
+</p>
+
+<p>
+The server is a minimal server that dynamically loads the VIs from
+and external file hierarchy thus making it easy to upgrade. The first
+time you run the server as a built executable, you must point it to
+the VI to run. Two example servers were included:
+clientsrv/ClientSrv Example Server.vi (only shows client-server functionality)
+datalog/DataLog Example Server.vi. (shows datalogging functionality as well)
+</p>
+
+<p>
+When running the server as a
+built executable, the viSearchPath entry in the application executable's
+INI file should point to any further required subVIs such as a copy
+of vi.lib and instr.lib. Please read the datalog/build/readme.txt file
+for further details on this minimal build scheme.
+</p>
+
+<p>
+Once the server is running, you can start the client and connect to
+it by selecting the Server>Connect menu item. When testing on a
+single machine, you can enter "localhost" as machine names. The
+passwords can be left empty until you set them in the access.lua
+script. You can change the run state of the server by selecting
+a runlevel from the Server>Runlevels submenu. In particular, you
+can stop the server, or switch it up to a level with all features
+enabled (the "drivers" runlevel for the datalogging example
+server).
+</p>
+
+<p>
+Another reason for providing this release is that LabVIEW 8.2 introduced a
+<a href="http://digital.ni.com/public.nsf/allkb/8545726A00272EB0862571DA005B896C">
+backwards incompatibility</a> such that built executables
+can no longer be treated as an LLB when it comes to finding and loading VIs.
+Hence, LuavIEW users were experiencing some issues to get built applications
+to properly load function VIs and other dynamic VIs since LuaVIEW made use of
+the LLB feature.
+</p>
+<hr>
+
+</body>
+
+</html>

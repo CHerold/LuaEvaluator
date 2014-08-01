@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Performance Considerations</title>
+</head>
+
+<body>
+
+<h3>Performance considerations</h3>
+<p>Avoid premature optimisation: only invest
+time in performance when you are fairly sure, through estimation, calculation, or measurement,
+that doing so will remove a bottleneck or allow for
+better scaling. When you have a pure top-down design, some up-front estimation
+is called for because refactoring will be painful. A bottom-up design can
+be changed easily, which makes it reasonable to postpone worrying about
+performance until measurements can be made. This appendix should help
+you make such estimates and measurements, and points out possible trouble
+spots.</p>
+
+<p>Methodologically dubious tests suggest that LabVIEW is about two to three times
+slower than C, and Lua is about twenty to thirty times slower than C, for comparable
+tasks. This makes Lua sound slow, but it is actually leading performance
+when <a href="http://dada.perl.it/shootout/craps.html">compared to other scripting
+languages</a>. It is also irrelevant, most of the
+time: scripting
+languages are not used for the same tasks that application programming languages
+are put to. Instead, scripting typically involves calling into C or LabVIEW, or
+waiting for I/O or events. In such cases, the fraction of time spent
+on executing Lua code tends to be negligible.</p>
+
+<p>The performance difference between Lua and LabVIEW
+is relevant only when you are considering whether to implement a pure Lua
+algorithm that takes a long time to execute. In such a case, the trade off is between
+programmer time saved during the implementation versus user time lost while the
+program operates, unless you are obliged to hit some performance benchmark. The optimal
+choice is a function of programming skills and the suitability of either
+language to the problem. A pragmatic approach for complicated algorithms is to
+prototype them in Lua and simply deploy the prototype when performance is
+sufficient. Also note that, as a last resort, there is always the option to
+use C or some other
+language: both Lua (through <code>loadlib</code>) and LabVIEW can call DLLs.</p>
+
+<p>Actually, it is rare to encounter a LabVIEW program that comes close to
+extracting maximum performance: performance is often
+dominated by overhead or scaling issues because programmers tend to choose convenience over performance. The lack of
+data references often necessitates the copying of data in wires, thus causing a
+performance hit when manipulating large data sets. One solution is to use a
+LabVIEW2-style global that hides the full data set and provides access
+via in-place operations, but this is a lot more work to set up for than simply
+passing and branching a wire. A related issue is the pervasive use of subVIs.
+This is convenient since it makes for smaller diagrams, more modular code, and
+easier testing. On the flip side, subVIs have calling overhead and can cause the
+allocation of additional data buffers. Large VI hierarchies have a lot of
+initialisation overhead. Lastly, there is a tendency to put too much
+functionality into a single contention-prone state machine since that allows for
+less inconvenient code scheduling.</p>
+
+<p>By using Lua, some of these issues can be avoided or resolved. Lua has tables
+and table references. Using these to implement large data structures can reduce
+overhead when the emphasis is on access and mutation instead of throughput. When
+a Lua data structure must be available
+throughout your program, hide it in a subVI implementing one or more
+LabVIEW-callable Lua functions that access the data. When the data structure is associated with code
+scheduling, make it part of a Lua script that also does the scheduling. Table references
+make it practical to set up trees, heaps, and other
+standard data structures that improve scalability. Tasks
+make it easy to spawn independent execution contexts so as to decouple the
+scheduling of subsystems. Lua code has a much smaller memory footprint
+than comparable LabVIEW code. The LuaVIEW building blocks make bottom-up
+programming practical which enables better code reuse.</p>
+
+<p>Calling or passing data between Lua and LabVIEW involves more overhead than
+LabVIEW to LabVIEW or Lua to Lua operations. This is due to the adaptations and
+translations that are performed by LuaVIEW when switching between Lua and
+LabVIEW. This functionality is implemented in C for speed. Even so, some
+performance has been traded for security and convenience: the
+functionality includes run-time type checks, argument checking, stack extension,
+and the tracking of information
+required for reporting errors. This was deemed to be a reasonable trade-off since
+it allowed for a simpler API and robust error handling with readable messages.</p>
+
+<p>Overhead becomes a bottleneck when the frequency with which it is incurred
+approaches the inverse of the time lost per occurrence. This can happen when performing very
+frequent calls or when passing lots of individual data items. In such a case,
+performance can be improved by moving the innermost loop surrounding the call
+into the function being called or by passing the data items as compound data.</p>
+
+<p>The LuaVIEW-provided functions (<a href="luaview_functions.html#do_script"><code>do_script</code></a><code>,
+</code><a href="luaview_functions.html#do_task"><code>do_task</code></a><code>, </code><a href="luaview_functions.html#run_task"><code>run_task</code></a>)
+and API VIs (<a href="API.html#re_LuaVIEW Do Script.vi">Do Script</a>, <a href="API.html#re_LuaVIEW Do Task.vi">Do Task</a>,
+<a href="API.html#re_LuaVIEW Run Task.vi">Run Task</a>) for compiling and
+executing scripts all
+instantiate a new virtual machine, and, in the case of tasks, also run a
+top-level VI to create an independent execution context. This makes scripts and
+tasks mutually independent: they cannot directly make each other fail or change each
+other's variables. Any interactions must occur via explicit
+LabVIEW-side mechanisms. This decoupling prevents unintended side effects. The
+combined compilation and execution makes starting scripts as simple as with an interpreter.
+The cost is extra overhead. When you need
+to load and execute scripts very frequently or want to avoid repeated
+compilation when executing code multiple times, use the
+Lua-provided functions (<code>require</code>, <code>dofile</code>, <code>loadfile</code>,
+or <code>loadstring</code>) instead.</p>
+
+<p><a name="measuring"></a>Below follow some scripts that
+perform performance measurements.</p>
+
+<pre><code>N=1000000
+t1=time()
+for i=1,N,1 do
+    j=i*i+1
+end
+t2=time()
+print(N/(t2-t1)..&quot; simple calculations per second.&quot;)</code></pre>
+
+<pre><code>N=500000
+function foo() return 42 end
+t1=time()
+for i=1,N,1 do
+    foo()
+end
+t2=time()
+print(N/(t2-t1)..&quot; simple Lua to Lua calls per second.&quot;)</code></pre>
+
+<pre><code>N=400000
+t1=time()
+for i=1,N,1 do
+    sqrt(4)
+end
+t2=time()
+print(N/(t2-t1)..&quot; simple Lua to C calls per second.&quot;)</code></pre>
+
+<pre><code>N=100000
+t1=time()
+for i=1,N,1 do
+    wait(0)
+end
+t2=time()
+print(N/(t2-t1)..&quot; simple Lua to LabVIEW calls per second.&quot;)</code></pre>
+
+<pre><code>N=10000
+t1=time()
+for i=1,N,1 do
+    loadstring(&quot;--&quot;)()
+end
+t2=time()
+print(N/(t2-t1)..&quot; trivial same-VM scripts per second.&quot;)</code></pre>
+
+<pre><code>N=100
+t1=time()
+for i=1,N,1 do
+    do_script(&quot;&quot;,&quot;--&quot;)
+end
+t2=time()
+print(N/(t2-t1)..&quot; trivial new-VM scripts per second.&quot;)</code></pre>
+
+<pre><code>N=50
+t1=time()
+for i=1,N,1 do
+    do_task(&quot;&quot;,&quot;--&quot;)
+end
+t2=time()
+print(N/(t2-t1)..&quot; trivial new tasks per second.&quot;)</code></pre>
+
+<p>Of course, these scripts somewhat underestimate performance since
+they do not take account of the overhead of the <code>for</code> loop. It
+is often interesting to learn about latency instead of throughput. <a name="latency"></a> To measure latency, a script like the following can help out.</p>
+
+<pre><code>lv.addcleanup(function()
+    print(&quot;average latency = &quot;..sum/n..&quot; ms&quot;)
+    print(&quot;max latency = &quot;..max..&quot; ms&quot;)
+end)
+max=0
+sum=0
+n=0
+while true do
+    t1=lv.tickcount()
+    wait(1)
+    t2=lv.tickcount()
+    latency=lv.subU32(t2,t1)-1
+    if latency&gt;max then
+        max=latency
+    end
+    sum=sum+latency
+    n=n+1
+end</code></pre>
+
+<p>The result has nothing to do with the script. Instead it reflects scheduling delays.
+This provides a rough
+indication of how long it might take a task or VI that runs at the same priority
+and in the same execution system as the script to respond under load
+conditions similar to those that held for the duration of the measurement.
+Beware that only real-time operating
+systems give guarantees for worst-case latencies.</p>
+
+<hr>
+<p><a href="manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

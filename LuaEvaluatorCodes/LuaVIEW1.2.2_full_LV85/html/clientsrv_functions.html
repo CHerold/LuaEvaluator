@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:09:52.55. The functions in the list were obtained from source "\clientsrv\functions".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#bootmode">bootmode</a></td>
+<td><a href="#resolve_VI_path">resolve_VI_path</a></td>
+<td><a href="#resources">resources</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="bootmode"><b>bootmode</b></a></dt>
+<dd><code> str:mode=bootmode()</code><br>
+Returns the bootmode of the server application as configured in the bootstrap script. The bootmode value is intended for conditional execution of initialisation and configuration actions. The returned value reflects the value of a LabVIEW global so the mode can also be referenced from LabVIEW code. A typical use is to discriminate between "operational" and "test" modes so that the server can run with and without instrumentation.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:mode<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="resolve_VI_path"><b>resolve_VI_path</b></a></dt>
+<dd><code> str:path=resolve_VI_path(str:VIname,[str:subpath])</code><br>
+Takes the name of a LuaVIEW-related VI and an optional toolkit subpath and resolves its location for the current runtime in a manner that works when built and when running in development mode. In development mode, the VI is assumed to be located in the directory of the toolkit/library/class extracted from the first part of the VI name, but converted to lower case. These are assumed to be subdirectories of the main LuaVIEW distribution directory. When built, the VI is assumed to be located in the application executable.<br>
+<br>
+Making the toolkit/library/class part of the VI name is a convention followed by all LuaVIEW-related VIs. It mostly serves to avoid VI namespace collisions. As this function shows it can also be used to locate LuaVIEW-related VIs without needing to specify an absolute path.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:VIname<br>
+[str:subpath]<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:path, path to VI<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="resources"><b>resources</b></a></dt>
+<dd><code> str:path=resources()</code><br>
+Returns the resource base path of the server application as configured in the bootstrap script. By storing server-side resources inside the resources directory or its subdirectories the use of many different absolute paths can be avoided. Also, for security reasons, the remote file access GUIs limit themselves to accessing files inside the resource tree. The returned value reflects the value of a LabVIEW global so that the path can also be referenced from LabVIEW code.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:path<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

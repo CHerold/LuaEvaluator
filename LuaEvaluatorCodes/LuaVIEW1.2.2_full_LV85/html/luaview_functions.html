@@ -1,0 +1,1164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:06:09.07. The functions in the list were obtained from source "\luaview\functions".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#app_kind">app_kind</a></td>
+<td><a href="#register.private">register.private</a></td>
+<td><a href="#sig.handle_pausing">sig.handle_pausing</a></td>
+<td><a href="#VI.close">VI.close</a></td>
+</tr>
+
+<tr>
+<td><a href="#call_plugin">call_plugin</a></td>
+<td><a href="#register.private_dir">register.private_dir</a></td>
+<td><a href="#sig.handle_stop">sig.handle_stop</a></td>
+<td><a href="#VI.close_fp">VI.close_fp</a></td>
+</tr>
+
+<tr>
+<td><a href="#do_script">do_script</a></td>
+<td><a href="#register.public">register.public</a></td>
+<td><a href="#sig.handle_swap">sig.handle_swap</a></td>
+<td><a href="#VI.execute">VI.execute</a></td>
+</tr>
+
+<tr>
+<td><a href="#do_task">do_task</a></td>
+<td><a href="#register.public_dir">register.public_dir</a></td>
+<td><a href="#sig.pause">sig.pause</a></td>
+<td><a href="#VI.get_control">VI.get_control</a></td>
+</tr>
+
+<tr>
+<td><a href="#format_time">format_time</a></td>
+<td><a href="#sig.allow_pause">sig.allow_pause</a></td>
+<td><a href="#sig.pause_set">sig.pause_set</a></td>
+<td><a href="#VI.open">VI.open</a></td>
+</tr>
+
+<tr>
+<td><a href="#print">print</a></td>
+<td><a href="#sig.allow_resume">sig.allow_resume</a></td>
+<td><a href="#sig.resume">sig.resume</a></td>
+<td><a href="#VI.open_fp">VI.open_fp</a></td>
+</tr>
+
+<tr>
+<td><a href="#run_task">run_task</a></td>
+<td><a href="#sig.allow_stop">sig.allow_stop</a></td>
+<td><a href="#sig.resume_set">sig.resume_set</a></td>
+<td><a href="#VI.open_module">VI.open_module</a></td>
+</tr>
+
+<tr>
+<td><a href="#sleep">sleep</a></td>
+<td><a href="#sig.allow_swap">sig.allow_swap</a></td>
+<td><a href="#sig.stop">sig.stop</a></td>
+<td><a href="#VI.run">VI.run</a></td>
+</tr>
+
+<tr>
+<td><a href="#swap_task">swap_task</a></td>
+<td><a href="#sig.begin_protected">sig.begin_protected</a></td>
+<td><a href="#sig.stop_set">sig.stop_set</a></td>
+<td><a href="#VI.set_control">VI.set_control</a></td>
+</tr>
+
+<tr>
+<td><a href="#time">time</a></td>
+<td><a href="#sig.clear_stop">sig.clear_stop</a></td>
+<td><a href="#sig.swap_set">sig.swap_set</a></td>
+<td><a href="#VI.signal_control">VI.signal_control</a></td>
+</tr>
+
+<tr>
+<td><a href="#dialog.one_button">dialog.one_button</a></td>
+<td><a href="#sig.confirm">sig.confirm</a></td>
+<td><a href="#task.active">task.active</a></td>
+<td><a href="#xio.copy">xio.copy</a></td>
+</tr>
+
+<tr>
+<td><a href="#dialog.query_string">dialog.query_string</a></td>
+<td><a href="#sig.delegate_pausing">sig.delegate_pausing</a></td>
+<td><a href="#task.directory">task.directory</a></td>
+<td><a href="#xio.delete">xio.delete</a></td>
+</tr>
+
+<tr>
+<td><a href="#dialog.two_button">dialog.two_button</a></td>
+<td><a href="#sig.delegate_stop">sig.delegate_stop</a></td>
+<td><a href="#task.identifier">task.identifier</a></td>
+<td><a href="#xio.listdir">xio.listdir</a></td>
+</tr>
+
+<tr>
+<td><a href="#msg.available">msg.available</a></td>
+<td><a href="#sig.delegate_swap">sig.delegate_swap</a></td>
+<td><a href="#task.mode">task.mode</a></td>
+<td><a href="#xio.move">xio.move</a></td>
+</tr>
+
+<tr>
+<td><a href="#msg.incite">msg.incite</a></td>
+<td><a href="#sig.disallow_pause">sig.disallow_pause</a></td>
+<td><a href="#task.ongoing">task.ongoing</a></td>
+<td><a href="#xio.newdir">xio.newdir</a></td>
+</tr>
+
+<tr>
+<td><a href="#msg.next">msg.next</a></td>
+<td><a href="#sig.disallow_resume">sig.disallow_resume</a></td>
+<td><a href="#task.paused">task.paused</a></td>
+<td><a href="#xio.strip">xio.strip</a></td>
+</tr>
+
+<tr>
+<td><a href="#msg.pop">msg.pop</a></td>
+<td><a href="#sig.disallow_stop">sig.disallow_stop</a></td>
+<td><a href="#task.script">task.script</a></td>
+<td><a href="#xio.tmpdir">xio.tmpdir</a></td>
+</tr>
+
+<tr>
+<td><a href="#msg.self">msg.self</a></td>
+<td><a href="#sig.disallow_swap">sig.disallow_swap</a></td>
+<td><a href="#task.wakeup">task.wakeup</a></td>
+</tr>
+
+<tr>
+<td><a href="#msg.send">msg.send</a></td>
+<td><a href="#sig.end_protected">sig.end_protected</a></td>
+<td><a href="#VI.abort">VI.abort</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="app_kind"><b>app_kind</b></a></dt>
+<dd><code> str:kind=app_kind()</code><br>
+Returns the "kind" application property enum. Under LabVIEW 7, it has as possible values: "invalid app kind", "Development System", "Run Time System", "Student Edition", "Embedded LabVIEW", "Evaluation", and "Custom". Note that future LabVIEW versions might add more kinds.<br>
+<br>
+This function allows a script to perform actions that depend on how the application is deployed. For example, compare the result string to "Development System" and take actions particular to the development setup if equal, or actions particular to the built setup if not equal.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:kind<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="call_plugin"><b>call_plugin</b> (reentrant)</a></dt>
+<dd><code> [any:result],...=call_plugin(str:path,[tab:config])</code><br>
+Opens a reference to a plug-in located at the specified path and calls that plug-in. When the path is relative, the plug-in will be searched for relative to the directory containing the calling task's main script. If the plug-in is not found there or if the calling script is not a task, the plug-in will be searched for relative to the resource base path. When running as a built application, the application executable will also be searched. When a VI with the specified name is already in memory, a reference to that VI is opened irrespective of the path.<br>
+<br>
+When the plug-in is not already in memory, it will be loaded unless the plug-in is a VI template, in which case an independent in-memory instance is created. Only when the plug-in is reentrant or a template is it possible to have simultaneous calls to different instances of the same plug-in implementation. The returned results are the same as those returned by the plug-in. On returning, the reference to the plug-in is closed which will cause its VI to be unloaded if no further references are open.<br>
+<br>
+Plug-ins typically implement protracted LabVIEW operations that must be startable and configurable from Lua. Plug-ins are referenced by path so that they can be located outside the built executable, which allows for adding, removal, or updating of plugins without the need of rebuilding and reinstalling the server. When multiple instances of the same plug-in must be simultaneously runnable, a template VI is usually preferable over a reentrant VI since template instances can have a unique front panel, can be individually debugged, and can remain running when calling an updated plug-in VI.<br>
+<br>
+To configure a plug-in, provide a configuration table. The format of the table varies from plug-in to plug-in and typically reflects a LabVIEW cluster. When the plug-in does not require configuration, the table must be omitted. When the plug-in provides a default configuration, the entire table or named elements in the table can be omitted and will be substituted for by the default data.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to the plug-in VI or template.<br>
+[tab:config], optional configuration table to pass to the plug-in.<br>
+<b><font color="#000080">Results:</font></b> <br>
+[any:result], result returned by plugin.<br>
+...<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Specified plug-in not found.<br>
+Configuration table is missing (when required by plug-in).<br>
+Configuration table has an invalid format.<br>
+Unable to open plug-in VI reference.<br>
+Unable to call plug-in, e.g. because its implementation is broken.<br>
+Any errors returned by the plug-in being called.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="do_script"><b>do_script</b> (reentrant)</a></dt>
+<dd><code> do_script(str:name,[str:script])</code><br>
+Call the "Do Script" API VI to compile and execute a script. The script is given its own virtual machine instance. This implies that it does not share variables with the script calling this function.<br>
+<br>
+Since LabVIEW has problems with recursion, it is not possible to call <code>do_script()</code> from inside a script started via <code>do_script()</code>. In such a case, the error message result will contain a LabVIEW recursion error. To do a do from a do, the thing to do is to copy the do function VI and rename it to, say, do2 and call into that do too. Note that <code>do_task()</code> does not suffer from this limitation since the creation of a top-level context causes a discontinuity in the call chain.<br>
+<br>
+By calling this function through <code>lv.pcall()</code>, you can execute a bit of code that can throw errors or has other ill-defined behaviour without risking the termination of your script or the corruption of its variable space.<br>
+<br>
+If the script is contained in a file, a relative path or bare filename will be resolved by searching relative to the configured script search directories. If no script search directories are configured, the resource base path is searched. If this function is called from a task context, the directory holding the main script of the calling task is searched first.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:name, when the optional script string is not specified, this is the filename plus any path from which to load the script. Otherwise it is the name used to refer to the script when reporting errors.<br>
+[str:script], optional script string allows direct specification of a bit of Lua code. It is advisable to make it a literal string by enclosing it in double square brackets.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Could not load script.<br>
+Script compilation error.<br>
+LabVIEW recursion error.<br>
+Any error thrown while executing the script.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="do_task"><b>do_task</b> (reentrant)</a></dt>
+<dd><code> do_task(str:name,[str:script])</code><br>
+Call the "Do Task" Lua API VI to prepare, pre-process, and execute a task script. Though this creates a seperate execution context, this function is synchronous because it waits for the task to finish.<br>
+<br>
+By calling this function through <code>lv.pcall()</code>, you can execute, in a task context, a bit of code that can throw errors or has other ill-defined behaviour  without risking the termination of your script or the corruption of its variable space.<br>
+<br>
+If the task script is contained in a file, a relative path or bare filename will be resolved by searching relative to the configured script search directories. If no script search directories are configured, the resource base path is searched. If this function is called from a task context, the directory holding the main script of the calling task is searched first.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:name, when the optional task script string is not specified, this is the filename plus any path from which to load the task script. Otherwise it is the name used to refer to the task script when reporting errors.<br>
+[str:script], optional task script string allows direct specification of a bit of Lua code.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Could not load task script or import script.<br>
+Error while preprrocessing task script or import script.<br>
+Compilation error in task script or import script.<br>
+Task identifier already in use.<br>
+Any error thrown while executing the task.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="format_time"><b>format_time</b></a></dt>
+<dd><code> str:formatted_time=format_time(num:time,[str:format])</code><br>
+Uses the LabVIEW "Format Date/Time String" function to convert a numerical timestamp into a display string. See the LabVIEW documentation for information on how to construct a time format string.<br>
+<br>
+BEWARE: when daylight savings is enabled, the resulting date/time will jump by one hour twice a year. When you require a continously changing textual representation of time and do not mind it to being off by one hour for half the year, you may wish to disable daylight savings. Under Windows, this can be done via the timezone tab of the "Date/Time" control panel. Under Linux, this can be done by selecting a GMT+/-N timezone to fix the GMT offset.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+num:time, number of seconds since the LabVIEW epoch.<br>
+[str:format], when no format string is specified the format specified in the "time format" global is used.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:formatted_time<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="print"><b>print</b></a></dt>
+<dd><code> print([any:arg],...)</code><br>
+Print a line of text. Takes the provided arguments and converts them to printable strings. The resulting strings are concatenated with spaces inserted between strings and a linefeed appended to the end. The resulting line of text is then output to a floating console window which is opened and moved to front if not already so. All scripts using this function share the same console window so that output can get mixed up. The console history has a limited capacity (40000 characters).<br>
+<br>
+The arguments can be of any type, but only the basic datatypes (boolean, number, and string) result in easily interpretable output. The content of functions and tables is not printed, only their unique reference pointers are printed as hexadecimal numbers. When no arguments are specified, only a linefeed will be printed.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+[any:arg], argument to be printed.<br>
+...<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="run_task"><b>run_task</b> (reentrant)</a></dt>
+<dd><code> str:identifier=run_task(str:name,[str:script])</code><br>
+Call the "Run Task" Lua API VI to prepare, pre-process, and run a task script. This creates a seperate execution context in which the task will commence running asynchronously from the calling script. This function returns as soon as the task is finished initializing. Normally, this implies that the main script and any import scripts involved with the task could be properly loaded, compiled, and executed up to the main script. However it is possible for a task to perform deferred initialization using the "--#defer" preprocessor keyword. In that case this function will return without error only after the task has called the <code>task.initalized</code> function. This is useful when the started task needs to perform a series of error prone additional initialization actions or when the remainder of the launching script depends on resources initialized by the task being run.<br>
+<br>
+If the task script is contained in a file, a relative path or bare filename will be resolved by searching relative to the configured script search directories. If no script search directories are configured, the resource base path is searched. If this function is called from a task context, the directory holding the main script of the calling task is searched first.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:name, when the optional task script string is not specified, this is the filename plus any path from which to load the task script. Otherwise it is the name used to refer to the task script when reporting errors.<br>
+[str:script], optional task script string allows direct specification of a bit of Lua code.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:identifier, identifier of the run task.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Could not load task script or import script.<br>
+Error while preprrocessing task script or import script.<br>
+Compilation error in task script or import script.<br>
+Task identifier already in use.<br>
+Any error thrown while initializing the task.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sleep"><b>sleep</b> (reentrant)</a></dt>
+<dd><code> bool:timed_out=sleep([I32:timeout])</code><br>
+Puts a task to sleep. The task will be woken up when it receives a signal, message, or some custom event. The task can also be woken up after expiry of an optional timeout. When an event has occurred before going to sleep, the call will return immediately.<br>
+<br>
+By testing for events after this function returns, tasks can quickly react without needing to poll. The timeout allows for a periodic wakeup call that has the task perform its standard chores.<br>
+<br>
+Before going back to sleep, a task should test all the event types that it supports and handle them if they have occurred. The reason is that multiple events might occur before a task is woken from its sleep.<br>
+<br>
+It might seem reasonable to reduce overhead by not testing events when a timed_out result of true is returned. This cannot be relied on. This function is based on "Wait on Occurrence", which, when called with an "ignore previous" input value of false very rarely keeps on returning "timed out" even though an occurrence was set. This bug is due to a race condition in LabVIEW &lt;= 7.1 with a very tiny window of opportunity.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+[I32:timeout], optional timeout in milliseconds.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:timed_out,  deprecated, do not rely on this result, see above.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="swap_task"><b>swap_task</b></a></dt>
+<dd><code> swap_task(str:identifier,str:name,[str:script])</code><br>
+Call the "Swap Task" Lua API VI to prepare a new task script and any import scripts. The task with the identifier specified either through the first argument or through the "--#identifier" keyword of the script will be signalled to swap the script(s) it is currently executing with the new script(s). This function does not return any run-time errors that occur while the task is swapping.<br>
+<br>
+If the task script is contained in a file, a relative path or bare filename will be resolved by searching relative to the configured script search directories. If no script search directories are configured, the resource base path is searched. If this function is called from a task context, the directory holding the main script of the calling task is searched first.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:identifier, identifier of the task to swap. When an empty string is specified, an identifier must be provided via the "--#identifier" pre-processor keyword.<br>
+str:name, when the optional task script string is not specified, this is the filename plus any path from which to load the task script. Otherwise it is the name used to refer to the task script when reporting errors.<br>
+[str:script], optional task script string allows direct specification of a bit of Lua code.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Could not load task script or import script.<br>
+Compilation error in task script or import script.<br>
+Error while preprrocessing task script or import script.<br>
+No task with the specified identifier exists.<br>
+Task does not allow the swap signal.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="time"><b>time</b></a></dt>
+<dd><code> num:time=time([tab:date])</code><br>
+Returns the time in seconds since the LabVIEW epoch (1-Jan-1904 00:00:00 GMT). When no parameter is specified, it returns the current time as obtained via "Library Time.vi", which exists to allow custom time sources. Its default implementation simply calls "Get Date/Time In Seconds"  LabVIEW node, which in turn obtains its time from the system clock. Beware that the system clock has a platform dependent resolution and will drift unless corrected for, e.g. using the ntp protocol.<br>
+<br>
+When a parameter is specified, it should specify a date/time via a table with the following format: {year=&lt;1904..2040&gt;,month=&lt;1..12&gt;,day=&lt;1..31&gt;,[hour=&lt;0..23&gt;],[min=&lt;0..59&gt;],[sec=&lt;0..59&gt;]}. When the optional hour, min, or sec entries are omitted, they default to zero. The conversion to a time in seconds is performed using the standard "Date/Time To Seconds" LabVIEW function.<br>
+<br>
+BEWARE: the "Date/Time To Seconds" function yields a result that depends on the timezone and platform. Under Windows, the function corrects for daylight savings, when enabled. Under Linux, it does not, at least for LabVIEW versions 7.0 and 7.1. This is a bug: it yields a numerical time that can be one hour off when displayed via "Format Date/Time String".<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+[tab:date]<br>
+<b><font color="#000080">Results:</font></b> <br>
+num:time<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Invalid date table.<br>
+Entry out of range.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="dialog.one_button"><b>dialog.one_button</b></a></dt>
+<dd><code> dialog.one_button(str:message,str:button)</code><br>
+Display a one-button dialog with a message. Returns when the button is clicked, the dialog window is closed or either the Return or Escape keys are pressed.<br>
+<br>
+The shown dialog is functionally identical to the standard LabVIEW "One Button Dialog". The standard dialog is not used because, at least up to LabVIEW version 7.1, it has the nasty property that it blocks the user interface thread while open. The UI thread is required not just for display updates but also for VI loading and instantiation. Thus, using the standard "One Button Dialog" might prevent essential background tasks from doing their job.<br>
+<br>
+Beware that the dialog pops up on the machine running Lua, which may not be the same as the machine being operated by the user in case of a client-server setup.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:message. message to display in the dialog box.<br>
+str:button, text to display on the button, e.g. "OK".<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="dialog.query_string"><b>dialog.query_string</b></a></dt>
+<dd><code> bool:ok,str:string=dialog.query_string(str:prompt,[str:default])</code><br>
+Queries for a string by means of a dialog with a string control and OK/Cancel buttons.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:prompt, prompt to display in the dialog titel bar.<br>
+[str:default], default string to set the string control to.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:ok, set to true when the query was OKed, false when cancelled.<br>
+str:string, the entered string.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="dialog.two_button"><b>dialog.two_button</b></a></dt>
+<dd><code> bool:confirmed=dialog.two_button(str:message,str:button1,str:button2)</code><br>
+Display a two-button dialog with a message. Returns when either button is selected, the dialog window is closed, or the Escape key is pressed. When the left button is selected, the result Boolean returns true. Otherwise false is returned.<br>
+<br>
+The shown dialog is functionally identical to the standard LabVIEW "Two Button Dialog". The standard dialog is not used because, at least up to LabVIEW version 7.1, it has the nasty property that it blocks the user interface thread while open. The UI thread is required not just for display updates but also for VI loading and instantiation. Thus, using the standard "Two Button Dialog" might prevent essential background tasks from doing their job.<br>
+<br>
+Beware that the dialog pops up on the machine running Lua, which may not be the same as the machine being operated by the user in case of a client-server setup.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:message. message to display in the dialog box.<br>
+str:button1, text to display on the left button, e.g. "OK".<br>
+str:button2, text to display on the right button, e.g. "Cancel".<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:confirmed<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="msg.available"><b>msg.available</b></a></dt>
+<dd><code> bool:available=msg.available()</code><br>
+Checks wether there are one or more messages available in the task's message queue.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:available<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="msg.incite"><b>msg.incite</b> (reentrant)</a></dt>
+<dd><code> str:reply=msg.incite(str:task,[U32:timeout])</code><br>
+Incite a task to send a reply. This is done by sending the task to be incited a message containing the task identifier of the current task. The incited task can then perform whatever service it is designed to provide and use that identifier to send a reply message when it is done. This function returns on receiving the reply unless an error occurs. BEWARE: when calling this function, you should not be receiving other types of messages at the same time lest these get confused with the incitation reply.<br>
+<br>
+Incitation provides an easy means of synchronously using a service provided by an asynchronous task. More complex message/reply mechanisms can be coded using the messaging primitives. Module export functions also allow a synchronous service to be offered and involve less overhead on account of not requiring a context switch. The advantage of a message/reply mechanism is that the service can be implemented as a task script that can also add asynchronous actions such as periodic updates into the mix. For example:<br>
+<br>
+<pre><code>--#identifier "myservice"
+while true do
+    inciting_task=msg.next()
+    if (inciting_task) then
+        repeat
+            lv.pcall(msg.send,inciting_task,poll(something))
+            inciting_task=msg.next()
+        until (not inciting_task)
+    else
+        update(poll(something))
+    end
+    sleep(update_period)
+end</code></pre><br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task, identifier of the task to incite<br>
+[U32:timeout], timeout in milliseconds.  When omitted, the default timeout as specified in the "incite timeout" configuration global is used.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:reply, reply message<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+Task being incited does not exist or is in error mode.<br>
+Timeout expired before a reply was received.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="msg.next"><b>msg.next</b></a></dt>
+<dd><code> any:message=msg.next()</code><br>
+Returns the next message and removes it from the task's message queue. The message returned is the oldest message present in the queue. Typically, this function is used when a task must process messages in first-in first-out order after being woken up. Note that multiple messages may be present in the queue, so do not go back to sleep until all have been handled.<br>
+<b><font color="#000080">Results:</font></b> <br>
+any:message, message string or nil when the queue is empty.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="msg.pop"><b>msg.pop</b></a></dt>
+<dd><code> any:message=msg.pop()</code><br>
+Returns the newest message and removes it from the task's message queue. This treats the queue like a stack. Typically, this function is used when a task must process messages in last-in first-out order after being woken up. Note that multiple messages may be present in the queue, so do not go back to sleep until all have been handled. Beware that the order of messages retrieved in this manner is only well-defined if it is certain that no more messages will be received during retrieval.<br>
+<b><font color="#000080">Results:</font></b> <br>
+any:message, message string or nil when the queue is empty.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="msg.self"><b>msg.self</b></a></dt>
+<dd><code> msg.self(str:message)</code><br>
+Have a task send a message to itself. This can help simplify a task's implementation by removing the need for special-casing the handling of self-initiated actions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:message<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="msg.send"><b>msg.send</b> (reentrant)</a></dt>
+<dd><code> msg.send(str:task,str:message)</code><br>
+Sends a message to a task specified via its identifier. This adds the message to the task's message queue and wakes it up if asleep. Since the message is queued, it is possible for multiple messages to be sent without loss when the receiving task is otherwise preoccupied.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task, identifier of the receiving task.<br>
+str:message, use a message that the receiving task understands.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Receiving task does not exist.<br>
+Receiving task is in an error state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="register.private"><b>register.private</b></a></dt>
+<dd><code> register.private(str:path)</code><br>
+Registers a LuaVIEW function VI with the private registry of the current script's LuaVIEW state. When this function returns, the function is callable by scripts executing on the state's VM instance. When a VI with the same name is already in memory that VI will be registered, otherwise an attempt will be made to load the function VI from disk. If the path is relative, the function VI is assumed to be located relative to the resource base path. If the application is built and the function VI could not be located at the specified path, the VIs built into the application executable will be searched. The function is unregistered, and its VI reference closed, when the LuaVIEW state of the script is closed. The function VI will unload when no further references to it remain open. Note that the function manager displays a use count for privately registered functions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to the function VI.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function name invalid.<br>
+Could not load function VI.<br>
+Function VI has an invalid connector pane.<br>
+Function improperly documented.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="register.private_dir"><b>register.private_dir</b></a></dt>
+<dd><code> register.private_dir(str:dirpath)</code><br>
+Tries to register all VIs ending in "_lua.vi" in a directory and, recursively, in any subdirectories or llbs, or inside a built executable, with the current LuaVIEW state's private function registry. The directory path can be absolute or relative to the resource base path.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:dirpath, path of a directory holding function VIs.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Directory path invalid.<br>
+Function name invalid.<br>
+Function improperly documented.<br>
+Could not load function VI.<br>
+Function VI has an invalid connector pane.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="register.public"><b>register.public</b></a></dt>
+<dd><code> register.public(str:path)</code><br>
+Registers a LuaVIEW function VI with the public function registry. The functions in the public registry are set when a script is started. Thus, the function will be available to subsequently started scripts yet remain invisible to already running scripts (including the script that called this registration function). When a VI with the same name is already loaded in memory, that VI will be registered. If the path is relative, the function VI is assumed to be located relative to the resource base path. If the application is built and the function VI could not be located at the specified path, the VIs built into the application executable will be searched. The registered function remains loaded until the public registry is cleaned up.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to the function VI.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function name invalid.<br>
+Could not load function VI.<br>
+Function VI has an invalid connector pane.<br>
+Function improperly documented.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="register.public_dir"><b>register.public_dir</b></a></dt>
+<dd><code> register.public_dir(str:dirpath)</code><br>
+Tries to register all VIs ending in "_lua.vi" in a directory and, recursively, in any subdirectories or llbs, or inside a built executable, with the public function registry. The directory path can be absolute or relative to the resource base path. The functions in the public registry are set when a virtual machine is instantiated. Thus, the registered functions will be available to subsequently opened LuaVIEW states yet remain invisible to already running scripts (including the script that called this registration function). The registered functions remain loaded until the public registry is cleaned up.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:dirpath, path of a directory holding function VIs.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Directory path invalid.<br>
+Function name invalid.<br>
+Function improperly documented.<br>
+Could not load function VI.<br>
+Function VI has an invalid connector pane.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.allow_pause"><b>sig.allow_pause</b></a></dt>
+<dd><code> sig.allow_pause()</code><br>
+Allow the pause signal. The pause signal is allowed when a task starts. This function is therefore only required when a prior "disallow_pause" must be undone.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.allow_resume"><b>sig.allow_resume</b></a></dt>
+<dd><code> sig.allow_resume()</code><br>
+Allow the resume signal. This function is only required when a task overrides the default handling of pausing as enabled via "handle_pausing".<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.allow_stop"><b>sig.allow_stop</b></a></dt>
+<dd><code> sig.allow_stop()</code><br>
+Allow this task to be stopped. When a task starts, the stop signal is already allowed. This function is therefore only needed when undoing a prior "disallow_stop".<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.allow_swap"><b>sig.allow_swap</b></a></dt>
+<dd><code> sig.allow_swap()</code><br>
+Allow this task to be swapped. When a task starts, the swap signal is already allowed. This function is therefore only needed when undoing a prior "disallow_swap".<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.begin_protected"><b>sig.begin_protected</b></a></dt>
+<dd><code> sig.begin_protected()</code><br>
+Begin a protected section of code. No signals will be handled until a matching call to "end_protected" is made. This prevents the protected section from being interrupted by anything other than an error. Each call to "begin_protected" must be matched by an "end_protected" call or otherwise signal handling will remain disabled. Signals that arrive while executing the protected sections are not discarded, their handling is merely postponed. It is possible to nest protected sections or call functions with protected sections from within a protected section. Signal handling is reenabled only after the outermost "end_protected" call.<br>
+<br>
+Calling "begin_protected" once at the start of your task without a subsequent "end_protected" will disable all signal handling so that your task must either run to completion or terminate with an error. To disallow all but the "kill" and "confirm" manual signals as sent via the Task Manager user interface window but not any programmatic signals, use the "--#disallow_manual" preprocessor keyword in the main task script. This is typically used for scripts whose starting and stopping is managed programatically because they perform some essential system management function.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Too many (100+) calls to "begin_protected" without matching calls to "end_protected".<br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.clear_stop"><b>sig.clear_stop</b></a></dt>
+<dd><code> sig.clear_stop()</code><br>
+Clears the stop signal. This function is useful only in the rare instance where you are handling the stop signal and decide, on receiving the signal, that stopping should not commence, e.g. because of some changed circumstance.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.confirm"><b>sig.confirm</b> (reentrant)</a></dt>
+<dd><code> bool:signal_set=sig.confirm(str:task_identifier)</code><br>
+Sends a "confirm" signal to the specified task. Note that the purpose of waiting for a confirm signal is to give the operator a chance to review a task's error message. Programmatic confirmation, through calling this function, should therefore be done only as a last resort to force tasks that keep on hanging in error mode to terminate.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task_identifier<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:signal_set<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.delegate_pausing"><b>sig.delegate_pausing</b></a></dt>
+<dd><code> sig.delegate_pausing()</code><br>
+Redelegate the built-in handling of pause and resume signals. When a task starts, the handling is already delegated to the built-in mechanism. This function is therefore only useful when your task performs custom handling of pause/resume signals for a limited time.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.delegate_stop"><b>sig.delegate_stop</b></a></dt>
+<dd><code> sig.delegate_stop()</code><br>
+Delegate the handling of the stop signal. Reenables the built-in handling of the stop signal when custom handling is no longer needed. When a task starts, the handling of the stop signal is already delegated. This function is therefore useful only when a prior call to "handle_stop" must be undone.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.delegate_swap"><b>sig.delegate_swap</b></a></dt>
+<dd><code> sig.delegate_swap()</code><br>
+Delegate the handling of the swap signal. Reenables the built-in handling of the swap signal when custom handling is no longer needed. When a task starts, the handling of the swap signal is already delegated. This function is therefore useful only when a prior call to "handle_swap" must be undone.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.disallow_pause"><b>sig.disallow_pause</b></a></dt>
+<dd><code> sig.disallow_pause()</code><br>
+Disallow the pause signal. If the pause signal was set prior to calling this function, it will be cleared. This function is required when a task overrides the default handling of pausing using "handle_pausing". Alternatively, it can be used to specifically disallow the pause signal but not any of the other signals, e.g. when your task manages some process that can be stopped but must otherwise run continuously. To disable the handling of all signals, use "begin_protected" instead. To disallow all manual signals as sent via the Task Manager user interface window but allow programmatic signals, use the "--#disallow_manual" preprocessor keyword in the main task script.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.disallow_resume"><b>sig.disallow_resume</b></a></dt>
+<dd><code> sig.disallow_resume()</code><br>
+Disallow the resume signal. If the resume signal was set prior to calling this function, it will be cleared. This function is only required when a task overrides the default handling of pausing as enabled via "handle_pausing".<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.disallow_stop"><b>sig.disallow_stop</b></a></dt>
+<dd><code> sig.disallow_stop()</code><br>
+Disallow the stop signal. If the stop signal was set prior to calling this function, it will be cleared. This function can be used to specifically disallow the stop signal but not any of the other signals, e.g. when your task must run to completion but does not mind being paused. To disable the handling of all signals, use "begin_protected" instead. To disallow all manual signals as sent via the Task Manager user interface window but allow programmatic signals, use the "--#disallow_manual" preprocessor keyword in the main task script.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.disallow_swap"><b>sig.disallow_swap</b></a></dt>
+<dd><code> sig.disallow_swap()</code><br>
+Disallow the swap signal. If the swap signal was set prior to calling this function, it will be cleared. This function can be used to specifically disallow the swap signal but not any of the other signals, e.g. when your task manages resources that do not allow for the cleanup and reinitialisation required during swapping. To disable the handling of all signals, use "begin_protected" instead. To disallow all manual signals as sent via the Task Manager user interface window but allow programmatic signals, use the "--#disallow_manual" preprocessor keyword in the main task script.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.end_protected"><b>sig.end_protected</b></a></dt>
+<dd><code> sig.end_protected()</code><br>
+End a protected section of code. No signals are handled while executing a protected section. This prevents the protected section from being interrupted by anything other than an error. Each call to "end_protected" must be preceeded by a matching call to "begin_protected". Signals that arrive while executing the protected sections are not discarded, their handling is merely postponed. It is possible to nest protected sections or call functions with protected sections from within a protected section. Signal handling is reenabled only after the outermost "end_protected" call.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+More calls to "end_protected" than "begin_protected" were made.<br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.handle_pausing"><b>sig.handle_pausing</b></a></dt>
+<dd><code> sig.handle_pausing()</code><br>
+Take over the handling of the pause and resume signals. When a task starts, the pausing is delegated to the built-in mechanism which, on receiving a pause signal, blocks the virtual machine, disallows the pause signal, sets the task from running to paused mode, and allows the resume signal. On receiving the resume signal, the reverse operation is performed. Custom pause/resume handling, as must be implemented when calling this function, should perform the same steps. It is needed only when the task must perform an additional task on pausing and/or resumption, e.g. deactivate some external process it is managing for the duration of the pause.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.handle_stop"><b>sig.handle_stop</b></a></dt>
+<dd><code> sig.handle_stop()</code><br>
+Handle the stop signal. When a task starts, the handling of the stop signal is delegated to a built-in mechanism that interrupts the task and runs any cleanup functions before terminating the virtual machine. This function disables built in handling and therefore obliges your script to perform custom handling of the stop signal. Custom handling is rarely useful. If your task manages resources that must be freed before the task is terminated, adding cleanup functions using "lv.addcleanup()" is more convenient and safer because cleanup functions are not skipped when an error occurs.<br>
+<br>
+The only situation that custom stop handling can cover that cleanup functions cannot is when the task must verify whether stopping is allowed, and resume the script when it is not. When the condition that makes stopping impossible is a result of the script execution instead of some external asynchronous event, it is possible to use "sig.disallow_stop()" instead, which is neater since it can be placed close to the code that should not be interrupted and has as advantage that the task manager "stop" button is greyed to make explicit that the task is not in a stoppable condition.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.handle_swap"><b>sig.handle_swap</b></a></dt>
+<dd><code> sig.handle_swap()</code><br>
+Handle the swap signal. When a task starts, the handling of the swap signal is delegated to a built-in mechanism that interrupts the task and runs any cleanup functions before starting the replacement task script. Calling this function will disable the built-in handling of the swap signal, and obliges your task script to implement custom handling. This can be used to terminate the task script in a controlled manner on swapping. Once terminated, the cleanup and starting of the replacement script(s) willl commence as usual.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.pause"><b>sig.pause</b> (reentrant)</a></dt>
+<dd><code> sig.pause(str:task_identifier)</code><br>
+Sets the "pause" signal of the specified task if allowed by that task. To reduce response latency, the task being signalled is woken up when asleep. Note that this call is asynchronous: the signal might not have been handled yet when this call returns.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task_identifier<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.pause_set"><b>sig.pause_set</b></a></dt>
+<dd><code> bool:set=sig.pause_set()</code><br>
+Test if the pause signal is set and must be handled. If pausing is delegated, this function returns false. When a task receives a signal, it will be woken up when asleep, or will wake immediately on attempting the next sleep when awake. It is therefore sufficient and efficient to only test signals after waking up.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:set<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.resume"><b>sig.resume</b> (reentrant)</a></dt>
+<dd><code> sig.resume(str:task_identifier)</code><br>
+Sets the "resume" signal of the specified task if allowed by that task. To reduce response latency, the task being signalled is woken up when asleep. Note that this call is asynchronous: the signal might not have been handled yet when this call returns.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task_identifier<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.resume_set"><b>sig.resume_set</b></a></dt>
+<dd><code> bool:set=sig.resume_set()</code><br>
+Test if the resume signal is set and must be handled. If pausing is delegated, this function returns false. When a task receives a signal, it will be woken up when asleep, or will wake immediately on attempting the next sleep when awake. It is therefore sufficient and efficient to only test signals after waking up.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:set<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.stop"><b>sig.stop</b> (reentrant)</a></dt>
+<dd><code> sig.stop(str:task_identifier)</code><br>
+Sets the "stop" signal of the specified task if allowed by that task. To reduce response latency, the task being signalled is woken up when asleep. Note that this call is asynchronous: the signal might not have been handled yet when this call returns.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task_identifier<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.stop_set"><b>sig.stop_set</b></a></dt>
+<dd><code> bool:set=sig.stop_set()</code><br>
+Test if the stop signal is set and must be handled. If the handling of the stop signal is delegated, this function returns false. When a task receives a signal, it will be woken up when asleep, or will wake immediately on attempting the next sleep when awake. It is therefore sufficient and efficient to only test signals after waking up.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:set<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="sig.swap_set"><b>sig.swap_set</b></a></dt>
+<dd><code> bool:set=sig.swap_set()</code><br>
+Test if the swap signal is set and must be handled. If the handling of the swap signal is delegated, this function returns false. When a task receives a signal, it will be woken up when asleep, or will wake immediately on attempting the next sleep when awake. It is therefore sufficient and efficient to only test signals after waking up.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:set<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.active"><b>task.active</b></a></dt>
+<dd><code> task.active()</code><br>
+Set the task mode to "running" when launched asynchronously via "Run Task" or to "executing" when launched synchronously via "Do Task". When no "--#defer" preprocessor keyword is used, this is done automatically as soon as the main script starts to execute.<br>
+<br>
+This function should be used when handling the resume signal or when the "--#defer" preprocessor keyword has left the task in "initializing" or "swapping" mode. Such deferred initialization allows the task to perform some additional  initialization. Once a task is no longer "initializing" and the task is launched asynchronously, "Run Task" will return. This prevents the launching context from proceeding before requisite initialization actions are complete or subsequently required resources are allocated.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.directory"><b>task.directory</b></a></dt>
+<dd><code> str:directory=task.directory()</code><br>
+Return the path to the directory in which the task's main script resides.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:directory<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+Task script was provided as a string and not a file.<br>
+Task script does not reside on a local filesystem.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.identifier"><b>task.identifier</b></a></dt>
+<dd><code> str:identifier=task.identifier()</code><br>
+Returns the calling task's own identifier. A task might want to know its own identifier in order to format more easily interpretable error or log messages, or to be able to pass its identifier to a different task so as to set up for bidirectional messaging.<br>
+<br>
+It is possible to assign a specific identifier to a task by using the "--#identifier" preprocessor keyword as part of its main script. This prevents additional task scripts with the same identifier from being started. If there is no problem with starting multiple instances of a task script, the "--#identifier" keyword can be omitted. In that case a unique number is assigned as identifier to each instance.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:identifier<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.mode"><b>task.mode</b></a></dt>
+<dd><code> str:mode=task.mode([str:task_identifier])</code><br>
+Returns the mode of the specified task or, when no argument is passed, the mode of the calling task.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+[str:task_identifier]<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:mode<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No such task.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.ongoing"><b>task.ongoing</b></a></dt>
+<dd><code> bool:ongoing=task.ongoing(str:task_identifier)</code><br>
+Tests if a task is ongoing. A started task is ongoing until it has run to completion (of the task script), suffers and error, is stopped, or is killed. This implies that tasks that are initializing, running, or paused are all ongoing.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task_identifier<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:ongoing<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.paused"><b>task.paused</b></a></dt>
+<dd><code> task.paused()</code><br>
+Set the task mode to "paused". This function should be used when doing customized handling of the pause signal so as to switch from "running" to "paused".<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.script"><b>task.script</b></a></dt>
+<dd><code> str:script=task.script()</code><br>
+Return the main script of the current task as a string. Useful for having a task log itself so that the script that actually ran, instead of a potentially modified script, can be reviewed later.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:script<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Function must be called from a task context but was not.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="task.wakeup"><b>task.wakeup</b> (reentrant)</a></dt>
+<dd><code> task.wakeup(str:task_identifier)</code><br>
+Wakes up a task. This causes an ongoing sleep() call of the task to return. When the task is otherwise occupied, its next sleep() call will drop through immediately. This function can be used to notify a task of some custom event.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:task_identifier<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.abort"><b>VI.abort</b> (reentrant)</a></dt>
+<dd><code> VI.abort(obj:self)</code><br>
+Aborts a VI. This method maps to the LabVIEW abort VI method. Beware that the VI is not given a chance to do any cleanup work. When this is a problem, consider using a plug-in.<br>
+<br>
+This function is reentrant because the abort VI method can take a while and might even get stuck without timing out in certain pathological cases, particularly when the VI being aborted has called a DLL function that fails to return.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, object of VI to abort.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+Could not abort VI.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.close"><b>VI.close</b></a></dt>
+<dd><code> VI.close(obj:self)</code><br>
+Closes a VI object. This method uses the LabVIEW close reference node to release the VI reference contained in the VI object. Once closed, the VI object can no longer be used with the exception that it is allowed to call close on an already closed VI object (in which case nothing happens). This allows you to close the VI object during normal execution of the script and add a cleanup that does the same. This will cause a superfluous close attempt during normal execution without causing and error and guarantees a close when an error occurs before the in-script close is reached.<br>
+<br>
+When the VI object refers to a module, its functions are no longer callable after it is closed. When the VI is not referenced from elsewhere, it will be unloaded after being closed.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, VI object to close.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.close_fp"><b>VI.close_fp</b></a></dt>
+<dd><code> VI.close_fp(obj:self)</code><br>
+Closes the front panel of a VI. This method maps to the LabVIEW close fp VI method. When the front panel is already closed, no action is under taken.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, object of the VI.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+Could not close front panel.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.execute"><b>VI.execute</b> (reentrant)</a></dt>
+<dd><code> VI.execute(obj:self)</code><br>
+Executes a VI synchronously. This method maps to the LabVIEW run VI method with the "Wait until done" option set so that it does not return until the VI completes execution.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, object of VI to execute.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+Could not execute VI.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.get_control"><b>VI.get_control</b></a></dt>
+<dd><code> any:value=VI.get_control(obj:self,str:label)</code><br>
+Gets the value of a control or indicator. Any data type that can be passed as compound data or occur as an element of compound data is supported.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, VI object.<br>
+str:label, label of control/indicator whose value to get.<br>
+<b><font color="#000080">Results:</font></b> <br>
+any:value, value of control/indicator.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+No such control or indicator.<br>
+Data type of control/indicator not supported.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.open"><b>VI.open</b></a></dt>
+<dd><code> obj:vi=VI.open(str:path,[I32:options])</code><br>
+Opens a VI object. This function uses the standard LabVIEW Open VI Refence node to obtain a VI reference that is subsequently packaged into a LuaVIEW object with attached methods. When a VI with the same name is already loaded in memory, a reference to that VI is returned. When the path is relative, the VI will be searched for relative to the directory containing the calling task's main script. If the VI is not found there or if the calling script is not a task, the plug-in will be searched for relative to the resource base path. When running as a built application, the application executable will also be searched.<br>
+<br>
+When the referenced VI is a template that is not already in memory, a clone of the template with its own front panel and data space will be instantiated. When "prepare for reentrant run" is requested for a non-template reentrant VI via the options bitset, the VI will be set up to be runnable with a new data space instance but not a front panel instance.<br>
+<br>
+Beware that when the top-level context (such as a task) from which the reference was opened is stopped, the VI reference is automatically closed by LabVIEW unless it was passed along via the "auto dispose ref" option of the run method .<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to the VI to open.<br>
+[I32:options], options bitset as detailed in the LabVIEW Open VI Reference documentation. Defaults to zero when not specified.<br>
+<b><font color="#000080">Results:</font></b> <br>
+obj:vi, a VI object.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+VI not found.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.open_fp"><b>VI.open_fp</b></a></dt>
+<dd><code> VI.open_fp(obj:self,[bool:activate])</code><br>
+Opens the front panel of a VI. This method maps to the LabVIEW open fp VI method. When the front panel is already open it will be brought to the front.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, object of the VI.<br>
+[bool:activate], determines whether the front panel should be activated on opening. Defaults to true when not specified.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+Could not open front panel.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.open_module"><b>VI.open_module</b></a></dt>
+<dd><code> obj:vi=VI.open_module(str:path,str:table,str:exptab,[tab:config])</code><br>
+Opens the module at the specified path and initialises it. This should cause the module to set its functions as part of the specified table. If no table is specified (an empty string) or "_G" is specified, the functions are set in the global namespace of your script.<br>
+<br>
+Like <a href="#VI.open"><code>VI.open()</code></a>, this function returns a VI object. Since the VI object is prepared for calling,  it cannot be run nor executed. After opening the module, it is advisable to immediately add a cleanup that <a href="#VI.close">closes</a> the returned VI object. After closing the module, its functions can no longer be called.<br>
+<br>
+When the path is relative, the module will be searched for relative to the directory containing the calling task's main script. If the module is not found there, or if the calling script is not a task, the module will be searched for relative to the resource base path. When running as a built application, the application executable will also be searched. When a VI with the specified name is already in memory, a reference to that VI is opened irrespective of the path.<br>
+<br>
+When the module is implemented as a non-reentrant VI, there is only one dataspace and there can only be one caller at a time. Depending on the implementation of such a module, it may or may not be possible to open and use it from multiple script contexts simultaneously. When the module is a reentrant VI, a new dataspace is created on opening the module. This allows multiple instances of one module to be opened, each with a separate configuration and state. Still, there can only be one caller per instance at any one time. Use a VI template when the full VI state must be instantiated, e.g. for debugging or when the front panel must be visible. When you must call multiple instances of the same module from within the same script, use a different table name for each instance so as to keep their functions separate.<br>
+<br>
+Modules are handy for implementing a set of functions that operate on a shared state or a shared resource. They can also be used as a quick and dirty means of implementing related functions without the full bother of creating and documenting multiple LuaVIEW VIs and adding background infrastructure to tie these functions together.<br>
+<br>
+When the module contains export functions, any scripts started after opening the module can call those functions. The export functions are registered under the specified export table or as globals when an empty string is specified. When there can be multiple instances of the module, be sure to use a unique name for the export table. Consider choosing a valid Lua variable name as the identifier of the task that opens and manages a module instance and reuse that as the name of the export table. A task's identifier can be retrieved via <a href="#task.identifier"><code>task.identifier()</code></a><br>
+<br>
+To configure a module, provide a configuration table. The format of the table varies from module to module and typically reflects a LabVIEW cluster. When the module does not require configuration, the table must be omitted. When the module provides a default configuration, the entire table or named elements in the table can be omitted and will be substituted for by the default data.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to the module VI or template.<br>
+str:table, table to be filled with the module functions. The global table is used when an empty string is specified.<br>
+str:exptab, table to register export functions under. Must be unique per instance.<br>
+[tab:config], optional configuration table to pass to the module. <br>
+<b><font color="#000080">Results:</font></b> <br>
+obj:vi, VI object of the module.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Specified module not found.<br>
+Configuration table is missing (when required by module).<br>
+Configuration table has an invalid format.<br>
+Unable to open module VI reference.<br>
+Unable to initialise module VI, e.g. because its implementation is broken.<br>
+Any errors returned during initialisation.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.run"><b>VI.run</b></a></dt>
+<dd><code> VI.run(obj:self,[bool:dispose_ref])</code><br>
+Runs a VI asynchronously. This method maps to the LabVIEW run VI method.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, object of VI to run.<br>
+[bool:dispose_ref], Auto dispose reference, defaults to false when not specified. When true, the VI reference is passed to the run VI and will be cleaned up when that VI stops so that there is no more need to close the VI object after having called this method. It also prevents LabVIEW from wanting to save a template instance in development mode. Without this option, LabVIEW will pull the rug from under the run VI when the execution context that opened the VI object comes to a halt and the front panel of the run VI is not open even when the VI object is never closed.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+VI is not in a runnable state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.set_control"><b>VI.set_control</b></a></dt>
+<dd><code> VI.set_control(obj:self,str:label,any:value)</code><br>
+Sets the value of a control or indicator. No "value changed" event will be generated. Any data type that can be passed as compound data or occur as an element of compound data is supported.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, VI object.<br>
+str:label, label of control/indicator to set.<br>
+any:value, new value for control/indicator.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+No such control or indicator.<br>
+Data type of value does not match data type of control/indicator.<br>
+Data type of control/indicator not supported.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="VI.signal_control"><b>VI.signal_control</b></a></dt>
+<dd><code> VI.signal_control(obj:self,str:label,any:value)</code><br>
+Sets the value of a front-panel control and generate a "value changed" event. This will cause an event structure that is monitoring the control/indicator to be signalled. Any data type that can be passed as compound data or occur as an element of compound data is supported. Useful for operating a front panel from a script, e.g. so as to perform a unit or regression test.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:self, VI object.<br>
+str:label, label of control/indicator to signal.<br>
+any:value, new value for control/indicator.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a VI object.<br>
+Dead VI object.<br>
+No such control or indicator.<br>
+Data type of value does not match data type of control/indicator.<br>
+Data type of control/indicator not supported.<br>
+Cannot signal a latched boolean.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.copy"><b>xio.copy</b></a></dt>
+<dd><code> xio.copy(str:source,str:taget)</code><br>
+Copies the file or directory specified by the source path to the target path.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:source, path of file or directory to copy<br>
+str:taget, path to copy to<br>
+<b><font color="#800000">Errors:</font></b> <br>
+File or directory not found.<br>
+File in use.<br>
+Access denied.<br>
+Disk full.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.delete"><b>xio.delete</b></a></dt>
+<dd><code> xio.delete(str:path)</code><br>
+Delete a file or an empty directory. To recursively delete a directory tree, use the following function definition:<br>
+<pre><code>function xio.deletetree(path)
+    local files,dirs=xio.listdir(path)
+    for i,d in ipairs(dirs) do
+        xio.deletetree(d)
+    end
+    for i,f in ipairs(files) do
+        xio.delete(f)
+    end
+    xio.delete(path)
+end</code></pre><br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path<br>
+<b><font color="#800000">Errors:</font></b> <br>
+File or directory not found.<br>
+File in use.<br>
+Directory not empty.<br>
+Access denied.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.listdir"><b>xio.listdir</b></a></dt>
+<dd><code> tab:files,tab:dirs=xio.listdir(str:path,[str:pattern])</code><br>
+Lists the content of a directory or a VI library. The listed files and/or directories are returned as full paths.<br>
+<br>
+To get a recursive listing, bind the "Library Recursively List Files.vi" in the library/file handling/ directory or simply use the following function:<br>
+<pre><code>function xio.recursedir(path)
+    local files,dirs=xio.listdir(path)
+    for i,d in ipairs(dirs) do
+        for j,f in ipairs(xio.recursedir(d)) do
+            table.insert(files,f)
+        end
+    end
+    return files
+end</code></pre><br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, directory or llb to list.<br>
+[str:pattern], filter pattern that can use the ? and * wildcards.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:files, paths of the files in the directory or llb being listed.<br>
+tab:dirs, paths of the subdirectories of the directory being listed.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a directory.<br>
+No such directory.<br>
+Access denied.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.move"><b>xio.move</b></a></dt>
+<dd><code> xio.move(str:source,str:taget)</code><br>
+Moves the file or directory specified by the source path to the target path.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:source, path of file or directory to move<br>
+str:taget, path to move to<br>
+<b><font color="#800000">Errors:</font></b> <br>
+File or directory not found.<br>
+File in use.<br>
+Access denied.<br>
+Disk full.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.newdir"><b>xio.newdir</b></a></dt>
+<dd><code> xio.newdir(str:path)</code><br>
+Creates a new directory.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path path of the directory to create.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Parent directory does not exist.<br>
+File or directory already exists at the specified path.<br>
+Disk full.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.strip"><b>xio.strip</b></a></dt>
+<dd><code> str:stripped,str:name=xio.strip(str:path)</code><br>
+Returns the name of the last component of a path and the stripped path that leads up to that component.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to strip<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:stripped, path up to last component.<br>
+str:name, name of last component.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="xio.tmpdir"><b>xio.tmpdir</b></a></dt>
+<dd><code> str:path=xio.tmpdir()</code><br>
+Returns the path to the temporary directory.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:path<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

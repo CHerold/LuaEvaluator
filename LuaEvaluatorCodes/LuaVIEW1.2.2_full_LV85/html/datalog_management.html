@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:08:59.03. The functions in the list were obtained from source "\datalog\resources\import\database management.lua".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#clonetag">clonetag</a></td>
+<td><a href="#clonetags">clonetags</a></td>
+<td><a href="#deletetags">deletetags</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="clonetag"><b>clonetag</b></a></dt>
+<dd><code> clonetag(any:sourcedb,any:targetdb,str:tag,[str:as])</code><br>
+Clone a (meta)tag from one database to another. This creates a tag in the target database with the same name and configuration as the source tag.<br>
+<br>
+When the tag is a set&hold tag, the initial value of the target tag is set to the last value logged to the source tag. Otherwise, the initial value is NaN in case of a number tag, and "UNDEFINED" in case of a string tag.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+any:sourcedb, name or object of source database.<br>
+any:targetdb, name or object of target database. May be the same as the source only when an alternate tag name is provided.<br>
+str:tag, name of tag to clone.<br>
+[str:as], alternate name for the cloned tag.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No such database.<br>
+Target database must be unlocked.<br>
+Tag does not exist in source database.<br>
+Tag already exists in target database.<br>
+Cannot clone a meta tag when parent tag does not exist.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="clonetags"><b>clonetags</b></a></dt>
+<dd><code> clonetags(any:sourcedb,any:targetdb,str:pattern)</code><br>
+Clone all tags matching the specified pattern from one database to another. Useful for creating an empty database that contains a subset of tags or all tags in a database that is being retired. See the documentation of clonetag() for further details.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+any:sourcedb, name or object of source database.<br>
+any:targetdb, name or object of target database.<br>
+str:pattern, tag filter pattern with '?' or '*' wildcards.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No such database.<br>
+Target database must be unlocked.<br>
+Tag already exists in target database.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="deletetags"><b>deletetags</b></a></dt>
+<dd><code> deletetags(any:db,str:pattern)</code><br>
+Delete all tags matching the specified pattern from a database. This function is highly dangerous when applied to a database containing important data.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+any:db, name or object of database.<br>
+str:pattern, tag filter pattern with '?' or '*' wildcards.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No such database.<br>
+Database must be unlocked.<br>
+Cannot delete a base tag when a meta tag remains in existence.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

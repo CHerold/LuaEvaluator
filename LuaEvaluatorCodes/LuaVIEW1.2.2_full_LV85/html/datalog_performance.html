@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Performance and scalability</title>
+</head>
+
+<body>
+
+<h3>Performance and scalability</h3>
+
+<p>The data logger is capable of handling roughly 5000 to 10000 <u>number tag</u>
+updates per second per GHz of processing power, including logging of all data to
+disk. The actual performance can vary somewhat depending on many details, in
+particular the percentage of the tag updates that are logged to disk and what
+fraction of the tag updates is performed from either Lua scripts or LabVIEW code
+(which offers the best performance). By virtue of a multi-stage buffering
+mechanism and O(1) algorithms, the performance is almost independent of the
+number of different tags being updated. The system is therefore able to scale to
+several thousand tags with little degradation, and will probably handle 10000 to
+20000 tags with minor performance regressions.</p>
+
+<p>Updates of <u>string tags</u> do not scale as well. Essentially, string tag
+updates perform identically to appending strings to per-tag files. Thus, string logging
+performance is almost wholly dependent on the disk subsystem. Provided that the
+strings are not too large, a hundred logged string updates per second is about
+the limit of what one should expect on a non-RAID system. Because of this relatively high overhead,
+string tags should be used only to record state that changes infrequently.</p>
+
+<p>Note that not all data more complex than a number needs be logged using a
+string tag. For example, a vector can be logged by updating, in unison, and with
+identical timestamps a set of number tags that represent the vector components.
+When doing so, it is preferable to choose a representation that can be
+interpolated on a per-component basis. For example, a polar vector is degenerate
+along the z-axis and as such is ill-suited to component-wise interpolation. Using
+a set of number tags instead of a string tag will scale better.</p>
+
+<p>When using the system on which the data logger runs to perform time-sensitive
+control tasks, the relevant performance parameter may not be maximum throughput.
+Instead, the maximum <u>latency</u> of the control task may be a larger concern.
+Latency can be reduced by tweaking the execution system and priority of the
+control task. However the most deterministic way of reducing latencies, short of
+switching to a real-time operating system, is to lower CPU usage and avoid
+intensive operations. User interface windows and their display updates are a
+particularly notorious source of scheduling latency. The client-server
+architecture helps out by allowing the client (with all the user interface
+windows) to run on a different machine than the server doing the control and
+logging. In such a situation it also helps to use the database mirroring
+mechanism so that queries can be run on a machine not taxed with time-sensitive
+tasks.</p>
+
+<p>Being able to run all logging and acquisition-related tasks inside a single
+runtime allows the system to scale with commodity computer hardware. Deploying
+on a faster computer with ample memory and multiple processors or multi-core
+processors will do wonders for performance and latency. The incremental cost
+will likely be less than the hardware cost of real-time controllers, and that is
+not even counting the additional development hassle these entail. Note that the
+system has been designed to benefit from multi-processing: when LabVIEW is
+configured to use multi-threading, busy LuaVIEW tasks gets assigned
+separate OS threads. Where possible, time-consuming operations were made
+reentrant so as to prevent one thread from blocking the other.</p>
+
+<p>The <u>performance of queries</u> hardly depends on the amount of data logged
+to the tag being queried. Instead, the performance scales with the amount of data
+involved in the query. When retrieving a time or index range, this equals the
+amount of data being retrieved. However when interpolating, this equals the time
+range over which the interpolation takes place, even when only few points in
+time are interpolated at.</p>
+
+<p>The total <u>amount of data</u> logged to a string tag may not exceed <u>two
+gigabytes</u>. When this limit is still some way off, a warning is generated. An
+error occurs only when the limit is actually reached. The total amount of data
+logged to a number tag, which requires 16 bytes per point, has no hard limit.
+However for very large amounts of data per tag (on the order of <u>a terabyte</u>)
+the query performance will start to degrade because the index file (which serves
+to speed up queries) will itself become a bottleneck because of its large size.
+When a number tag grows to be this large, a warning is generated but no errors
+are thrown. Obviously the total amount of data in a logging database is limited
+by the capacity of the logical volume on which it is stored. For this reason it
+is advisable, when logging, to periodically write the disk usage to a tag with a
+warning limit. The &quot;disk usage.lua&quot; script included in the example
+server configuration does so.</p>
+
+<hr>
+<p><a href="datalog_manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

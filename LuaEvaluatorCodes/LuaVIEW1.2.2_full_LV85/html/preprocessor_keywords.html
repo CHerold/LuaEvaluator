@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Pre-processor keywords</title>
+</head>
+
+<body>
+
+<h3>Pre-processor keywords</h3>
+<p>Tasks can be configured by specifying keywords (prefixed with
+"--#") as part of their script. These keywords are
+extracted by a pre-processor from the header of the script when it is loaded.
+Some keywords must be followed by values enclosed in double quotes. This is
+LuaVIEW-specific functionality: Lua considers anything following a "--" a
+comment and ignores it.
+Making the configuration and implementation part of the same script file keeps everything task-related in a single
+place. Occasionally, it is desirable to run tasks with the same implementation but different configurations.
+In such a case, put the implementation in a separate script and <a href="#import"> import</a>
+it from scripts containing only pre-processor keywords that specify the various configurations.</p>
+<p>The script header includes all lines up to the first line that is neither
+empty nor starts with &quot;--&quot;. This implies that the header runs up to
+the first line of code or up to the first multi-line comment. Keywords that
+occur later in the script are ignored. This is useful because it is possible for
+string literals in a script to contain a further task script. Had keyword
+extraction not been limited to the header, any keywords of such an embedded script
+would confuse the
+configuration of the parent task.</p>
+<p>All keywords are optional. When omitted, default values are used. When
+keywords are specified in an import script, all but the <a href="#import">import</a>,
+<a href="#version">version</a>,
+and <a href="#description">description</a> keywords are ignored. This allows an import script to do
+double duty as a main task script. Any keyword arguments should be treated as case dependent. This also
+holds for the paths of imported scripts so that compatibility with case
+dependent file systems is retained and importing also works under, say, Linux.
+The following keywords can be used to configure a task:</p>
+<ul>
+  <li><a href="#priority">priority</a></li>
+  <li><a href="#prefsys">prefsys</a></li>
+  <li><a href="#identifier">identifier</a></li>
+  <li><a href="#class">class</a></li>
+  <li><a href="#handler">handler</a></li>
+  <li><a href="#hide">hide</a></li>
+  <li><a href="#defer">defer</a></li>
+  <li><a href="#disallow_manual">disallow_manual</a></li>
+  <li><a href="#import">import</a></li>
+  <li><a href="#version">version</a></li>
+  <li><a href="#description">description</a></li>
+</ul>
+<p><a name="priority"></a>--#<b>priority</b> "&lt;priority&gt;"</p>
+<p>Sets the execution priority of the task. This keyword is ignored when
+swapping a task. The possible choices are identical to the LabVIEW VI priority settings with the proviso that "subroutine priority" is not
+applicable:</p>
+<ul>
+  <li>&quot;background priority&quot;</li>
+  <li>&quot;normal priority&quot;</li>
+  <li>&quot;above normal priority&quot;</li>
+  <li>&quot;high priority&quot;</li>
+  <li>&quot;time critical priority&quot;</li>
+</ul>
+<p>Which of these can actually be used depends on the configured task
+alternatives. The default priority is also configurable. Configuration is
+required because LabVIEW 7.0 does not allow setting the priority or execution
+system in a built application. To provide a way around this, LuaVIEW allows
+selectable combinations of priority and preferred
+execution system to be <a href="manual.html#Configuration">configured</a>. When no alternatives are configured,
+it is only possible to start tasks at &quot;normal priority&quot; in the
+&quot;standard&quot; execution system.</p>
+<p>Be sure to read the LabVIEW documentation on multi threading, priorities, and
+execution systems before using these techniques with tasks. Beware that
+scheduling does not always behave as one might reasonably expect. To gain
+confidence, perform latency and performance <a href="performance.html#measuring">measurements</a>. Beware that frequent
+context switches between execution systems can introduce overhead that does not
+occur when scheduling remains within an execution system. When the system load
+is light and no protracted operations occur once your application is initialised,
+there is no need to resort to priorities and execution systems.</p>
+<p><a name="prefsys"></a>--#<b>prefsys</b> "&lt;execution system&gt;"</p>
+<p>Sets the preferred execution system of the task. This keyword is ignored when
+swapping a task. The possible choices are identical to the LabVIEW VI execution system settings with the proviso that "same as caller" is not
+applicable:</p>
+<ul>
+  <li>&quot;user interface&quot;</li>
+  <li>&quot;standard&quot;</li>
+  <li>&quot;instrument i/o&quot;</li>
+  <li>&quot;data acquisition&quot;</li>
+  <li>&quot;other 1&quot;</li>
+  <li>&quot;other 2&quot;</li>
+</ul>
+<p>Which of these can actually be used depends on the <a href="manual.html#Configuration">configured</a>
+task
+alternatives. The default execution system is also configurable. See the discussion of the <a href="#priority">priority</a> keyword for details.</p>
+<p><a name="identifier"></a>--#<b>identifier</b> "&lt;identifier&gt;"</p>
+<p>Allows a specific identifier to be assigned to a task. LuaVIEW ensures that
+tasks have a unique identifier by preventing the starting of tasks with the same
+identifier as an already existing task. This keyword is ignored when swapping a
+task. When you omit this keyword, a unique
+number is auto-assigned as identifier instead. To prevent clashes with such
+numbers, it is not allowed to specify an identifier that consists only of
+decimal digits.</p>
+<p>Since only one task with a particular identifier can be running at any one time,
+a specific identifier can be used to prevent multiple tasks that use
+or manage some exclusive resource from being started. Alternatively, an
+identifier makes it possible to signal or message a task providing a particular
+service. Preferably pick an identifier that matches the resource being protected
+or service being provided. When swapping a task with a specific identifier, the script of the replacement
+task should specify the same identifier.</p>
+<p><a name="class"></a>--#<b>class</b>  &quot;&lt;class name&gt;&quot;</p>
+<p>Optionally a task can be assigned a class, which is some arbitrary string that can be used to group multiple tasks that are similar in function or utility. The class is shown in the "Task Manager".
+Future versions of the &quot;Task Manager&quot; may use this keyword
+to organize tasks in a tree view.</p>
+<p>Task scripts of the same class are likely to also be grouped together in a
+directory. More likely than not this directory will have the same name as the
+class name you would like to be set. To set the class name to the name of the
+directory containing the task script, use &quot;&lt;dir&gt;&quot; as the
+argument.</p>
+<p><a name="handler"></a>--#<b>handler</b>  &quot;&lt;identifier of handler task&gt;&quot;</p>
+<p>When tasks are run, they detach themselves from the launching context after
+leaving <b>initializing</b> mode. Any errors that occur after this happens have
+no place to go. Normally, a task goes into <b>error</b> mode so that such errors
+can be reviewed and confirmed via the &quot;Task Manager&quot;. This keyword
+allows you to override this behaviour and instead handle the errors
+programmatically. To do so, specify the identifier of a handler task as a
+parameter to this keyword. That task should be set up to receive the error
+messages via the task messaging mechanism. Once the error message has been sent
+to the handler, the failed task will remove itself from the task list instead of
+staying stuck in <b>error</b> mode. The keyword is ignored for synchronous tasks
+(tasks started via the
+<a href="API.html#re_LuaVIEW Do Task.vi">Do Task</a> API VI or <a href="luaview_functions.html#do_task"><code>do_task</code></a>
+LuaVIEW function) since these pass any error back to the launching context.</p>
+<p>A handler task will typically take some
+corrective or emergency action, and in addition will likely want to log the error somewhere.
+When the action performed by the handler is noteworthy, consider prepending a
+notice to the error message before logging it. That way users will be notified
+of the corrective or emergency action taken. The task script below shows how to implement a simple handler that merely prints
+the error messages it receives.</p>
+<pre><code>--#identifier &quot;myhandler&quot;
+while true do
+    while msg.available() do
+        print(msg.next())
+    end
+    sleep()
+end</code></pre>
+<p>Implement a handler for each distinct set of custom task error handling actions.
+When the handler specified for a task does not exist, the pre-processor will
+throw an error. When the specified handler no longer exists once the task for
+which it was specified throws an error,
+that task will revert to the default behaviour of going into <b>error</b> mode.
+Note that specifying a handler for a task will cause it to
+ignore the global &quot;task error logger&quot;
+<a href="manual.html#Configuration">configuration</a>  parameter.</p>
+<p><a name="hide"></a>--#<b>hide</b></p>
+<p>Hide the task's scripts from the Task Manager GUI. This makes it impossible
+to use the &quot;retrieve&quot; button in the &quot;script(s)&quot; tab. This
+can be useful when the task script or one of its import scripts contains
+sensitive information such as a password. Note that this only
+provides protection when the task and the Task Manager run in different runtimes
+on different accounts or machines, as is the case for a <a href="clientsrv_manual.html">client-server</a>
+deployment.</p>
+<p><a name="defer"></a>--#<b>defer</b></p>
+<p>Defer initialisation. By default, a task leaves <b>initializing</b> 
+or <b>swapping</b> mode when its main script is executed (which occurs after
+execution of any <a href="#import">import</a> scripts). When this keyword is
+used, the task does not automatically switch modes but instead waits until you
+call the <code><a href="luaview_functions.html#task.active">task.active</a></code> 
+ function. This allows the task script to perform deferred
+initialisation actions: operations that must complete successfully before the task is
+considered to have been successfully run. Alternatively, it allows a task script to
+perform initialisation actions that depend on whether it is being swapped or
+started normally.</p>
+<p>The <a href="API.html#re_LuaVIEW Run Task.vi">Run Task</a> API VI and <code><a href="luaview_functions.html#run_task">run_task</a></code>
+LuaVIEW function return without error only after the task
+being run switches from <b>initializing</b> to <b>running</b>
+mode. An error is returned when loading fails, any of the scripts fails to
+pre-process or compile, or an error occurs when running one of the import
+scripts: the error is propagated from the task's context to the launching
+context. When the defer keyword is specified, an error is also returned when the
+main task script (or any function called from there) throws an error at any time
+prior to calling <code><a href="luaview_functions.html#task.active">task.active</a></code>. When an error is returned to the
+launching context, the task will be immediately removed from the task list. Only
+errors that occur after the task has switched to <b>running</b> mode cause
+the task to go into <b>error</b> mode and remain listed pending
+confirmation of the error.</p>
+<p>One use is preventing the Lua or LabVIEW code that runs the task  from proceeding before requisite
+initialisation actions are complete or subsequently required resources are allocated.
+Another use is to perform error-prone initialisation as deferred initialisation
+so that errors that are likely to occur can be managed programmatically instead
+of manually through operator confirmation.</p>
+<p><a name="disallow_manual"></a>--#<b>disallow_manual</b></p>
+<p>Prevents manual signals. When this keyword is specified, the task cannot be sent signals via the
+"Task Manager" user interface with the exception of the <b>confirm</b> signal that can be sent when the task has thrown an error.
+This is useful when a task is being started and stopped programmatically and
+relied upon to be running without interruption, for example tasks that provide
+some background service or tasks that perform system initialisation and cleanup.
+It prevents the operator from accidentally stopping or otherwise interrupting
+the task. This keyword does not disallow programmatic signalling as done via
+the provided LuaVIEW signalling functions or the LabVIEW task API.</p>
+<p><a name="import"></a>--#<b>import</b> "&lt;script path&gt;"</p>
+<p>The main task script can import additional scripts using this keyword. Imported scripts can in turn also use this keyword to import further scripts.
+Imported scripts are executed before the scripts that import them. This ensures that the functionality provided by the imported scripts is
+initialised. Lua-implemented function libraries or Lua-table based configuration settings are typical examples of possible content of import scripts.
+The import script is specified via a relative or absolute path. When a relative
+path is specified, the directory holding the already loaded task script and
+import scripts (including the script for which the importing is done) as well
+as the various script search directories will be pre-pended in an
+attempt to locate the script. Try to use unique script names to prevent this
+multi-directory search from loading the wrong script. As is the case for path strings
+passed from Lua to LabVIEW, any occurrences of both &quot;\&quot; and &quot;/&quot; are
+converted to the platform specific path separator unless otherwise configured
+via
+<a href="lv_c-library_functions.html#lv.substitute_separators"><code>lv.substitute_separators</code></a>.
+As opposed to quoted strings in normal Lua code, a backslash
+is <i> not</i> interpreted as an escape character and thus need not be escaped.</p>
+<p>The result of processing all <a href="#import">import</a> keywords is a tree/hierarchy of
+loaded scripts with the main task script at its root. The depth-first execution
+order implies that the main task script is
+executed last. Preferably, the import scripts should only contain definitions (of functions or variables) and
+occasionally some initialisation code. This ensures that the main task script is a proper reflection of the processing that will be done when the task runs.
+When a particular script is imported twice (e.g. because its functionality is required by both the main task script and one
+of the import scripts specified in the main task script) it will only be loaded once and
+executed once. The imported scripts and main scripts
+are compiled in the launching context and subsequently executed in the task's
+context. This ensures that any compile errors occur before the task is
+instantiated and its execution commences.</p>
+<p>To discourage implementing protracted operations as part of the initial
+execution of import scripts and ensure that any compile errors are caught on starting a
+task, tasks by default do not leave <b>initializing</b> mode before
+execution of the main script commences unless overridden via the <a href="#defer">defer</a>
+ keyword. The main script is the last script in the execution order. Import scripts that perform some protracted action therefore block the
+context the task is being run from. This blocking can be prevented
+by calling <code><a href="luaview_functions.html#task.active">task.active</a></code>
+from within the import
+script so as to allow the launching context to commence. Preferably do not use this
+method as it makes the task behave in a manner that is not be readily visible in
+the main task script. It is better form to provide such protracted operations as
+a Lua function that must be called explicitly from the main script.</p>
+<p><a name="version"></a>--#<b>version</b> "&lt;version&gt;"</p>
+<p>A free format version string. This keyword is extracted for import scripts as well. This can be used to document the script. The version strings of the script(s) making up a task can be accessed
+programmatically.</p>
+<p><a name="description"></a>--#<b>description</b>
+"&lt;description&gt;"</p>
+<p>Allows a brief description of the task's function or utility to be specified for display purposes. This keyword is extracted for import scripts as well. The description of the main task script is shown in the "Task Manager". The descriptions of the script(s) making up a task can be accessed
+programmatically.</p>
+
+<hr>
+<p><a href="manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

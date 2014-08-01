@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="-1">
+<title>LuaVIEW Change Log</title>
+</head>
+
+<body>
+
+<h3>Change Log</h3>
+<p>Lists the changes that were made between releases.</p>
+
+
+<hr>
+
+<p>Release 1.2.1 (31-Oct-2005)</p>
+<ul>
+  <li><b>Fix:</b> workarounds for changed behaviour of VI references under LabVIEW 8.0.</li>
+  <li><b>Fix:</b> with LabVIEW running in evaluation mode, LuaVIEW resolved
+    paths improperly and disabled edit actions in the mistaken belief that it was
+    running as part of a built application.</li>
+  <li><b>Fix:</b> path resolution for built applications is now adaptive so that it
+    works not only when including all VIs into the executable, but also when building
+    a minimal executable that loads the LuaVIEW VIs from an external source tree.</li>
+</ul>
+<p>Release 1.2.0 (27-Jun-2005)</p>
+<ul>
+  <li><b>New:</b> to provide a more complete example, the distribution now
+    includes a <a href="clientsrv_manual.html">client-server application
+    framework</a> as an optional install.</li>
+  <li><b>New:</b> the <a href="luaview_functions.html#time"><code>time</code></a> function
+    now allows a table specifying a date/time as an optional parameter. When
+    specified, it returns the corresponding time in seconds instead of the
+    current time.</li>
+  <li><b>New:</b> when specifying &quot;&lt;dir&gt;&quot; as the argument of
+    the <a href="preprocessor_keywords.html#class">--#class</a>
+    pre-processor keyword, the directory containing the script will be used for
+    the class name.</li>
+  <li><b>New:</b> it is now possible to specify an error handler for a running task via the <a href="preprocessor_keywords.html#handler">--#handler</a>
+    pre-processor keyword.</li>
+  <li><b>New:</b> errors of running tasks can be logged by
+    setting the &quot;task error logger&quot; <a href="manual.html#Configuration">configuration
+    parameter</a>.</li>
+  <li><b>New:</b> when exiting LabVIEW, any remaining tasks are sent stop and
+    confirm signals.</li>
+  <li><b>Change:</b> the preprocessor was a made a bit more strict so that it
+    works precisely as documented: lines containing keywords must start with
+    &quot;--#&quot;. Before this change it accepted additional characters
+    between the two dashes and the hash. Since it no longer does, you can now
+    disable a keyword by adding another dash, thereby in effect commenting it
+    out.</li>
+  <li><b>Change:</b> <a href="luaview_functions.html#dialog.one_button"><code>dialog.one_button</code></a> and <a href="luaview_functions.html#dialog.two_button"><code>dialog.two_button</code></a>
+    now make use of custom dialogs because the standard &quot;One Button
+    Dialog&quot; and &quot;Two Button Dialog&quot; block the user interface
+    thread, thereby potentially postponing operations involving VI loading and
+    instantiation.</li>
+  <li><b>Improved:</b> the <code>math.random()</code> and <code>math.randomseed()</code>
+    functions provided by Lua use the <code>rand()</code> and <code>srand()</code> C- library
+    functions. Because these have a platform-dependent behaviour and do not
+    maintain state per VM instance, they were re-implemented with a
+    platform-independent <a href="http://en.wikipedia.org/wiki/Mersenne_twister">Mersenne
+    twister</a> that does maintain state per VM instance.</li>
+  <li><b>Fix:</b> the application builder defaulted to removing the front panels
+    of task VIs (named &quot;re_LuaVIEW Task (*).vi&quot;). Though task VIs do
+    not use a front panel, the lack of some associated data structure appears to
+    break the &quot;Run VI&quot; method, and thus task running for built
+    applications. The application builder can be manually instructed to not
+    remove panels of selected VIs, but a more convenient solution was found by
+    including a dummy panel reference in each task VI. This causes the
+    application builder to default to not removing the panel. (thanks to Andy
+    Reding).</li>
+</ul>
+<p>Release 1.1.0 (27-Jul-2004)</p>
+    <dir>
+      <li><b>New:</b> support for Mac OS X. Note that some example scripts
+        contain paths that need adjustment in order to run on the Mac. Also, the
+        <a href="lv_c-library_functions.html#lv.memusage"><code>lv.memusage</code></a>
+        function always returns zero, at least under LabVIEW 7.0 for Mac OS X: the
+        underlying <code>DSMemStats</code> manager function does not work
+        properly.</li>
+      <li><b>New:</b> the script or scripts of a task can be replaced
+        on-the-fly using <a href="manual.html#Swapping tasks">task swapping
+        functionality</a>. This can be done manually
+        via the &quot;Task Manager&quot; or programmatically via the new <a href="API.html#LuaVIEW Swap Task.vi">Swap
+        Task</a> API VI or <a href="luaview_functions.html#swap_task"><code>swap_task</code></a>
+        function.</li>
+      <li><b>New:</b> using the <a href="lv_c-library_functions.html#lv.print"><code>lv.print</code></a>
+        function, scripts can print to a private print buffer. The content of
+        the print buffer can be retrieved using <a href="lv_c-library_functions.html#lv.dump"><code>lv.dump</code></a>.
+        The <a href="API.html#LuaVIEW Poll Print Buffer.vi">Poll Print Buffer</a> API VI
+        can be used to read a print buffer for display purposes, as is done by
+        the print console that opens when using the new
+        &quot;Print Console&quot; button of the &quot;Task Manager&quot;.</li>
+      <li><b>New:</b> miscellaneous functions: <a href="luaview_functions.html#task.mode"><code>task.mode</code></a><code>,
+        </code> <a href="luaview_functions.html#xio.copy"><code>xio.copy</code></a><code>,
+        </code> <a href="luaview_functions.html#xio.delete"><code>xio.delete</code></a><code>,
+        </code> <a href="luaview_functions.html#xio.listdir"><code>xio.listdir</code></a><code>,
+        </code> <a href="luaview_functions.html#xio.move"><code>xio.move</code></a><code>,
+        </code> <a href="luaview_functions.html#xio.newdir"><code>xio.newdir</code></a><code>,
+        </code> <a href="luaview_functions.html#xio.strip"><code>xio.strip</code></a><code>,
+        and </code><a href="luaview_functions.html#xio.tmpdir"><code>xio.tmpdir</code></a>.</li>
+      <li><b>Improved:</b> documentation. Extended <a href="http://www.citengineering.com/LuaVIEW/faq.html">FAQ</a>,
+        reworked introductory information in
+        the <a href="manual.html">manual</a>, added an <a href="performance.html">appendix
+        on performance</a>.</li>
+      <li><b>Change:</b> an unlimited number of elements can be pushed onto the
+        Lua stack from LabVIEW: the stack is grown as needed. Before, the limit was twenty
+        for an un-grown stack.</li>
+      <li><b>Change:</b> the pre-processor no longer allows task identifiers
+        consisting only of decimal digits. This avoids conflict with
+        auto-assigned identifier numbers.</li>
+      <li><b>Fix:</b> very rarely, tasks would not respond to a delegated
+        signal. Caused by a race condition in LabVIEW &lt;= 7.1 that can make &quot;Wait on Occurrence&quot;
+        time out in spite of an occurrence having been set. Circumvented by not
+        relying on the &quot;timed out&quot; output. For the same reason, the <code>timed_out</code>
+        result of the <a href="luaview_functions.html#sleep"><code>sleep</code></a>
+        function has been deprecated.</li>
+      <li><b>Fix:</b> when a Lua function with one or more parameters was
+        located inside a table, it could not be called from LabVIEW.</li>
+    </dir>
+<p>Release 1.0.1 (13-May-2004)</p>
+<ul>
+  <li><b>Fix:</b>  Under LabVIEW 7.1, the function registry did not clean itself
+    up when trying to exit LabVIEW: the application exit event can get eaten
+    before arrival when a different event structure also handles it, even when
+    the respective VI is not running.</li>
+</ul>
+<p>
+
+Release 1.0.0 (23-Apr-2004)</p>
+    <dir>
+      <li><b>New:</b> <a href="manual.html#Calling Lua from LabVIEW">Lua can be
+        called</a> from LabVIEW using the <a href="API.html#re_LuaVIEW Call.vi">Call</a>
+        API VI.</li>
+      <li><b>New:</b> <a href="calling_lua.html#Example: expression evaluation">expression evaluation</a> and
+        <a href="calling_lua.html#Example: converting data to/from text">data to/from text</a> examples.</li>
+      <li><b>New:</b> the <a href="API.html#LuaVIEW Revoke Exports.vi">Revoke
+        Exports</a> API VI makes it possible to call-protect a module that must
+        perform cleanup actions that leave its export functions in an
+        un-callable state. See the updated module template and example scripts for
+        details.</li>
+      <li><b>New:</b> easy message/reply synchronous actions via the <a href="API.html#re_LuaVIEW Incite.vi">Incite</a>
+        advanced API VI or the <a href="luaview_functions.html#msg.incite"><code>msg.incite</code></a>
+        function.</li>
+      <li><b>New:</b> support for coroutines with the restriction that LabVIEW
+        cannot be called from a coroutine.</li>
+      <li><b>New:</b> most flavours of refnum can be pushed or pulled as flat
+        data.</li>
+      <li><b>New:</b> optional <b>include cluster order</b> input for <a href="API.html#LuaVIEW Push _flat data_.vi">Push
+        (flat data)</a>.</li>
+      <li><b>New:</b> a mandatory import script can be <a href="manual.html#Configuration">configured</a> to execute as
+        the first action of any task.</li>
+      <li><b>New:</b> miscellaneous functions: <a href="luaview_functions.html#app_kind"><code>app_kind</code></a>,
+        <a href="lv_c-library_functions.html#lv.isinf"><code>lv.isinf</code></a>, <a href="lv_c-library_functions.html#lv.memusage"><code>lv.memusage</code></a>,
+        <a href="luaview_functions.html#task.directory"><code>task.directory</code></a>,
+        <a href="luaview_functions.html#task.script"><code>task.script</code></a>,
+        <a href="luaview_functions.html#VI.get_control"><code>VI.get_control</code></a>,
+        <a href="luaview_functions.html#VI.set_control"><code>VI.set_control</code></a>, and <a href="luaview_functions.html#VI.signal_control"><code>VI.signal_control</code></a>.</li>
+      <li><b>Improved:</b> to enable the use of&nbsp; lots of tasks, task
+        instantiation overhead was reduced: CPU
+        overhead by a factor of four, memory overhead by an order of magnitude to
+        roughly 70k per instance.</li>
+      <li><b>Change:</b> the <a href="preprocessor_keywords.html">pre-processor</a>
+        is more picky and will throw errors when encountering ill-formatted
+        keywords. Placing keywords in the script header is now mandatory.</li>
+      <li><b>Change:</b> to select an execution system other than
+        &quot;standard&quot; and priority other than &quot;normal priority&quot;
+        for a task, a set of allowed choices must be <a href="manual.html#Configuration">configured</a>
+        first. This
+        allows priority and execution system selection to work for built
+        applications as well.</li>
+      <li><b>Change:</b> to reduce VI-hierarchy clutter, selected VIs
+        were marked as system VI. LuaVIEW function VIs can be marked as system VI when
+        editing their documentation.</li>
+      <li><b>Fix:</b> under LabVIEW 7.0, the abort VI method does not time out
+        when the VI being aborted is in a (rare) non-abortable state. To add insult to
+        injury, LabVIEW pops up a modal dialog that blocks both the user interface
+        thread and the calling VI. To circumvent this bug, the
+        task killing functionality was enhanced to first try some alternatives and perform a safety check before resorting to the
+        use of the abort VI method. Also, killing was moved to a
+        reentrant VI to avoid contention. For the same reason, the <a href="luaview_functions.html#VI.abort"><code>VI.abort</code></a>
+        function was made reentrant.</li>
+    </dir>
+<p>
+Release 1.0 pre 2 (19-Feb-2004)</p>
+    <dir>
+      <li><b>New:</b> support for passing enums, paths, and compound data types
+        (arrays, clusters, variants) between
+        LabVIEW and Lua. The <a href="datatypes.html">data
+        types documentation</a>  was updated to detail this new functionality.</li>
+      <li><b>New:</b> Private registration of function VIs. Available via the <a href="API.html#LuaVIEW Register Private Function.vi">Register
+        Private Function</a> and <a href="API.html#LuaVIEW Register Private Function Directory.vi">Register
+        Private Function Directory</a> API VIs as well as the corresponding <a href="luaview_functions.html#register.private"><code>register.private</code></a>
+        and <a href="luaview_functions.html#register.private_dir"><code>register.private_dir</code></a>
+        function VIs.</li>
+      <li><b>New:</b> <a href="API.html#LuaVIEW Get Object Attribute.vi">Get Object Attribute</a> advanced API VI.</li>
+      <li><b>Change:</b> the module and plug-in VI templates as well as the <a href="API.html#LuaVIEW Bootstrap.vi">bootstrap
+        facility</a> were updated to make use of the new cluster passing
+        capability. The corresponding configuration table parameters of <a href="luaview_functions.html#VI.open_module"><code>VI.open_module</code></a>
+        and <a href="luaview_functions.html#call_plugin"><code>call_plugin</code></a> were made optional instead of mandatory.</li>
+      <li><b>Change:</b> checking of Boolean arguments to LabVIEW-side functions
+        was made strict: a Boolean type is now required on the Lua side whereas
+        previously any type, with the standard conversions for Boolean
+        expressions (nil == false, etc.) applied,&nbsp; was allowed.&nbsp;</li>
+      <li><b>Change:</b> forced &quot;C&quot; locale instead of retaining system
+        locale. This ensures that Lua will behave consistently with respect to
+        number formatting and allowed characters in identifiers, irrespective of
+        the system language/locale settings.</li>
+      <li><b>Fix:</b> Pulling a string&nbsp; no longer truncates it when there is a
+        null character (it was treated as a C string). Both Lua and LabVIEW strings can hold arbitrary 8 bit
+        character values, so this should not have been.</li>
+      <li><b>Fix:</b> CIN failed to load on some (e.g. Red Hat 7.3) Linux
+        installations. It could
+        not dynamically link to the older libc present on there. Resolved by
+        statically linking with libc (thanks to Germán
+        Schumacher).</li>
+    </dir>
+Release 1.0 pre 1 (8-Dec-2003)
+    <dir>
+      <li>Initial pre-release.</li>
+    </dir>
+
+<hr>
+
+<p><a href="index.html">Go to index of LuaVIEW documentation pages</a></p>
+
+</body>
+
+</html>

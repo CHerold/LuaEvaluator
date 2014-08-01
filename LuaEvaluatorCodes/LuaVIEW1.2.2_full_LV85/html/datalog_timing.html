@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Timing errors</title>
+</head>
+
+<body>
+
+<h3>Timing errors</h3>
+<p>When writing to tags, you must ensure that the values are time stamped with
+sufficient accuracy. This appendix discusses the various sources of timing error
+that you might need to take into account. In addition, means of correcting for
+them are suggested.</p>
+<ul>
+  <li><a href="#Clock drift">Clock drift</a></li>
+  <li><a href="#Clock resolution">Clock resolution</a></li>
+  <li><a href="#Acquisition latency">Acquisition latency</a></li>
+  <li><a href="#Scheduling latency">Scheduling latency and acquisition jitter</a></li>
+      <li><a href="#Representational resolution">Representational resolution</a></li>
+</ul>
+
+<h4><a name="Clock drift">Clock drift</a></h4>
+
+<p>The system clock can drift markedly, e.g. because of temperature variations
+in the computer case causing shifts in the resonance frequency of the quartz
+oscillator. It is advisable to correct for this drift when you need to log over
+long periods of time or need to correlate tags to data time stamped using a
+different clock, e.g. data acquired on a different PC. Several services/clients
+exist that perform such correction. Typically these are included with the
+operating system. Before enabling such a service, ensure that it performs its
+job by gradually throttling the system clock instead performing the correction
+in a single discontinuous jump. The most standard, open, and widely available
+method is the <a href="http://www.ntp.org/">Network Time Protocol</a> (NTP). It
+is risky to expose measurement machines to the internet or an intranet. To allow
+the NTP protocol to work inside a private subnet you will have to provide for at
+least one well-secured machine that runs an NTP daemon (e.g. <a href="http://www.openntpd.org/">OpenNTPD</a>)
+and talks to both the subnet and the wider internet or intranet. There also
+exists router and gateway appliances that include an NTP daemon in their
+firmware.</p>
+
+<h4><a name="Clock resolution">Clock resolution</a></h4>
+
+<p> All reads of the
+system clock are done through the library/Library Time.vi included in the
+LuaVIEW distribution which wraps &quot;Get Date/Time In Seconds&quot;. This
+function has a resolution of 1/100th of a second on LabVIEW 7.0
+for Windows. Under Linux, the resolution is much better. To determine the clock
+resolution for your OS and LabVIEW version, call library/Library Time.vi in a
+loop and look for the smallest non-zero time difference between successive
+readings. To get better resolution than that, change the
+implementation of the VI to make use of a different time source. Because all
+access of the system clock is done through this VI, this will replace the system
+clock throughout the system. Note though
+that the VI is likely to be called frequently. Performance might suffer
+when your alternate time source takes a long time to read.</p>
+
+<h4><a name="Acquisition latency">Acquisition latency</a></h4>
+
+<p>When you acquire values to be written to a tag from an instrument, there can
+be a delay between the actual physical value being sampled and the resulting
+value becoming available through the device driver to LabVIEW. This holds in
+particular for instruments that are interfaced via a slow bus or instruments
+that buffer readings before making them available. The default time stamping
+will cause the times of such a tag to be off&nbsp; by an amount equal to this
+acquisition latency. This can be a problem when you want to correlate data in
+different tags acquired from instruments with different latencies. To correct
+for such errors measure the latency, e.g. by comparing the readings of an
+instrument with negligible latency to the long latency instrument and applying
+the same pulse or step signal to both. When the latency does not vary much from
+reading to reading, most of the timing error can be corrected for simply by
+subtracting the average latency so determined from the system time as returned
+by the &quot;Library Time.vi&quot; or
+the LuaVIEW <a href="luaview_functions.html#time"><code>time</code></a> function and using that to timestamp the values
+written to the tag.</p>
+
+<h4><a name="Scheduling latency">Scheduling latency and acquisition jitter</a></h4>
+
+<p>When the scheduler interrupts your program between acquiring the value and
+reading the system clock, the timestamp will be off by the amount of time it
+takes for your program to be rescheduled. Typically there is tiny window
+of opportunity so that this occurs only rarely. Also, latencies are usually
+small, on the order of a couple of milliseconds on a system with little load.
+However, rare worst-case latencies can easily be on the order of 100 ms,
+depending on your operating system and system load. See the LuaVIEW manual <a href="performance.html">appendix
+on performance</a> to learn how to measure such latencies for your system. The
+regularity of timing of software acquisition will also be limited by the
+scheduling latency. Similar jitter and time stamping errors can be caused when
+the driver of an instrument requires a variable amount of time to return its
+value.&nbsp;</p>
+
+<p>It is possible to reduce the probability of scheduling latencies by
+increasing the chance that a CPU core is available to service your acquisition
+task. This can be done by lowering the system load or buying a faster PCs. In
+particular, using a PC with multiple CPUs or with multiple cores per CPU can
+help reduce latencies. Also, try to avoid irregular time-consuming tasks by not
+using the PC for things other than acquisition. Graphical user interface
+(GUI) windows in particular are an important cause of latencies when updated or
+operated. The
+client-server support provides you with the option to remove GUI-related
+latencies by allowing you to run the client on a machine other than the server.
+Some useful statistics for assessing latency and jitter are displayed when using
+the &quot;Stats&quot; button of the &quot;Tag Manager&quot; GUI.</p>
+
+<p>Aside from using a real time operating system, the only way to completely
+avoid software timing variations is through hardware timing. This involves
+synchronising the acquisition via a trigger input to some clock. Unfortunately, the
+system clock in typical PCs does not output synchronisation signals. Thus,
+either a separate clock is required or you must switch over to a custom time source that provides
+synchronisation outputs. A separate clock is typically integrated with an
+instrument and fronted by a divide-down counter that allows the acquisition rate
+to be tuned. For example, a card that performs buffered acquisition allows you
+to infer the time that has passed since acquisition has started from the
+sequence number of the read values multiplied by the scan period. Unfortunately,
+converting such relative times into timestamps synchronised with the system
+clock is not as easy as adding an offset since the clocks can mutually drift.
+(//todo: explain how to do so)</p>
+
+<p>When you require the accuracy that only hardware timing can provide, the
+ideal to strive for is to synchronise all instruments relative to the same
+clock. By using divide-down counters or programming scan lists, this can be made
+to work while supporting different acquisition rates for different channels.
+Unfortunately, such synchronisation is usually not practicable when using a
+diverse collection of instrumentation.</p>
+
+<h4><a name="Representational resolution">Representational resolution</a></h4>
+
+<p> The timestamps are represented as 64-bit floating-point numbers (doubles) containing the number of seconds since
+the LabVIEW epoch (1-Jan-1904, 00:00:00 GMT). Though LabVIEW offers 128-bit
+fixed-point timestamps as of version 7.0, doubles were chosen instead to save
+disk space. Doubles provide roughly 16 digits worth of mantissa. Because of the
+large number of seconds since the epoch, the number of bits after the floating
+point, that is, the representational resolution of the fractional seconds, is
+limited and degrades by a factor of two when the time since the epoch is
+doubled. Since 1972, the resolution is at 0.48 microseconds. In 2040, the
+resolution will halve to 0.95 microseconds. For typical data rates this is
+plenty of resolution. However, if you want to very precisely timestamp events or
+need to perform accurate calculations based on differences between timestamps,
+the limited resolution can cause trouble. In such a case you may want to change the
+time stamping to use a more recent epoch, e.g. by changing the implementation of library/Library Time.vi
+to subtract an offset before converting to double precision. Beware though that
+when doing so all time to/from date conversion functions will also need to be
+changed to first apply an opposite offset since they operate relative to the
+LabVIEW epoch.</p>
+
+<hr>
+<p><a href="datalog_manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

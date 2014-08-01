@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Organization</title>
+</head>
+
+<body>
+
+<h3>Organization</h3>
+
+<p>This appendix details the on-disk organization of logging databases. Though a
+logging database can be accessed both via user interfaces as well as
+programmatically, knowing its organization makes it possible to manipulate the
+database via the file system. This should <u>never</u> be done while the
+&quot;databases&quot; runlevel is active because parts of the database will then
+be cached in memory.</p>
+
+<p>Tags are contained in subdirectories of the database directory.&nbsp; These
+directories have the same name as the tags themselves. Meta tags are contained
+in subdirectories of the directory of their parent tag. Their directories have
+the same name as their <a href="datalog_manual.html#name extension">name extension</a>. It is possible to copy tags,
+including their logged data, from one database to another simply
+by copying their directories. Also, it is possible to rename or delete tags by
+renaming or deleting their directories.</p>
+
+<p>In addition to data, the tag's
+directory contains its configuration inside a script named &quot;config.lua&quot;.&nbsp;
+The script defines a table of configuration parameters that
+includes both the tag's creation parameters as well as the run-time modifiable
+tag configuration parameters. Similarly, the root of the database directory will
+hold a &quot;subsets.lua&quot; script when subsets have been defined via the &quot;Tag Subset Editor&quot;.
+It is possible to load and modify these scripts using a text editor. Care should
+be taken to retain the proper table format, otherwise the database will fail to
+be initialised by the &quot;databases&quot; runlevel.</p>
+
+<p>Since logging databases do not have to worry about referential integrity or
+mutation of already stored data, the storage format is simple. It is therefore
+not hard to write a custom program to accesses the logged data. There should be
+no need for doing so since a comprehensive set of tag access functions and VIs
+is provided. Still, for completeness, the remainder of this section details the
+data storage format&nbsp;</p>
+
+<p>The data of each tag is spread out over one or more numbered &quot;points&lt;nnnn&gt;.dat&quot;
+files. By using multiple point files, number tags can contain more data than the
+LabVIEW file size limit allows. Point files simply contain successive timestamp
+and value pairs, both represented as double precision floating point numbers.
+For string tags, the values indirectly specify a string through a byte offset
+into an additional &quot;strings.dat&quot; file. The &quot;strings.dat&quot;
+file stores strings as successive flattened LabVIEW strings: a big-endian 32-bit
+string length followed by as many bytes of string data. Since there is only a
+single &quot;strings.dat&quot; file, the amount of string data is constrained by
+the file-size limitations of LabVIEW. Note that the data logger performs
+run-length compression such that when a particular string is logged multiple
+consecutive times, points with the same string offset are written so that the
+&quot;strings.dat&quot; gets appended to only once. Also, the
+&quot;UNDEFINED&quot; string is never stored but instead represented via a NaN
+offset value.</p>
+
+<p>The &quot;index.dat&quot; file starts with a double that specifies the number
+of points in the log (the log size). This may be less than the size of the last
+point file indicates because the point files are grown in size by padding them
+with zeros in fairly large power-of-two increments (so-called chunks) once the
+log grows beyond a certain size. This prevents disk fragmentation by favouring
+the allocation of a continuous range of disk blocks when a point file is grown.
+After the log size, the &quot;index.dat&quot; file contains the double-precision
+timestamps of the first point in each chunk. These timestamps allow the quick
+localisation of logged data, given a timestamp, to within a chunk. This speeds
+up queries.</p>
+
+<hr>
+<p><a href="datalog_manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

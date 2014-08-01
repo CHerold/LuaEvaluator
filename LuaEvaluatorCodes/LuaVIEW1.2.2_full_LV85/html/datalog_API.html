@@ -1,0 +1,1727 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>LuaVIEW Data Logger LabVIEW API</title>
+</head>
+<p align="Center"><a name="index">
+</a></p>
+
+<p align="Center">
+<b>Live API VIs</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#DataLog Read Last Number.vi">DataLog Read Last Number.vi</a></td>
+<td><a href="#DataLog Read Last String.vi">DataLog Read Last String.vi</a></td>
+<td><a href="#DataLog Write String.vi">DataLog Write String.vi</a></td>
+<td><a href="#re_DataLog Write Number.vi">re_DataLog Write Number.vi</a></td>
+</tr>
+
+</table>
+<p align="Center">
+<b>Query API VIs</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#DataLog Interpolate Log.vi">DataLog Interpolate Log.vi</a></td>
+<td><a href="#DataLog Merge Times.vi">DataLog Merge Times.vi</a></td>
+<td><a href="#DataLog Read Log Strings.vi">DataLog Read Log Strings.vi</a></td>
+<td><a href="#re_DataLog Tag Info.vi">re_DataLog Tag Info.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#DataLog Log Info.vi">DataLog Log Info.vi</a></td>
+<td><a href="#DataLog Read Log Index Range.vi">DataLog Read Log Index Range.vi</a></td>
+<td><a href="#DataLog Read Log Time Range.vi">DataLog Read Log Time Range.vi</a></td>
+</tr>
+
+</table>
+<p align="Center">
+<b>API objects</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#obj_DataLog Tag Buffers.vi">obj_DataLog Tag Buffers.vi</a></td>
+<td><a href="#obj_DataLog Tag Hash.vi">obj_DataLog Tag Hash.vi</a></td>
+</tr>
+
+</table>
+<hr>
+<A NAME="DataLog Read Last Number.vi"></A><H2>DataLog Read Last Number.vi</H2>
+<P>Reads the last-written number (the current value) from a number tag of the live database. This is a convenience wrapper around the &quot;Tag Buffers&quot; object which provides a more complete set of methods for reading values from a tag's buffer.</P>
+<P><IMG SRC="dlAPIpng/DataLog Read Last Numberc.png" ALT="DataLog Read Last Number.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>tag</B> <P>Tag name. It is used when &quot;tag index in&quot; is not wired.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index in (name lookup)</B> <P>The index of the tag. If left unwired or less than zero, a tag lookup will be performed, and the related inputs must be wired. When performing repeated actions on the same tag, use a shift register initialized to a negative value (e.g. -1)  around the tag index in/out. This will cause the first iteration to do a name lookup, and subsequent iterations to use the tag's index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>number</B> <P>Number value read from tag.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>time</B> <P>Timestamp of the number value.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>tag index out</B> <P>Duplicate of &quot;tag index in&quot;, if wired.</P>
+<P>When &quot;tag index in&quot; is left unwired, this returns the index of tag &quot;tag&quot;, or -1 when an invalid name is wired to &quot;tag&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Read Last String.vi"></A><H2>DataLog Read Last String.vi</H2>
+<P>Reads the last-written string (the current value) from a string tag of the live database.</P>
+<P><IMG SRC="dlAPIpng/DataLog Read Last Stringc.png" ALT="DataLog Read Last String.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>tag</B> <P>Tag name. It is used when &quot;tag index in&quot; is not wired.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index in (name lookup)</B> <P>The index of the tag. If left unwired or less than zero, a tag lookup will be performed, and the related inputs must be wired. When performing repeated actions on the same tag, use a shift register initialized to a negative value (e.g. -1)  around the tag index in/out. This will cause the first iteration to do a name lookup, and subsequent iterations to use the tag's index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>string</B> <P>String value read from tag.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>time</B> <P>Timestamp of the string value.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>tag index out</B> <P>Duplicate of &quot;tag index in&quot;, if wired.</P>
+<P>When &quot;tag index in&quot; is left unwired, this returns the index of tag &quot;tag&quot;, or -1 when an invalid name is wired to &quot;tag&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Write String.vi"></A><H2>DataLog Write String.vi</H2>
+<P>Writes a string value to a tag. The current time is used as timestamp if no custom time is wired. The current database must be live.</P>
+<P><IMG SRC="dlAPIpng/DataLog Write Stringc.png" ALT="DataLog Write String.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>string</B> <P>The string to write to the tag.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>time (current)</B> <P>Timestamp to apply to the string value being written. When not wired or NaN is wired, the current time is used as timestamp.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>tag</B> <P>Tag name. It is used when &quot;tag index in&quot; is not wired.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index in (use tag)</B> <P>The index of the tag. If left unwired or less than zero, a tag lookup will be performed, and the related inputs must be wired. When performing repeated writes to the same tag, use a shift register initialized to a negative value (e.g. -1) that loops &quot;tag index out&quot; back to &quot;tag index in&quot;. This will cause the first iteration to do a tag name lookup, and subsequent iterations to use the more efficient index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>tag index out</B> <P>Duplicate of &quot;tag index in&quot;, if wired.</P>
+<P>When &quot;tag index in&quot; is left unwired, this returns the index of tag &quot;tag&quot;, or -1 when an invalid name is wired to &quot;tag&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_DataLog Write Number.vi"></A><H2>re_DataLog Write Number.vi</H2>
+<P>Writes a number value to a tag. The current time is used as timestamp if no custom time is wired. The value is checked against any limit meta tags and coerced to any max/min meta tags. The current database must be live.</P>
+<P><IMG SRC="dlAPIpng/re_DataLog Write Numberc.png" ALT="re_DataLog Write Number.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>number</B> <P>The number value to write to the tag.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>time (current)</B> <P>Timestamp to apply to the number value being written. When not wired or NaN is wired, the current time is used as timestamp.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>tag</B> <P>Tag name. It is used when &quot;tag index in&quot; is not wired.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index in (use tag)</B> <P>The index of the tag. If left unwired or less than zero, a tag lookup will be performed, and the related inputs must be wired. When performing repeated writes to the same tag, use a shift register initialized to a negative value (e.g. -1) that loops &quot;tag index out&quot; back to &quot;tag index in&quot;. This will cause the first iteration to do a tag name lookup, and subsequent iterations to use the more efficient index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>tag index out</B> <P>Duplicate of &quot;tag index in&quot;, if wired.</P>
+<P>When &quot;tag index in&quot; is left unwired, this returns the index of tag &quot;tag&quot;, or -1 when an invalid name is wired to &quot;tag&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Interpolate Log.vi"></A><H2>DataLog Interpolate Log.vi</H2>
+<P>Interpolate the point values in a tag log at the specified times. When the tag is of &quot;sample&quot; temporal type, the values of the two points adjacent to each specified time are linearly interpolated in case of a number tag, or, in case of a string tag, an error is returned. When the tag is of &quot;set&amp;hold&quot; temporal type, the value of the last point prior to each specified time is used: such tags hold their value until changed. In case of a string tag you'll have to use the returned offset values to read the string values from the log. When the tag is of &quot;event&quot; temporal type, an error is returned since such tags have values that are defined only at the time of the event.</P>
+<P></P>
+<P>Note that this VI tries to read the timerange covered by the specified times from the tag log before commencing with interpolation. This fails when the timerange contains more than &quot;max points&quot; points. In such an event, the specified times are divided in increasingly smaller chunks until the reads succeed. In this eventuality, it helps performance when the specified times increase or decrease monotonically.</P>
+<P><IMG SRC="dlAPIpng/DataLog Interpolate Logc.png" ALT="DataLog Interpolate Log.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>tag config</B> <P>Wire the temporal type of the tag here.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>name</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>unit</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>temporal</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>index</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>capacity</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>is meta?</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>mincapacity</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>deadband</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>limit delay</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>format</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cu8.png" ALT="cu8"></P>
+</TD>
+<TD>
+<B>precision</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>undefine</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>update</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cu16.png" ALT="cu16"></P>
+</TD>
+<TD>
+<B>update period</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>expression</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>logging algorithm</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/c1ddbl.png" ALT="c1ddbl"></P>
+</TD>
+<TD>
+<B>logging parameters</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/c1ddbl.png" ALT="c1ddbl"></P>
+</TD>
+<TD>
+<B>times</B> <P>The times to interpolate at.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>dup tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>value type</B> <P>Value type of the tag. In case of &quot;string&quot;, the returned offset values must be used to retrieve the actual string values.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1ddbl.png" ALT="i1ddbl"></P>
+</TD>
+<TD>
+<B>interpolated values</B> <P>Point values interpolated (linearly or held from prior) at the specified times.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Log Info.vi"></A><H2>DataLog Log Info.vi</H2>
+<P>Returns the log size, that is, the number of values (numbers or strings) contained in the tag's log. Since, on writing, logs are only appended to, this equals the write index. A double is used because it can represent very large integers without overflowing or rounding. In addition, the start time, that is, the timestamp of the first logged point is returned. When the log is empty, the start time is set to NaN.</P>
+<P><IMG SRC="dlAPIpng/DataLog Log Infoc.png" ALT="DataLog Log Info.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>dup tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>size</B> <P>Number of values in the log.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>start time</B> <P>Timestamp of the first logged point.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Merge Times.vi"></A><H2>DataLog Merge Times.vi</H2>
+<P>Merge times for interpolation. Given two arrays of monotonically increasing times, output an array of times that contains the monotonically increasing union of the input times. When the time arrays contain identical values, the value is copied only once into the output array.</P>
+<P></P>
+<P>Beware that when either set of times does not increase monotonically, the output times will not either. Though sorting the times is not difficult, this option was rejected to ensure that the algorithm executes in linear time: the arrays might be very large.</P>
+<P><IMG SRC="dlAPIpng/DataLog Merge Timesc.png" ALT="DataLog Merge Times.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/c1ddbl.png" ALT="c1ddbl"></P>
+</TD>
+<TD>
+<B>times to add</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/c1ddbl.png" ALT="c1ddbl"></P>
+</TD>
+<TD>
+<B>times in</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1ddbl.png" ALT="i1ddbl"></P>
+</TD>
+<TD>
+<B>times out</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Read Log Index Range.vi"></A><H2>DataLog Read Log Index Range.vi</H2>
+<P>Read the range of points starting at the specified index from a tag's log.</P>
+<P><IMG SRC="dlAPIpng/DataLog Read Log Index Rangec.png" ALT="DataLog Read Log Index Range.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>log index</B> <P>Index of first point to read.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>number of points</B> <P>Number of points to read. When more points are requested than the configured &quot;max points&quot;, and error is thrown.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>dup tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1dtdef.png" ALT="i1dtdef"></P>
+</TD>
+<TD>
+<B>range of points</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/inclst.png" ALT="inclst"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+</UL>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Read Log Strings.vi"></A><H2>DataLog Read Log Strings.vi</H2>
+<P>Read the strings at the specified byte offsets from the strings file of a string tag log. These offsets are stored as the values of the tag's point. Consequently, to use this function, you must pass a range of points read from the tag's log or their offset values.</P>
+<P><IMG SRC="dlAPIpng/DataLog Read Log Stringsc.png" ALT="DataLog Read Log Strings.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/c1dtdef.png" ALT="c1dtdef"></P>
+</TD>
+<TD>
+<B>points (use offsets)</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cnclst.png" ALT="cnclst"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+</UL>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/c1ddbl.png" ALT="c1ddbl"></P>
+</TD>
+<TD>
+<B>offsets (use points)</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>dup tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1dstr.png" ALT="i1dstr"></P>
+</TD>
+<TD>
+<B>strings</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>string</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1ddbl.png" ALT="i1ddbl"></P>
+</TD>
+<TD>
+<B>times</B> <P>The timestamps of the provided points (if any).</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<a href="#index">Up to API index</a><HR>
+<A NAME="DataLog Read Log Time Range.vi"></A><H2>DataLog Read Log Time Range.vi</H2>
+<P>Read a range of points that covers the specified time range from a tag's log. The first returned point's time &lt;= begin, the last returned point's time &gt;= end. An exception to this rule occurs when the range begins before the oldest point in the log or ends after the last point in the log. In that case as much data as possible will be returned. If the range lies before the logged data, only the first point will be returned. If the range lies beyond the logged data, only the last point will be returned.</P>
+<P><IMG SRC="dlAPIpng/DataLog Read Log Time Rangec.png" ALT="DataLog Read Log Time Range.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>begin of range</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>end of range</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>dup tag log directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>too many points?</B> <P>True when the VI failed because there were more than &quot;max points&quot; in the specified time range.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1dtdef.png" ALT="i1dtdef"></P>
+</TD>
+<TD>
+<B>time range of points</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/inclst.png" ALT="inclst"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+</UL>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_DataLog Tag Info.vi"></A><H2>re_DataLog Tag Info.vi</H2>
+<P>Return information on a tag in a database. The returned tag log directory can be used to perform queries on the tag's log. The returned tag config cluster can be used to determin the temporal type, value type, or unit of the tag.</P>
+<P></P>
+<P>The tag can be specified via its name, or via its index. In the latter case the database must be live. The database can be specified via a reference or name. When omitting both, the current database is used.</P>
+<P></P>
+<P>When true is wired to the flush input, an attempt will be made to flush the buffered tag data to the log before returning. Use this when you are about to query data from the log and require the most recent available data. Note that flushing propagates over the network for a mirrored database provided that a mirroring connection has been established.</P>
+<P></P>
+<P>This VI is reentrant not only because flushing might take some time, but also to avoid recursion deadlocks when the database being mirrored is part of the local runtime (e.g. for testing purposes).</P>
+<P><IMG SRC="dlAPIpng/re_DataLog Tag Infoc.png" ALT="re_DataLog Tag Info.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/csvrn.png" ALT="csvrn"></P>
+</TD>
+<TD>
+<B>database ref (use name)</B> <P>Reference to the database object instance. Provides an alternative means of specifying the database.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>flush? (false)</B> <P>When you need the most recent available data to be present in the tag log, wire true. When the database is live or being mirrored, any buffered data to the tag's log.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>database (current)</B> <P>Used when no database reference is wired. Specifies the name of the database. When left empty, the current database is used.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>tag</B> <P>Name of the tag. Used when the database is not live or no tag index is wired.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index (use tag)</B> <P>The index of the tag for which to contstruct the tag log directory path. Only works when the database is live.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>tag log directory</B> <P>The directory containing the tag's log. This can be be wired into subsequent query VIs so as to read or interpolate the log.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>tag config</B> <P>Tag configuration cluster.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>name</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>unit</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>temporal</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>index</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>capacity</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>is meta?</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>mincapacity</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>deadband</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>limit delay</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>format</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/iu8.png" ALT="iu8"></P>
+</TD>
+<TD>
+<B>precision</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>undefine</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>update</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/iu16.png" ALT="iu16"></P>
+</TD>
+<TD>
+<B>update period</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>expression</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>logging algorithm</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/i1ddbl.png" ALT="i1ddbl"></P>
+</TD>
+<TD>
+<B>logging parameters</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>mode</B> <P>Mode of the database.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="obj_DataLog Tag Buffers.vi"></A><H2>obj_DataLog Tag Buffers.vi</H2>
+<P>Provides circular buffers for the tags in the live database. Only the {read} and {read last} methods are intended for public use. All other methods are private.</P>
+<P></P>
+<P>The implementation pools the tag buffers so as to provide indexing over tags while avoiding more complicated composite data structures that confuse the LabVIEW compiler sufficiently to not to generate in-place code. By restricting the tag buffers in the pool to have a power of two capacity, modulo the capacity reduces to a simple bitwise &quot;and&quot; operation with a mask, and a write or read index overflow (at 2^31) does not invalidate the indexing. To make comparisons of indices overflow insensitve, their difference is compared to zero.</P>
+<P><IMG SRC="dlAPIpng/obj_DataLog Tag Buffersc.png" ALT="obj_DataLog Tag Buffers.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>method</B> <P>Public methods:</P>
+<P>{read} read a point from a tag buffer at the specified index. The returned read index is incremented.</P>
+<P>{read last} read the last point written to a tag buffer. The returned read index can be used to {read} the next point to be written.</P>
+<P>Private methods:</P>
+<P>{inert} internal method used to do nothing when the tag index is invalid.</P>
+<P>{write} write a point to a tag buffer. This method is private since the public write interface is provided by the &quot;Write Number&quot; and &quot;Write String&quot; VIs.</P>
+<P>{read oldest} read the oldest point still stored in a tag's buffer. Note that subsequent points are not guaranteed to be present during subsequent reads since writes might have occurred in the mean time. Thus, getting the maximum amount of data requires a bit of care. See for example the &quot;Dump Tag Buffer&quot; VI.</P>
+<P>{initialize} initialize the buffer pool and other internal state using information stored in the tag info list object.</P>
+<P>{cleanup} dispose of the buffer pool and other internal state.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>read index in</B> <P>{read} the index at which to read a datapoint from the tag's buffer.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cnclst.png" ALT="cnclst"></P>
+</TD>
+<TD>
+<B>point in</B> <P>{write} The datapoint to write to the buffer.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index</B> <P>{initialize} {cleanup} not applicable.</P>
+<P>Other methods: the index of the tag to which the buffer method is to be applied.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>available?</B> <P>{read} is the indexed point available? If false, the requested point has not yet been written. It might also be that the requested point is no longer available in the buffer, in which case an error will be returned.</P>
+<P>{read last} is the last point available? If not, an error will be returned.</P>
+<P>{read oldest} is an oldest point available? If not, an error will be returned.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>read index out</B> <P>{read}, {read oldest}, {read last} points to the next point in the buffer or to be buffered provided that the read point was available. Otherwise it points to the point for which the failed read attempt was made.</P>
+<P>other methods: dup of read index in.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/inclst.png" ALT="inclst"></P>
+</TD>
+<TD>
+<B>point out</B> <P>{read} {read oldest} {read last} that point read from the buffer.</P>
+<P>Other methods: duplicate of point in.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>value</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>tag index dup</B> <P>Duplicate of tag index in.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="obj_DataLog Tag Hash.vi"></A><H2>obj_DataLog Tag Hash.vi</H2>
+<P>Efficiently associates the names of the tags in the live database with their indices. A tag index is required to access tag-specific data inside data structures set up for the live database. Only the {index tag}, {lookup}, and {#tags} methods are meant for public use. The {index tag} method retrieves the tag's name given a tag index. The {lookup} method retrieves the tag's index given a tag name. The {#tags} method returns the number of tags in the live database.</P>
+<P></P>
+<P>By storing the tag indices in a hash table, a lookup of a tag's index via its name becomes an O(1) operation (the execution time is independent of the number of tags). In this way, the amount of work during repeated run-time operations is reduced by proper preparation during the once-only initialization.</P>
+<P></P>
+<P>NOTE: the subVIs for accessing the live database mostly accept both tag indices and tag names. In the latter case, they use this object to {lookup} the tag index.</P>
+<P><IMG SRC="dlAPIpng/obj_DataLog Tag Hashc.png" ALT="obj_DataLog Tag Hash.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>method</B> <P>Public methods:</P>
+<P>{index tag} retrieve a tag by its tag index.</P>
+<P>{lookup} retrieve a tag index by its tag.</P>
+<P>{#tags} return the number of tags in the live database.</P>
+<P>Private methods:</P>
+<P>{initialize} initialize the hash and other internal state.</P>
+<P>{add tag} add a tag to the hash and assign an index.</P>
+<P>{cleanup} dispose of hash and other internal state.</P>
+<P>{write recovery} write the internal state to disk so as to allow it to be used to recover from a crash. This should be called once all tags have been added.</P>
+<P>{read recovery} attempts to recover the hash state from disk so that the crash recovery can commence. Crash recovery mostly entails flushing the content of the recovery file. This requires an indexable list of tags. When the system was shut down properly, this function returns an error since the recovery file will have been deleted.</P>
+<P>{delete recovery} deletes the recovery file. This prevent a recovery from occurring during the next system startup. It should be called after the aggregation buffer has been fully flushed on shutdown.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>tag in</B> <P>{add tag}: will be added to the hash table.</P>
+<P>{lookup}: used to look up the tag's index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>tag index in</B> <P>{index tag} the tag whose name must be retrieved.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>#tags</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>tag out</B> <P>{index tag}: the tag with the given index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>tag index out</B> <P>{lookup}: the named tag's index.</P>
+<P>{add tag}: the assigned tag index.</P>
+<P>Other methods: a duplicate of &quot;tag index in&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="dlAPIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+</BODY>
+</HTML>

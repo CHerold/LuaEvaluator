@@ -1,0 +1,4738 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>API</title>
+</head>
+<p align="Center"><a name="index">
+</a></p>
+
+<p align="Center">
+<b>Basic API VIs</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#LuaVIEW Close.vi">LuaVIEW Close.vi</a></td>
+<td><a href="#LuaVIEW Pull _poly_.vi">LuaVIEW Pull (poly).vi</a></td>
+<td><a href="#re_LuaVIEW Call.vi">re_LuaVIEW Call.vi</a></td>
+<td><a href="#re_LuaVIEW Execute.vi">re_LuaVIEW Execute.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Compile.vi">LuaVIEW Compile.vi</a></td>
+<td><a href="#LuaVIEW Push _poly_.vi">LuaVIEW Push (poly).vi</a></td>
+<td><a href="#re_LuaVIEW Do Script.vi">re_LuaVIEW Do Script.vi</a></td>
+<td><a href="#re_LuaVIEW Run Task.vi">re_LuaVIEW Run Task.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Open.vi">LuaVIEW Open.vi</a></td>
+<td><a href="#LuaVIEW Swap Task.vi">LuaVIEW Swap Task.vi</a></td>
+<td><a href="#re_LuaVIEW Do Task.vi">re_LuaVIEW Do Task.vi</a></td>
+</tr>
+
+</table>
+<p align="Center">
+<b>Polymorphic data exchange alternatives</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#LuaVIEW Pull _I16_.vi">LuaVIEW Pull (I16).vi</a></td>
+<td><a href="#LuaVIEW Pull _number_.vi">LuaVIEW Pull (number).vi</a></td>
+<td><a href="#LuaVIEW Push _U16_.vi">LuaVIEW Push (U16).vi</a></td>
+<td><a href="#LuaVIEW Push _path_.vi">LuaVIEW Push (path).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _I32_.vi">LuaVIEW Pull (I32).vi</a></td>
+<td><a href="#LuaVIEW Pull _object_.vi">LuaVIEW Pull (object).vi</a></td>
+<td><a href="#LuaVIEW Push _U32_.vi">LuaVIEW Push (U32).vi</a></td>
+<td><a href="#LuaVIEW Push _refnum_.vi">LuaVIEW Push (refnum).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _I8_.vi">LuaVIEW Pull (I8).vi</a></td>
+<td><a href="#LuaVIEW Pull _path_.vi">LuaVIEW Pull (path).vi</a></td>
+<td><a href="#LuaVIEW Push _U8_.vi">LuaVIEW Push (U8).vi</a></td>
+<td><a href="#LuaVIEW Push _string_.vi">LuaVIEW Push (string).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _U16_.vi">LuaVIEW Pull (U16).vi</a></td>
+<td><a href="#LuaVIEW Pull _refnum_.vi">LuaVIEW Pull (refnum).vi</a></td>
+<td><a href="#LuaVIEW Push _boolean_.vi">LuaVIEW Push (boolean).vi</a></td>
+<td><a href="#re_LuaVIEW Pull _flat data_.vi">re_LuaVIEW Pull (flat data).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _U32_.vi">LuaVIEW Pull (U32).vi</a></td>
+<td><a href="#LuaVIEW Pull _string_.vi">LuaVIEW Pull (string).vi</a></td>
+<td><a href="#LuaVIEW Push _flat data_.vi">LuaVIEW Push (flat data).vi</a></td>
+<td><a href="#re_LuaVIEW Push _flat data_.vi">re_LuaVIEW Push (flat data).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _U8_.vi">LuaVIEW Pull (U8).vi</a></td>
+<td><a href="#LuaVIEW Push _I16_.vi">LuaVIEW Push (I16).vi</a></td>
+<td><a href="#LuaVIEW Push _nil_.vi">LuaVIEW Push (nil).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _boolean_.vi">LuaVIEW Pull (boolean).vi</a></td>
+<td><a href="#LuaVIEW Push _I32_.vi">LuaVIEW Push (I32).vi</a></td>
+<td><a href="#LuaVIEW Push _number_.vi">LuaVIEW Push (number).vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Pull _flat data_.vi">LuaVIEW Pull (flat data).vi</a></td>
+<td><a href="#LuaVIEW Push _I8_.vi">LuaVIEW Push (I8).vi</a></td>
+<td><a href="#LuaVIEW Push _object_.vi">LuaVIEW Push (object).vi</a></td>
+</tr>
+
+</table>
+<p align="Center">
+<b>Function registration VIs</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#LuaVIEW Bootstrap.vi">LuaVIEW Bootstrap.vi</a></td>
+<td><a href="#LuaVIEW Register Private Function.vi">LuaVIEW Register Private Function.vi</a></td>
+<td><a href="#LuaVIEW Register and Set Indexed Function.vi">LuaVIEW Register and Set Indexed Function.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Cleanup Public Registry.vi">LuaVIEW Cleanup Public Registry.vi</a></td>
+<td><a href="#LuaVIEW Register Public Function Directory.vi">LuaVIEW Register Public Function Directory.vi</a></td>
+<td><a href="#LuaVIEW Register and Set Module Function.vi">LuaVIEW Register and Set Module Function.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Register Private Function Directory.vi">LuaVIEW Register Private Function Directory.vi</a></td>
+<td><a href="#LuaVIEW Register Public Function.vi">LuaVIEW Register Public Function.vi</a></td>
+<td><a href="#LuaVIEW Revoke Exports.vi">LuaVIEW Revoke Exports.vi</a></td>
+</tr>
+
+</table>
+<p align="Center">
+<b>Advanced API VIs</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#LuaVIEW Cast Gen Ref to VI Ref.vi">LuaVIEW Cast Gen Ref to VI Ref.vi</a></td>
+<td><a href="#LuaVIEW Get Task Script Directory.vi">LuaVIEW Get Task Script Directory.vi</a></td>
+<td><a href="#LuaVIEW Poll Print Buffer.vi">LuaVIEW Poll Print Buffer.vi</a></td>
+<td><a href="#LuaVIEW Stack to String.vi">LuaVIEW Stack to String.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Cast VI Ref to Gen Ref.vi">LuaVIEW Cast VI Ref to Gen Ref.vi</a></td>
+<td><a href="#LuaVIEW Get Task State Reference.vi">LuaVIEW Get Task State Reference.vi</a></td>
+<td><a href="#LuaVIEW Push Value.vi">LuaVIEW Push Value.vi</a></td>
+<td><a href="#re_LuaVIEW Execute Iteration.vi">re_LuaVIEW Execute Iteration.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Clear Stack.vi">LuaVIEW Clear Stack.vi</a></td>
+<td><a href="#LuaVIEW Open Base State.vi">LuaVIEW Open Base State.vi</a></td>
+<td><a href="#LuaVIEW Set Object Attribute.vi">LuaVIEW Set Object Attribute.vi</a></td>
+<td><a href="#re_LuaVIEW Incite.vi">re_LuaVIEW Incite.vi</a></td>
+</tr>
+
+<tr>
+<td><a href="#LuaVIEW Get Object Attribute.vi">LuaVIEW Get Object Attribute.vi</a></td>
+<td><a href="#LuaVIEW Open Private State.vi">LuaVIEW Open Private State.vi</a></td>
+<td><a href="#LuaVIEW Stack Elements.vi">LuaVIEW Stack Elements.vi</a></td>
+<td><a href="#re_LuaVIEW Plug_in Handler.vi">re_LuaVIEW Plug-in Handler.vi</a></td>
+</tr>
+
+</table>
+<p align="Center">
+<b>API objects</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#obj_LuaVIEW Task List.vi">obj_LuaVIEW Task List.vi</a></td>
+<td><a href="#re_obj_LuaVIEW Task State.vi">re_obj_LuaVIEW Task State.vi</a></td>
+</tr>
+
+</table>
+<hr>
+<A NAME="LuaVIEW Pull _I16_.vi"></A><H2>LuaVIEW Pull (I16).vi</H2>
+<P>Retrieves an I16 data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (I16)c.png" ALT="LuaVIEW Pull (I16).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii16.png" ALT="ii16"></P>
+</TD>
+<TD>
+<B>I16</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _I32_.vi"></A><H2>LuaVIEW Pull (I32).vi</H2>
+<P>Retrieves an I32 data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (I32)c.png" ALT="LuaVIEW Pull (I32).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>I32</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _I8_.vi"></A><H2>LuaVIEW Pull (I8).vi</H2>
+<P>Retrieves an I8 data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (I8)c.png" ALT="LuaVIEW Pull (I8).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii8.png" ALT="ii8"></P>
+</TD>
+<TD>
+<B>I8</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _U16_.vi"></A><H2>LuaVIEW Pull (U16).vi</H2>
+<P>Retrieves an U16 data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (U16)c.png" ALT="LuaVIEW Pull (U16).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu16.png" ALT="iu16"></P>
+</TD>
+<TD>
+<B>U16</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _U32_.vi"></A><H2>LuaVIEW Pull (U32).vi</H2>
+<P>Retrieves an U32 data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (U32)c.png" ALT="LuaVIEW Pull (U32).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>U32</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _U8_.vi"></A><H2>LuaVIEW Pull (U8).vi</H2>
+<P>Retrieves an U8 data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (U8)c.png" ALT="LuaVIEW Pull (U8).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu8.png" ALT="iu8"></P>
+</TD>
+<TD>
+<B>U8</B> </TD>
+</TR>
+</Table>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _boolean_.vi"></A><H2>LuaVIEW Pull (boolean).vi</H2>
+<P>Retrieves a boolean data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (boolean)c.png" ALT="LuaVIEW Pull (boolean).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>boolean</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _flat data_.vi"></A><H2>LuaVIEW Pull (flat data).vi</H2>
+<P>Retrieves the item at the head/bottom of the Lua stack, translates it to a flat LabVIEW data string, and removes the item from the stack, thereby shifting any remaining data items down by one. The most important use for this VI is to transfer compound data from Lua (a table) to LabVIEW (a cluster or array). To perform the translation, this function requires the type descriptor of the LabVIEW type/cluster/array that specifies how the translation is to take place. To use the flat data on the LabVIEW side, unflatten it.</P>
+<P></P>
+<P>The translation is recursive and thus handles nested clusters and arrays. If no translation is possible, e.g. because a LabVIEW array type is specified but no Lua table is provided, an error is returned.  The LuaVIEW manual details which translations are supported.</P>
+<P></P>
+<P>When the optional <B>default flat data</B> input is wired, its content will be used when either the Lua stack is empty or the Lua data item is nil. Note that allowing an empty stack is somewhat different from the other pull variants. It simplifies the implementation of an optional argument at the end of the argument list such that its omission causes the setting of default data.</P>
+<P></P>
+<P>When default data is wired and the Lua data item has missing/nil table elements that map into a cluster element that is not inside an array, a partial substition of only these elements is performed so that the Lua-side data need not be fully specified. This is like a bundle by name where some cluster elements are not specified and the default data serves the role of the input cluster.</P>
+<P></P>
+<P>This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (flat data)c.png" ALT="LuaVIEW Pull (flat data).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>default flat data</B> <P>When it is allowed for the Lua data to be optional, nil, or incomplete, wire this input to provide default values to substitute for the missing data.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/c1di16.png" ALT="c1di16"></P>
+</TD>
+<TD>
+<B>type descriptor</B> <P>Type descriptor corresponding to the &lt;b&gt;flat data&lt;/b&gt; output as well as the optional &lt;b&gt;default flat data&lt;/b&gt; input. The Lua data item being pulled is translated into this type. The descriptor can be obtained from &quot;Flatten To String&quot;, &quot;Variant To Flattened String&quot;, or the &quot;Type Descriptor&quot; control/indictor property.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci16.png" ALT="ci16"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>flat data</B> <P>The translated Lua data item, optionally with default data filled in. To make the data usable, convert it using &quot;Unflatten From String&quot; or &quot;Flattened String To Variant&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _number_.vi"></A><H2>LuaVIEW Pull (number).vi</H2>
+<P>Retrieves a number data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (number)c.png" ALT="LuaVIEW Pull (number).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>number</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _object_.vi"></A><H2>LuaVIEW Pull (object).vi</H2>
+<P>Retrieves an object data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. The returned value is a generic refnum that identifies some LabVIEW side object and must be cast to the appropriate type before use. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (object)c.png" ALT="LuaVIEW Pull (object).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>kill (false)</B> <P>Kill the object being retrieved. Wire true when the object has an associated LabVIEW resource and you are about to release that resource. Any subsequent attempt to pull the object with kill=false will result in a &quot;dead object&quot; error. This prevents the object from being used after your resource releasing function completes.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>already dead?</B> <P>Set when the kill input was wired with true but the object turned out to be dead already. This implies that a superfluous attempt is being made at releasing the resource associated with the object. This situation does not cause an error. It should be handled by doing nothing with the object. This allows the script writer to both set a cleanup function to release the object as well as release the object once done with it during script execution, without the need to disable the actions of the cleanup function. It is advisable to document this behaviour.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ignrn.png" ALT="ignrn"></P>
+</TD>
+<TD>
+<B>object refnum</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _path_.vi"></A><H2>LuaVIEW Pull (path).vi</H2>
+<P>Returns the path converted from a string at the head/bottom of the Lua stack. The string is subsequently removed, thereby shifting any remaining data items down by one. Beware that, if so configured, the string to path conversion might treat path seperators in a manner that differs slightly from LabVIEW's string to path conversion. Please refer to the manual appendix describing the various supported data types for details. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (path)c.png" ALT="LuaVIEW Pull (path).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>path</B> <P>Path converted from the pulled Lua string.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _refnum_.vi"></A><H2>LuaVIEW Pull (refnum).vi</H2>
+<P>Retrieves a refnum data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. The returned value is a generic refnum that identifies some LabVIEW side object and must be cast to the appropriate type before use. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (refnum)c.png" ALT="LuaVIEW Pull (refnum).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ignrn.png" ALT="ignrn"></P>
+</TD>
+<TD>
+<B>refnum</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _string_.vi"></A><H2>LuaVIEW Pull (string).vi</H2>
+<P>Retrieves a string data item from the head/bottom of the Lua stack and removes it, thereby shifting any remaining data items down by one. This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (string)c.png" ALT="LuaVIEW Pull (string).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>string</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _I16_.vi"></A><H2>LuaVIEW Push (I16).vi</H2>
+<P>Pushes an I16 data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (I16)c.png" ALT="LuaVIEW Push (I16).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci16.png" ALT="ci16"></P>
+</TD>
+<TD>
+<B>I16</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _I32_.vi"></A><H2>LuaVIEW Push (I32).vi</H2>
+<P>Pushes an I32 data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (I32)c.png" ALT="LuaVIEW Push (I32).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>I32</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _I8_.vi"></A><H2>LuaVIEW Push (I8).vi</H2>
+<P>Pushes an I8 data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (I8)c.png" ALT="LuaVIEW Push (I8).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci8.png" ALT="ci8"></P>
+</TD>
+<TD>
+<B>I8</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _U16_.vi"></A><H2>LuaVIEW Push (U16).vi</H2>
+<P>Pushes an U16 data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (U16)c.png" ALT="LuaVIEW Push (U16).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cu16.png" ALT="cu16"></P>
+</TD>
+<TD>
+<B>U16</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _U32_.vi"></A><H2>LuaVIEW Push (U32).vi</H2>
+<P>Pushes an U32 data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (U32)c.png" ALT="LuaVIEW Push (U32).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cu32.png" ALT="cu32"></P>
+</TD>
+<TD>
+<B>U32</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _U8_.vi"></A><H2>LuaVIEW Push (U8).vi</H2>
+<P>Pushes an U8 data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (U8)c.png" ALT="LuaVIEW Push (U8).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cu8.png" ALT="cu8"></P>
+</TD>
+<TD>
+<B>U8</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _boolean_.vi"></A><H2>LuaVIEW Push (boolean).vi</H2>
+<P>Pushes a boolean data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (boolean)c.png" ALT="LuaVIEW Push (boolean).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>boolean</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _flat data_.vi"></A><H2>LuaVIEW Push (flat data).vi</H2>
+<P>Pushes a Lua-data item onto the stack after translating it from flat LabVIEW data. The most important use for this VI is to transfer compound data from LabVIEW (a cluster or array) to Lua (a table). To perform the translation, this function requires the type descriptor of the LabVIEW type/cluster/array that specifies how the translation is to take place. The translation is recursive and thus handles nested clusters and arrays. If no translation is possible, e.g. because cluster elements are not named, an error is returned.  The LuaVIEW manual details which translations are supported. This VI is part of a polymorphic set that supports pushing various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (flat data)c.png" ALT="LuaVIEW Push (flat data).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>flat data</B> <P>The flattened LabVIEW data to translate into Lua-side data. It should match the provided type descriptor.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/c1di16.png" ALT="c1di16"></P>
+</TD>
+<TD>
+<B>type descriptor</B> <P>Type descriptor corresponding to the <B>flat data</B> input. The flat data being pushed is translated into a Lua-side data item compatible with this type. The descriptor can be obtained from &quot;Flatten To String&quot;, &quot;Variant To Flattened String&quot;, or the &quot;Type Descriptor&quot; control/indictor property.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci16.png" ALT="ci16"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>include cluster order (false)</B> <P>When set to true, any tables pushed for clusters in the flat data will be given an additional entry named &quot;_cluster_order&quot; containing an array-like table with the cluster element names ordered as per the cluster order. This can be used to iterate over the cluster's table in the same order as the order of the cluster elements. For example:</P>
+<P>for i,k in ipairs(tab._cluster_order) do print(tab[k]) end</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _nil_.vi"></A><H2>LuaVIEW Push (nil).vi</H2>
+<P>Pushes a nil data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (nil)c.png" ALT="LuaVIEW Push (nil).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _number_.vi"></A><H2>LuaVIEW Push (number).vi</H2>
+<P>Pushes a number data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (number)c.png" ALT="LuaVIEW Push (number).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdbl.png" ALT="cdbl"></P>
+</TD>
+<TD>
+<B>number</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _object_.vi"></A><H2>LuaVIEW Push (object).vi</H2>
+<P>Pushes a LuaVIEW object onto the Lua stack. To Lua it will appear as heavy userdata. This can be used to pass any refnum or other identifier specifying some LabVIEW-side object while attaching a set of methods that can be called, by Lua, on that object. The only requirement is that it can be cast into a generic refnum. Once the object is on the stack, any additional attributes can be attached using the &quot;Set Object Attribute&quot; VI. This VI is part of a polymorphic set that supports pushing various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (object)c.png" ALT="LuaVIEW Push (object).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cgnrn.png" ALT="cgnrn"></P>
+</TD>
+<TD>
+<B>object refnum</B> <P>Cast the LabVIEW thingy you want to create a LuaVIEW object for to a generic refnum before passing it in here.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>method table (use caller's function table)</B> <P>A LuaVIEW object is more than just a refnum. It allows attachment of a set of methods, and, at a later stage, attributes. The methods can be attached by specifying the name of a table containing methods that operate on the type of object you are pushing. When unwired, the calling VI is assumed to be a LuaVIEW function with a VI name that includes both a function table and function name part. The table is assumed to contain methods that can operate on the object being pushed apart from the calling function itself as it returns an object instead of operates on an object.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _path_.vi"></A><H2>LuaVIEW Push (path).vi</H2>
+<P>Converts a path into a string and pushes that string onto the Lua stack. The conversion performed is identical to LabVIEW's &quot;Path to String&quot; conversion function. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (path)c.png" ALT="LuaVIEW Push (path).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>path</B> <P>Path to convert into the Lua string to push.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _refnum_.vi"></A><H2>LuaVIEW Push (refnum).vi</H2>
+<P>Pushes a refnum data item onto the Lua stack. To Lua it will appear as light userdata. This can be used to pass any refnum or other identifier specifying some LabVIEW-side object. The only requirement is that it can be cast into a generic refnum. This VI is part of a polymorphic set that supports pushing various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (refnum)c.png" ALT="LuaVIEW Push (refnum).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cgnrn.png" ALT="cgnrn"></P>
+</TD>
+<TD>
+<B>refnum</B> <P>Cast the LabVIEW thingy you want to create a light userdata for to a generic refnum before passing it in here.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _string_.vi"></A><H2>LuaVIEW Push (string).vi</H2>
+<P>Pushes a string data item onto the Lua stack. This VI is part of a polymorphic set that supports various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu. When &quot;automatic&quot; is checked in that menu, wiring a different type to the top left input will cause the appropriate VI to be selected automatically.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (string)c.png" ALT="LuaVIEW Push (string).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>string</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Pull _flat data_.vi"></A><H2>re_LuaVIEW Pull (flat data).vi</H2>
+<P>Retrieves the item at the head/bottom of the Lua stack, translates it to a flat LabVIEW data string, and removes the item from the stack, thereby shifting any remaining data items down by one. Use this reentrant variant instead of the non-reentrant variant when pulling lots of flat data to prevent the non-reentrant VI from becoming contended. The most important use for this VI is to transfer compound data from Lua (a table) to LabVIEW (a cluster or array). To perform the translation, this function requires the type descriptor of the LabVIEW type/cluster/array that specifies how the translation is to take place. To use the flat data on the LabVIEW side, unflatten it.</P>
+<P></P>
+<P>The translation is recursive and thus handles nested clusters and arrays. If no translation is possible, e.g. because a LabVIEW array type is specified but no Lua table is provided, an error is returned.  The LuaVIEW manual details which translations are supported.</P>
+<P></P>
+<P>When the optional <B>default flat data</B> input is wired, its content will be used when either the Lua stack is empty or the Lua data item is nil. Note that allowing an empty stack is somewhat different from the other pull variants. It simplifies the implementation of an optional argument at the end of the argument list such that its omission causes the setting of default data.</P>
+<P></P>
+<P>When default data is wired and the Lua data item has missing/nil table elements that map into a cluster element that is not inside an array, a partial substition of only these elements is performed so that the Lua-side data need not be fully specified. This is like a bundle by name where some cluster elements are not specified and the default data serves the role of the input cluster.</P>
+<P></P>
+<P>This VI is part of a polymorphic set that supports the pulling various data types. To change the type being pulled, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Pull (flat data)c.png" ALT="re_LuaVIEW Pull (flat data).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>default flat data</B> <P>When it is allowed for the Lua data to be optional, nil, or incomplete, wire this input to provide default values to substitute for the missing data.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/c1di16.png" ALT="c1di16"></P>
+</TD>
+<TD>
+<B>type descriptor</B> <P>Type descriptor corresponding to the &lt;b&gt;flat data&lt;/b&gt; output as well as the optional &lt;b&gt;default flat data&lt;/b&gt; input. The Lua data item being pulled is translated into this type. The descriptor can be obtained from &quot;Flatten To String&quot;, &quot;Variant To Flattened String&quot;, or the &quot;Type Descriptor&quot; control/indictor property.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci16.png" ALT="ci16"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>flat data</B> <P>The translated Lua data item, optionally with default data filled in. To make the data usable, convert it using &quot;Unflatten From String&quot; or &quot;Flattened String To Variant&quot;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Push _flat data_.vi"></A><H2>re_LuaVIEW Push (flat data).vi</H2>
+<P>Pushes a Lua-data item onto the stack after translating it from flat LabVIEW data. Use this reentrant VI instead of the non-reentrant variant when pushing lots of flat data to prevent the non-reentrant VI from becoming contended. The most important use for this VI is to transfer compound data from LabVIEW (a cluster or array) to Lua (a table). To perform the translation, this function requires the type descriptor of the LabVIEW type/cluster/array that specifies how the translation is to take place. The translation is recursive and thus handles nested clusters and arrays. If no translation is possible, e.g. because cluster elements are not named, an error is returned.  The LuaVIEW manual details which translations are supported. This VI is part of a polymorphic set that supports pushing various data types. To change the type being pushed, pop up on this VI's diagram icon and use the &quot;Select Type&quot; sub menu.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Push (flat data)c.png" ALT="re_LuaVIEW Push (flat data).vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>flat data</B> <P>The flattened LabVIEW data to translate into Lua-side data. It should match the provided type descriptor.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/c1di16.png" ALT="c1di16"></P>
+</TD>
+<TD>
+<B>type descriptor</B> <P>Type descriptor corresponding to the <B>flat data</B> input. The flat data being pushed is translated into a Lua-side data item compatible with this type. The descriptor can be obtained from &quot;Flatten To String&quot;, &quot;VariantTo Flattened String&quot;, or the &quot;Type Descriptor&quot; control/indictor property.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci16.png" ALT="ci16"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>include cluster order (false)</B> <P>When set to true, any tables pushed for clusters in the flat data will be given an additional entry named &quot;_cluster_order&quot; containing an array-like table with the cluster element names ordered as per the cluster order. This can be used to iterate over the cluster's table in the same order as the order of the cluster elements. For example:</P>
+<P>for i,k in ipairs(tab._cluster_order) do print(tab[k]) end</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Close.vi"></A><H2>LuaVIEW Close.vi</H2>
+<P>Closes a LuaVIEW reference as returned by &quot;LuaVIEW Open&quot;. This closes the Lua state associated with the references and decrements the function registry usage count. When the usage count reaches zero, the function registry is cleaned up.</P>
+<P></P>
+<P>This function executes irrespective of the input error so that the reference is closed and registry use count is decremented even when one of the preceeding chained VIs failed. It does not execute when a default (nil) reference is provided, as returned by a failed &quot;LuaVIEW Open&quot; or an uninitialized shift register. Do not close or otherwise use an already closed reference. Though LuaVIEW performs checks to avoid operating on closed states, this is only 99.999% safe.</P>
+<P><IMG SRC="APIpng/LuaVIEW Closec.png" ALT="LuaVIEW Close.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> <P>When this is a default reference (as returned when the LuaVIEW open has failed) the VI will do nothing.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>An input error does NOT prevent this VI from executing.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>dup error</B> <P>Duplicate of <B>error in</B>.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Compile.vi"></A><H2>LuaVIEW Compile.vi</H2>
+<P>Compiles the provided script string so that it can be executed. This is not compilation to native machine code but rather compilation to bytecode that can execute on the Lua virtual machine instance associated with the provided LuaVIEW reference. Multiple scripts can be compiled. These will be executed in order of compilation.</P>
+<P><IMG SRC="APIpng/LuaVIEW Compilec.png" ALT="LuaVIEW Compile.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script name</B> <P>This name shows up in the error report when a runtime error occurs in the provided script. Choose it such that the error report becomes more intelligible, e.g. the name of the file containing the script.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script</B> <P>Lua script to compile.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Open.vi"></A><H2>LuaVIEW Open.vi</H2>
+<P>Open a LuaVIEW state that can call public and export functions as well as the other types of LuaVIEW function. The resulting state (passed via the LuaVIEW reference)  is ready for script compilation and subsequent execution. Once the LuaVIEW reference is no longer required, close it using &quot;LuaVIEW Close&quot; to free the associated resources.</P>
+<P></P>
+<P>When the public function registry is not yet initialized and the &quot;auto-init registry&quot; global is set, the registry will be initialized first with all LuaVIEW function VIs in the built executable or, when running under development mode, with all LuaVIEW function VIs in the functions directory of the LuaVIEW toolkit.</P>
+<P></P>
+<P>Note that the LuaVIEW reference returned by this VI is associated with a new and unique Lua state which entails an instance of the Lua virtual machine as well as the data space involved in compiling scripts and executing the resulting bytecode on that virtual machine instance. Scripts that run on different Lua states therefore have separate variable spaces.</P>
+<P><IMG SRC="APIpng/LuaVIEW Openc.png" ALT="LuaVIEW Open.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> <P>When the open fails, a null reference is returned. This can be safely passed into &quot;LuaVIEW Close&quot; which, when null, does nothing.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Pull _poly_.vi"></A><H2>LuaVIEW Pull (poly).vi</H2>
+<P>Pull a data item of a polymorphic type from the Lua stack. This can be an argument in case of a Lua to LabVIEW call, or a result in case of a LabVIEW to Lua call. The data item is retrieved from the head/bottom of the stack and removed, thereby shifting any remaining data items down by one.</P>
+<P><IMG SRC="APIpng/LuaVIEW Pull (poly)c.png" ALT="LuaVIEW Pull (poly).vi"></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push _poly_.vi"></A><H2>LuaVIEW Push (poly).vi</H2>
+<P>Push a data item of a polymorphic type onto the Lua stack. This can be a result in case of a Lua to LabVIEW call, or an argument in case of a LabVIEW to Lua call. The data item is placed on the top of the stack.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push (poly)c.png" ALT="LuaVIEW Push (poly).vi"></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Swap Task.vi"></A><H2>LuaVIEW Swap Task.vi</H2>
+<P>Swap the script(s) executing under an existing LuaVIEW task. This VI loads, pre-processes, and compiles the new script(s), and signals the task to be swapped to execute the new script(s). This VI does not wait for the task to commence with swapping: any run-time error that occurs on cleaning up the prior script(s) or on executing the new script(s) is not returned by this VI.</P>
+<P><IMG SRC="APIpng/LuaVIEW Swap Taskc.png" ALT="LuaVIEW Swap Task.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>script file or name (no name)</B> <P>Path/file holding the task script. If relative, any custom and script search directories will be examined. When a script string is provided, the name part of this path (if provided) will be used as a name for the script while reporting errors, but it will not be used for file I/O purposes.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>custom search directory (none)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script string (&quot;&quot; == load from file)</B> <P>When wired with a non-empty string, this will be used as the task script (as opposed to loading the script from a file).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>identifier (use keyword)</B> <P>The identifier of the task to swap scripts for. When left unwired or empty, an attempt is made to extract the identifier from the provided script via the --#identifier preprocessor keyword.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>identifier</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Call.vi"></A><H2>re_LuaVIEW Call.vi</H2>
+<P>Call a Lua-side function. Any elements pushed onto the stack prior to the call are passed as arguments. When the function returns, the stack holds the function result values, if any. The call is protected so that any errors during the function's execution are caught.</P>
+<P>Never make simultaneous calls to the same LuaVIEW state.</P>
+<P></P>
+<P>To be able to make Lua-side calls, open a LuaVIEW base state using &quot;Open Base State&quot; and compile one or more scripts implementing the function or functions to be called using &quot;Compile&quot;. Next, the resulting compilations must be executed using &quot;Execute&quot; so that the functions become defined. After that, &quot;Call&quot; can be used on all defined functions. Functions called via &quot;Call&quot; cannot call LabVIEW-side functions and are not interruptable other than through throwing an error.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Callc.png" ALT="re_LuaVIEW Call.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>function name</B> <P>Name of the function to call with optional table prefixes. To prefix one or more tables, use the '.' separator. Some examples: &quot;foo&quot; specifies a function assigned to global &quot;foo&quot;; &quot;foo.bar&quot; specifies a function with key &quot;bar&quot; contained in a table referenced by global &quot;foo&quot;; &quot;foo.bar.baz&quot; specifies a function with key &quot;baz&quot; contained in a table with key &quot;bar&quot; contained in a table referenced by global &quot;foo&quot;; and so on.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>required results (no checking needed)</B> <P>When you cannot assume that the function being called returns a particular number of results (e.g. because it is defined in an external script that is modifyable by others), yet a particular number of results is required, wire that number to this input. This will cause a descriptive error to be thrown when the called function returns fewer or more results.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Do Script.vi"></A><H2>re_LuaVIEW Do Script.vi</H2>
+<P>Compiles and executes a script while also opening and closing the LuaVIEW reference (which creates and destroys a virtual machine instance) required for this purpose. Use the primitives instead of this VI when manipulation of the script execution state is required.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Do Scriptc.png" ALT="re_LuaVIEW Do Script.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>script file or name (no name)</B> <P>Path/file holding the task script. If relative, any custom and script search directories will be examined. When a script string is provided, the name part of this path (if provided) will be used as a name for the script while reporting errors, but it will not be used for file IO purposes.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>custom search directory (none)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script string (&quot;&quot; == load from file)</B> <P>When wired with a non-empty string, this will be used as the task script (as opposed to loading the script from a file).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Do Task.vi"></A><H2>re_LuaVIEW Do Task.vi</H2>
+<P>Do a LuaVIEW task. This prepares a task, runs it, and waits until the task is done before returning. Any error thrown during the task's execution is returned.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Do Taskc.png" ALT="re_LuaVIEW Do Task.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>script file or name (no name)</B> <P>Path/file holding the task script. If relative, any custom and script search directories will be examined. When a script string is provided, the name part of this path (if provided) will be used as a name for the script while reporting errors, but it will not be used for file IO purposes.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>custom search directory (none)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script string (&quot;&quot; == load from file)</B> <P>When wired with a non-empty string, this will be used as the task script (as opposed to loading the script from a file).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Execute.vi"></A><H2>re_LuaVIEW Execute.vi</H2>
+<P>Execute one or more previously compiled scripts until the last script completes or an error occurs and any cleanup handling has run its course. This simple iterator does not do run-time script management such as probing as tasks do. Neither does this VI allow for indexed functions to be called. To do that a custom iterator must be implemented.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Executec.png" ALT="re_LuaVIEW Execute.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Run Task.vi"></A><H2>re_LuaVIEW Run Task.vi</H2>
+<P>Runs a new LuaVIEW task. This prepares a task and runs it. This VI returns when the task has progressed beyond its initialization. When the task fails while initializing, its error is returned.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Run Taskc.png" ALT="re_LuaVIEW Run Task.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>script file or name (no name)</B> <P>Path/file holding the task script. If relative, any custom and script search directories will be examined. When a script string is provided, the name part of this path (if provided) will be used as a name for the script while reporting errors, but it will not be used for file I/O purposes.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>custom search directory (none)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script string (&quot;&quot; == load from file)</B> <P>When wired with a non-empty string, this will be used as the task script (as opposed to loading the script from a file).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>manual? (false)</B> <P>When set, initialization errors are not returned and the task is left listed in error mode. This can be used when manually launching the task from the &quot;Task Manager&quot; or similar. The idea is that the user is present and should be enabled to do a post-mortem analysis on the task.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>manual error</B> <P>When the task was run with the &quot;manual?&quot; input set to true, and an initialisation error occurs after the task has become listed, no error cluster is returned even though the task is in error mode. Instead, this output is set to true. It should be used to trigger a post-mortem analysis on the task, which is left listed to allow such.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>identifier</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Bootstrap.vi"></A><H2>LuaVIEW Bootstrap.vi</H2>
+<P>Bootstrap an application that uses LuaVIEW with a Lua script. Note that this VI is intentionally non-reentrant so that only a single bootstrap script can be active at any one time. The bootstrap script can set the global configuration and register functions prior to starting further Lua scripts. To do so, the bootstrap script has access to all C functions and a small set of LuaVIEW functions:</P>
+<P>configure(tab:configuration)</P>
+<P>str:path=bootstrap_path()</P>
+<P>str:path=toolkit_path(str:toolkit,[str:subpath])</P>
+<P>str:kind=app_kind()</P>
+<P>register.public(str:path)</P>
+<P>register.public_dir(str:dirpath)</P>
+<P>do_script(str:name,[str:script])</P>
+<P>The last four are identical to the standard LuaVIEW functions of the same name. The configure() function is used to set the configuration globals. See the bootstrapping example VI for details. When the bootstrap script was loaded from a file instead of passed as a string, the bootstrap_path() function returns a path to the directory containing the script. This allows the resource base path or script search directories to be configured relative to this path.</P>
+<P></P>
+<P>Though bootstrapping can also be done with LabVIEW code that sets configuration globals and calls the LabVIEW API to register functions, the advantages of a bootstrap script are that it has convenient error handling and can be changed when deployed with a built executable.</P>
+<P><IMG SRC="APIpng/LuaVIEW Bootstrapc.png" ALT="LuaVIEW Bootstrap.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>script file or name (no name)</B> <P>Path/file holding the bootstrap script. If relative, any custom and script search directories will be examined (though the search directories will typically not be configured before the bootstrap has run). When a script string is provided, the name part of this path (if provided) will be used as a name for the script while reporting errors, but it will not be used for file IO purposes.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>custom search directory (none)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>script string (&quot;&quot; == load from file)</B> <P>When wired with a non-empty string, this will be used as the bootstrap script (as opposed to loading the script from a file).</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/c1dsvrn.png" ALT="c1dsvrn"></P>
+</TD>
+<TD>
+<B>task alternatives (default)</B> <P>References to the various task VIs that each represent an allowed  choice for the combination of preferred execution system and execution priority. When the --#prefsys and --#priority preprocessor keywords are used to configure a task, a task VI reference with that combination must be present in this array so that an instance of that VI can serve as the top-level context under which the task executes. When either or both keywords are omitted in a task script, the execution system and/or priority of the first entry in the array is used as the default choice. When this array is left uwired, tasks can only be started under the standard execution system at normal priority.</P>
+<P></P>
+<P>This array can be initialized using references obtained via &quot;Open VI Reference&quot;. However it is more convenient to use static references since this will cause the task VIs to automatically be included in a build.</P>
+</TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/csvrn.png" ALT="csvrn"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Cleanup Public Registry.vi"></A><H2>LuaVIEW Cleanup Public Registry.vi</H2>
+<P>Requests a cleanup of the public LuaVIEW function registry. This will cause the public function VIs as well as the registry daemon  to be unloaded. Use of this VI is not necessary when the &quot;Unload Functions ASAP&quot; global is set. If the registry is not initialized, this function will return immediately. If the registry is still in use (there are running scripts that use public functions), this VI will fail. If the registry was initialized but no longer in use, this VI will return after unloading completes. Do not simultaneously register and cleanup.</P>
+<P><IMG SRC="APIpng/LuaVIEW Cleanup Public Registryc.png" ALT="LuaVIEW Cleanup Public Registry.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Any error that occurred while trying to clean up the registry. If any error is returned, it will typically be due to open LuaVIEW states that make use of the registry so that cleanup cannot commence.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Register Private Function Directory.vi"></A><H2>LuaVIEW Register Private Function Directory.vi</H2>
+<P>Tries to register all VIs ending in &quot;_lua.vi&quot; in a directory or llb and, recursively, in any subdirectories or llbs, or, alternatively, inside a built executable as private LuaVIEW functions with the provided LuaVIEW state.</P>
+<P><IMG SRC="APIpng/LuaVIEW Register Private Function Directoryc.png" ALT="LuaVIEW Register Private Function Directory.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>base path</B> <P>Directory/llb/exe where the function VIs or subdirectories with function VIs reside. When a relative path is specified, the resource base path is prepended.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Register Private Function.vi"></A><H2>LuaVIEW Register Private Function.vi</H2>
+<P>Open a reference to a LuaVIEW function VI and add it to the LuaVIEW state's private registry so that any script running under that state can call the function.</P>
+<P><IMG SRC="APIpng/LuaVIEW Register Private Functionc.png" ALT="LuaVIEW Register Private Function.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>function VI path</B> <P>Path to the function VI. When relative, the resource base path is prepended.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Register Public Function Directory.vi"></A><H2>LuaVIEW Register Public Function Directory.vi</H2>
+<P>Tries to register all VIs ending in &quot;_lua.vi&quot; in a directory or llb and, recursively, in any subdirectories or llbs, or, alternatively, inside a built executable as public LuaVIEW functions.</P>
+<P><IMG SRC="APIpng/LuaVIEW Register Public Function Directoryc.png" ALT="LuaVIEW Register Public Function Directory.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>base path</B> <P>Directory/llb/exe where the function VIs or subdirectories with function VIs reside. When a relative path is specified, the resource base path is prepended.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Register Public Function.vi"></A><H2>LuaVIEW Register Public Function.vi</H2>
+<P>Open a reference to a LuaVIEW function VI and add it to the public registry. Any LuaVIEW states that are opened after the function was registered will be able to call the function (unless &quot;Use Public Registry?&quot; was reset to false on opening the state). If the function VI was already registered, no further resources will be allocated.</P>
+<P><IMG SRC="APIpng/LuaVIEW Register Public Functionc.png" ALT="LuaVIEW Register Public Function.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cpath.png" ALT="cpath"></P>
+</TD>
+<TD>
+<B>function VI path</B> <P>Path to the function VI. When relative, the resource base path is prepended.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Register and Set Indexed Function.vi"></A><H2>LuaVIEW Register and Set Indexed Function.vi</H2>
+<P>Registers an indexed function with the LuaVIEW state's private function registry and sets the function as part of the state's variable space so that it can be called by name. Indexed functions are functions whose LabVIEW-side functionality is specified via an index instead of a function VI reference. When an indexed function is called, &quot;LuaVIEW Execute Iteration&quot; will return and leave the handling to its caller. Thus, indexed functions can be implemented as part of anything that allows selection via an index (typically a case of a case structure).</P>
+<P><IMG SRC="APIpng/LuaVIEW Register and Set Indexed Functionc.png" ALT="LuaVIEW Register and Set Indexed Function.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>index</B> <P>Selection index of the indexed function. The index must be &gt; 0. This allows 0 to be treated as a special case  that selects script resumption.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>synopsis</B> <P>Calling synopsis of the function. This has as format:</P>
+<P>[&lt;type&gt;:&lt;name1&gt; [,&lt;type&gt;:&lt;name2&gt; [,etc.]] = ] [&lt;tablename&gt;.]&lt;functionname&gt;</P>
+<P>([&lt;type&gt;:&lt;name1&gt;[,&lt;type&gt;:&lt;name2&gt; [,etc.]])</P>
+<P>for the result list, naming, and argument list.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Register and Set Module Function.vi"></A><H2>LuaVIEW Register and Set Module Function.vi</H2>
+<P>Registers a module function with the LuaVIEW state's private function registry and sets the function as part of the state's variable space so that it can be called by name. When the function is to be exported, as denoted by an exclamation mark prefix to its synopsis, it is also registered with the public function registry. If an exported module function of that name and table is already present, it will be replaced. This implies that the module or module instance called via an exported module function can change while a script is running. Replace exports only when they offer equivalent functionality.</P>
+<P><IMG SRC="APIpng/LuaVIEW Register and Set Module Functionc.png" ALT="LuaVIEW Register and Set Module Function.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cgnrn.png" ALT="cgnrn"></P>
+</TD>
+<TD>
+<B>module refnum</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>export table (set as global)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>table (set as global)</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>index</B> <P>Selection index of the indexed function. The index must be &gt; 0. This allows 0 to be treated as a special case  that selects script resumption.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>synopsis</B> <P>Calling synopsis of the function. This has as format:</P>
+<P>[&lt;type&gt;:&lt;name1&gt; [,&lt;type&gt;:&lt;name2&gt; [,etc.]] = ] [&lt;tablename&gt;.]&lt;functionname&gt;</P>
+<P>([&lt;type&gt;:&lt;name1&gt;[,&lt;type&gt;:&lt;name2&gt; [,etc.]])</P>
+<P>for the result list, naming, and argument list.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Revoke Exports.vi"></A><H2>LuaVIEW Revoke Exports.vi</H2>
+<P>Revokes the functions exported from a module or module instance. When your module performs cleanup actions after which calls to export functions result in erroneous or undefined results, and there is a risk that scripts that use the export functions are still active when your module cleans up,  it is necessary to revoke the export functions before performing those cleanup actions. To do so, first call this VI from a dedicated module function, say &quot;revoke_exports()&quot;. It is not fully safe to call this VI inside the cleanup function since an export call might be made in the short timespan between entering that function and revocation.</P>
+<P></P>
+<P>Note that if you want the scripts that use the export functions to switch over to using a subsequently initialized module instance without their ongoing calls being in risk of failing, the new module instance must be initialized within the (configurable) &quot;export timeout&quot; period after this VI is called. This VI only throws an error when it is NOT called as part of a non-export module function.</P>
+<P><IMG SRC="APIpng/LuaVIEW Revoke Exportsc.png" ALT="LuaVIEW Revoke Exports.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Cast Gen Ref to VI Ref.vi"></A><H2>LuaVIEW Cast Gen Ref to VI Ref.vi</H2>
+<P>This VI casts between incompatible refnum types. Refnums passed to Lua only carry their value and not their type. It is therefore required to cast them to a generic type on passing them to Lua and back from the generic type to their actual type on retrieval from Lua.</P>
+<P><IMG SRC="APIpng/LuaVIEW Cast Gen Ref to VI Refc.png" ALT="LuaVIEW Cast Gen Ref to VI Ref.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cgnrn.png" ALT="cgnrn"></P>
+</TD>
+<TD>
+<B>refnum in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ivirn.png" ALT="ivirn"></P>
+</TD>
+<TD>
+<B>refnum out</B> </TD>
+</TR>
+</Table>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Cast VI Ref to Gen Ref.vi"></A><H2>LuaVIEW Cast VI Ref to Gen Ref.vi</H2>
+<P>This VI casts between incompatible refnum types. Refnums passed to Lua only carry their value and not their type. It is therefore required to cast them to a generic type on passing them to Lua and back from the generic type to their actual type on retrieval from Lua.</P>
+<P><IMG SRC="APIpng/LuaVIEW Cast VI Ref to Gen Refc.png" ALT="LuaVIEW Cast VI Ref to Gen Ref.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cvirn.png" ALT="cvirn"></P>
+</TD>
+<TD>
+<B>refnum in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ignrn.png" ALT="ignrn"></P>
+</TD>
+<TD>
+<B>refnum out</B> </TD>
+</TR>
+</Table>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Clear Stack.vi"></A><H2>LuaVIEW Clear Stack.vi</H2>
+<P>Clears the stack. This can be used to remove any remaining arguments from the stack before starting to push results. This VI is rarely required since the argument pull VIs already remove their arguments from the stack. It might come in handy after performing an in-place operation on a stack argument.</P>
+<P><IMG SRC="APIpng/LuaVIEW Clear Stackc.png" ALT="LuaVIEW Clear Stack.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Get Object Attribute.vi"></A><H2>LuaVIEW Get Object Attribute.vi</H2>
+<P>Gets an attribute of a LuaVIEW object. The object must be located at the bottom of the stack. The retrieved value is pushed onto the top of the stack for later pulling.</P>
+<P><IMG SRC="APIpng/LuaVIEW Get Object Attributec.png" ALT="LuaVIEW Get Object Attribute.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>key</B> <P>Key of the attribute to set. Preferably use a valid Lua identifier so that the simplified &lt;object&gt;.&lt;key&gt; syntax can be used to access the attribute.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Get Task Script Directory.vi"></A><H2>LuaVIEW Get Task Script Directory.vi</H2>
+<P>Returns the directory holding the task script. When not a task, task script remote, or task script provided as a string, an empty path and error is returned.</P>
+<P><IMG SRC="APIpng/LuaVIEW Get Task Script Directoryc.png" ALT="LuaVIEW Get Task Script Directory.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>task script directory</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Get Task State Reference.vi"></A><H2>LuaVIEW Get Task State Reference.vi</H2>
+<P>Returns a reference to the task state object when the LuaVIEW state is part of a task context. Otherwise an error is returned. This VI is used by LuaVIEW functions that operate on the task state of the calling context.</P>
+<P><IMG SRC="APIpng/LuaVIEW Get Task State Referencec.png" ALT="LuaVIEW Get Task State Reference.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/isvrn.png" ALT="isvrn"></P>
+</TD>
+<TD>
+<B>task state reference</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Open Base State.vi"></A><H2>LuaVIEW Open Base State.vi</H2>
+<P>Opens a LuaVIEW base state which is essentially an instance of the Lua virtual machine with associated storage, and returns a reference to it. A base state lacks the infrastructure and preparations required for calling LabVIEW from Lua. Instead it is intended for hosting functions to be called from LabVIEW via the &quot;Call&quot;. To define callable functions, compile and execute a script containing function definitions for a base state.</P>
+<P></P>
+<P>Closing a base state is not required when it is only opened once during an application run: open base states are closed when the LuaVIEW VIs unload. When repeatedly opening a state for the same purpose, the &quot;close identifier&quot; can be used to automatically close stale states.</P>
+<P><IMG SRC="APIpng/LuaVIEW Open Base Statec.png" ALT="LuaVIEW Open Base State.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>close identifier (none)</B> <P>Causes any still open base states with the same tracking identifier to be closed. By wiring an identifier that is unique to your VI, states dating from prior runs of your VI will first be closed so that no open states will accumulate. An easy way to provide such an identifier is to wire the name of your VI, provided that your VI is not reentrant.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> <P>Reference to the opened LuaVIEW base state, or not a refnum in case of a failed open.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Open Private State.vi"></A><H2>LuaVIEW Open Private State.vi</H2>
+<P>Open a LuaVIEW state that does not make use of the public function registry nor any module export functions. To use the returned state, register and set any private and indexed functions, compile a script, and execute it. Once the LuaVIEW reference is no longer required, close it using &quot;LuaVIEW Close&quot; to free the associated resources.</P>
+<P></P>
+<P>Though anything that can be done with a state returned by this function can also be done with a state returned by &quot;LuaVIEW Open&quot;, it is sometimes desirable to use this VI to prevent the loading of the infrastructure associated with the public function registry.</P>
+<P></P>
+<P>The opened LuaVIEW state holds a new instance of the Lua virtual machine. Scripts that run on different LuaVIEW states therefore have separate variable spaces.</P>
+<P><IMG SRC="APIpng/LuaVIEW Open Private Statec.png" ALT="LuaVIEW Open Private State.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> <P>When the open fails, a null reference is returned. This can be safely passed into &quot;LuaVIEW Close&quot; which, when null, does nothing.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Poll Print Buffer.vi"></A><H2>LuaVIEW Poll Print Buffer.vi</H2>
+<P>Each LuaVIEW state is provided with a private print buffer. Using the lv.print() function, text can be printed to this buffer on a per-script or per-task basis. This VI allows polling of the content of these print buffers for display purposes. One option is to empty the entire content, and display that. This limits the amount of displayed text to the size of the circular print buffer (32768 characters). Alternatively, the read index can be used to return only the newly printed text, if any. By frequently polling the buffer and appending the returned text to previously read text, you can display more text than fits inside the buffer.</P>
+<P></P>
+<P>This VI is exceptional because it is designed to poll the print buffer of a LuaVIEW state while other operations on that state are ongoing: normally actions on the same LuaVIEW state must be serialized. This implies that it can be used inside a loop that is asynchronous from the script or task execution.</P>
+<P><IMG SRC="APIpng/LuaVIEW Poll Print Bufferc.png" ALT="LuaVIEW Poll Print Buffer.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cbool.png" ALT="cbool"></P>
+</TD>
+<TD>
+<B>read all?</B> <P>When set to true, the read index input is ignored and the entire print buffer content is returned. When set to false, the print buffer is read starting from the specified read index.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>read index in</B> <P>Index as of which to read the print buffer. Used when the &quot;read all?&quot; input is set to false. When the text at the specified index is no longer present in the buffer, the &quot;text break?&quot; output will be set to true and as much data as possible will be returned.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>text</B> <P>Text read from the print buffer.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>text gap?</B> <P>Set to true when the text requested via the read index input is no longer present in the print buffer. For typical use, this implies that there is a gap between previously read text, and the new text being returned. When displaying the text, you may wish to alert the user of the gap by displaying a special string, e.g. &lt;&lt;MISSING TEXT&gt;&gt;.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>read index out</B> <P>Indexes the print buffer beyond the last read character. Can be used on the next call to retrieve text continuous with the previously read text.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Push Value.vi"></A><H2>LuaVIEW Push Value.vi</H2>
+<P>Pushes the value located at the bottom (front) of the stack onto the top of the stack without removing it. This can be used to duplicate a stack element. A likely use is to duplicate a table or LuaVIEW object (which Lua passes by reference) for later in-place modification.</P>
+<P><IMG SRC="APIpng/LuaVIEW Push Valuec.png" ALT="LuaVIEW Push Value.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Set Object Attribute.vi"></A><H2>LuaVIEW Set Object Attribute.vi</H2>
+<P>Sets an attribute on a LuaVIEW object. When calling this VI, the value to set (any type) must be at the top of the stack and be preceeded by the object on which to set the attribute. The value being set is removed from the stack. The function's documentation should list these attributes. Note that attributes are read-only on the Lua side. Object attributes can be read from in the very same way as table attributes.</P>
+<P></P>
+<P>Attributes can be used to adorn an object being returned by a LuaVIEW function with invariant object properties. An alternative use is for an attribute to maintain some object-instance specific variable that changes between method calls, e.g. something like the read/write/seek offset associated with a file handle.</P>
+<P><IMG SRC="APIpng/LuaVIEW Set Object Attributec.png" ALT="LuaVIEW Set Object Attribute.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>key</B> <P>Key of the attribute to set. Preferably use a valid Lua identifier so that the simplified &lt;object&gt;.&lt;key&gt; syntax can be used to access the attribute.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Stack Elements.vi"></A><H2>LuaVIEW Stack Elements.vi</H2>
+<P>Returns the number of elements on the stack. This is typically used to determine the number of arguments remaining on the stack in case of a function that accepts a variable number of arguments. Functions with a fixed number of arguments can simply assume those arguments to be present on calling, provided that their documentation/synopsis is in sync with their implementation, because automated argument checking ensures this.</P>
+<P><IMG SRC="APIpng/LuaVIEW Stack Elementsc.png" ALT="LuaVIEW Stack Elements.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>elements</B> <P>Number of elements present on the Lua stack.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="LuaVIEW Stack to String.vi"></A><H2>LuaVIEW Stack to String.vi</H2>
+<P>Removes the elements present on the stack and converts them into a space-separated string terminated by a linefeed that is suited for printing. This VI is used by print() and similar functions. When converting an element to a string, this function uses the &quot;tostring&quot; function, which respects &quot;__tostring&quot; metamethods. You can therefore customize the print formatting by overriding &quot;tostring&quot; or defining meta methods.</P>
+<P><IMG SRC="APIpng/LuaVIEW Stack to Stringc.png" ALT="LuaVIEW Stack to String.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>string</B> <P>Print string reflecting the elements that were present on the stack.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Execute Iteration.vi"></A><H2>re_LuaVIEW Execute Iteration.vi</H2>
+<P>Execute compiled script(s) for a single &quot;resume&quot; iteration and return to LabVIEW when the last script completes, a LabVIEW-side call is made, a yield is performed, an error occurs, and so on. Iterating over resumptions allows LabVIEW-side stuff to be interspersed with virtual machine execution. Any custom LabVIEW-side stuff, such as indexed functions or execution management must be implemented as part of the loop inside which this VI is called.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Execute Iterationc.png" ALT="re_LuaVIEW Execute Iteration.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>init or indexed function error</B> <P>Any error on the first iteration of this state is supposed to result from initialization and is passed through. During later iterations, this input must be wired with any error caused by an indexed function that was called in the code surrounding this VI. This need not cause immediate script termination, e.g. in case of a protected call or cleanup functions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>last?</B> <P>True when no further iterations are required.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>function index</B> <P>When &gt; 0, a call to an indexed function was made and must be handled by this VI's caller. When no indexed functions are registered with the LuaVIEW state, this will never occur. Typically, the index will be cast to an enum and wired to the selection terminal of a case structure. This allows a close mixing of Lua and LabVIEW code.</P>
+<P></P>
+<P>When a task is being executed, this output will be set to 1 when the main task script is about to be executed (on the next iteration). Otherwise it will be set to zero. Note that tasks do not call indexed functions.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>final error</B> <P>If an error has occurred on initialization or during execution, it will be output here on the last iteration.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Incite.vi"></A><H2>re_LuaVIEW Incite.vi</H2>
+<P>Incite a task to send a reply. This is done by sending the task to be incited a message containing the task identifier of the current task. The incited task can then perform whatever service it is designed to provide and use that identifier to send a reply message when it is done. This VI returns on receiving the reply unless an error occurs.</P>
+<P></P>
+<P>An error occurs when the provided LuaVIEW reference is not associated with a task (this VI is not called inside a task) or when the task being incited does not exist, is in error mode, or fails to reply before the timeout expires. BEWARE: the task doing the incitation should not be receiving other types of messages at the same time lest these get confused with the incitation reply.</P>
+<P></P>
+<P>Incitation provides an easy means of synchronously using a service provided by an asynchronous task. More complex message/reply mechanisms can be coded in similar fashion: this VI merely constitutes a convenience implementation of the instigating side of the simplest conceivable message/reply mechanism. Module export functions also allow a synchronous service to be offered and involve less overhead on account of not requiring a context switch. The advantage of a message/reply mechanism is that the service can be implemented as a task script that can also add asynchronous actions such as periodic updates into the mix.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Incitec.png" ALT="re_LuaVIEW Incite.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>task</B> <P>Task to incite.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cu32.png" ALT="cu32"></P>
+</TD>
+<TD>
+<B>timeout [ms] (use default)</B> <P>Number of milliseconds to wait for a reply before timing out. When not wired, the default timeout as specified in the &quot;incite timeout&quot; configuration global is used.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference in</B> <P>The LuaVIEW state of the task as part of which this VI is called.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ccclst.png" ALT="ccclst"></P>
+</TD>
+<TD>
+<B>error in (no error)</B> <P>When an error is passed in, this VI will return without executing its actions.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>reply</B> <P>Reply message from the incited task.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference out</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>error out</B> <P>Returns the input error or any error that occurs on execution of this VI.</P>
+</TD>
+</TR>
+</Table>
+<P></P>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_LuaVIEW Plug_in Handler.vi"></A><H2>re_LuaVIEW Plug-in Handler.vi</H2>
+<P>This VI can be used inside a plug-in to assist in handling task signals. Examine the plugin template to see how it is deployed. The built-in handling of task signals does not work while called into a plug-in. Using this handler or similar code allows a plug-in to nevertheless respond to task signals. This handler limits itself to waiting for the timeout to expire when the plug-in was not started from a task.</P>
+<P><IMG SRC="APIpng/re_LuaVIEW Plug-in Handlerc.png" ALT="re_LuaVIEW Plug-in Handler.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cdlrn.png" ALT="cdlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>timeout (ms)</B> <P>Number of millseconds that should pass without receipt of signals before the handler times out.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>handle</B> <P>Enum indicating if signal handling is to be done by the calling plug-in. When set to &quot;timeout&quot; no signals were received and the plugin can proceed as normal. When set to &quot;stop&quot; or &quot;swap&quot;, the plug-in should return to the calling script. To prevent interruption of service it is sometimes desirable to forego cleanup actions in case of a &quot;swap&quot;.</P>
+</TD>
+</TR>
+</Table>
+<a href="#index">Up to API index</a><HR>
+<A NAME="obj_LuaVIEW Task List.vi"></A><H2>obj_LuaVIEW Task List.vi</H2>
+<P>Lists LuaVIEW tasks and allows operations on tasks in the list. A particular task is specified through its identifier and manipulated through a reference to its state object. </P>
+<P>This VI is only marginally part of the API: those methods that are in common use by function VIs can be deemed safe for use provided that typedefs are used so as to be forward compatible with extension of the method enum or typedef clusters (only use unbundle/bundle by name, and so on).</P>
+<P></P>
+<P>Beware that when using this VI to send a request or message, the receiving task's request occurrence, as returned by this VI, must be set. This unfortunate inconvenience was made mandatory to avoid the superfluous context switches that can occur when occurrences are set from within a non-reentrant object.</P>
+<P><IMG SRC="APIpng/obj_LuaVIEW Task Listc.png" ALT="obj_LuaVIEW Task List.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>method</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>message</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/csvrn.png" ALT="csvrn"></P>
+</TD>
+<TD>
+<B>state object ref in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>script index</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>task identifier</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>task info</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>main script</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>identifier</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>class</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>mode</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>handler</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>scripts</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>hide</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>active</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>error msg</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>defer</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>launch</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>main path valid</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>start time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>swap time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ivirn.png" ALT="ivirn"></P>
+</TD>
+<TD>
+<B>task VI</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>prefsys</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>priority</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>signal flags</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>allow mask</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>handle mask</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>disallow manual</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/i1dtdef.png" ALT="i1dtdef"></P>
+</TD>
+<TD>
+<B>task info list</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B></B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>main script</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>identifier</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>class</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>mode</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>handler</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>scripts</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>hide</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>active</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>error msg</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>defer</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>launch</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>main path valid</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>start time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>swap time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ivirn.png" ALT="ivirn"></P>
+</TD>
+<TD>
+<B>task VI</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>prefsys</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>priority</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>signal flags</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>allow mask</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>handle mask</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>disallow manual</B> </TD>
+</TR>
+</Table>
+</UL>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/isvrn.png" ALT="isvrn"></P>
+</TD>
+<TD>
+<B>state object ref out</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>set/ongoing</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iocrn.png" ALT="iocrn"></P>
+</TD>
+<TD>
+<B>wakeup occurrence</B> <P>The wakeup occurrence of the specified task. Set this occurrence after setting a signal or sending a message. This causes the receiving task to be woken up. To allow the task to be scheduled immediately, follow setting the occurrence by a wait(1): a wait(0) does not necessarily cause a reschedule.</P>
+<P></P>
+<P>The occurrence is not set inside the task list to prevent the object from being blocked for use by the receiving task on account of a still ongoing call: such an eventuality would increase instead of lower response latency.</P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>script info</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>path</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>text</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>parent index</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>version</B> </TD>
+</TR>
+</Table>
+</UL>
+<a href="#index">Up to API index</a><HR>
+<A NAME="re_obj_LuaVIEW Task State.vi"></A><H2>re_obj_LuaVIEW Task State.vi</H2>
+<P>Instantiated per task. Holds the state of a task and allows for asynchronous communication with a task. Must be called by reference. A reference can be obtained from the task list.</P>
+<P></P>
+<P>This VI is only marginally part of the API: those methods that are in common use by function VIs can be deemed safe for use provided that typedefs are used so as to be forward compatible with extension of the method enum or typedef clusters (only use unbundle/bundle by name, and so on).</P>
+<P><IMG SRC="APIpng/re_obj_LuaVIEW Task Statec.png" ALT="re_obj_LuaVIEW Task State.vi"></P>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>method</B> <P></P>
+</TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>mode {set mode}</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cenum.png" ALT="cenum"></P>
+</TD>
+<TD>
+<B>signal</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ci32.png" ALT="ci32"></P>
+</TD>
+<TD>
+<B>script index</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/cstr.png" ALT="cstr"></P>
+</TD>
+<TD>
+<B>string in</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>task info {get task info}</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>main script</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>identifier</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>class</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>mode</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>handler</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idlrn.png" ALT="idlrn"></P>
+</TD>
+<TD>
+<B>LuaVIEW reference</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>scripts</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>hide</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>active</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>error msg</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>defer</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>launch</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>main path valid</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>start time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/idbl.png" ALT="idbl"></P>
+</TD>
+<TD>
+<B>swap time</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ivirn.png" ALT="ivirn"></P>
+</TD>
+<TD>
+<B>task VI</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>prefsys</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ienum.png" ALT="ienum"></P>
+</TD>
+<TD>
+<B>priority</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>signal flags</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>allow mask</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iu32.png" ALT="iu32"></P>
+</TD>
+<TD>
+<B>handle mask</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>disallow manual</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ibool.png" ALT="ibool"></P>
+</TD>
+<TD>
+<B>set/available/pending</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/icclst.png" ALT="icclst"></P>
+</TD>
+<TD>
+<B>script info</B> </TD>
+</TR>
+</Table>
+<UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ipath.png" ALT="ipath"></P>
+</TD>
+<TD>
+<B>path</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>description</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>text</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/ii32.png" ALT="ii32"></P>
+</TD>
+<TD>
+<B>parent index</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>version</B> </TD>
+</TR>
+</Table>
+</UL>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/istr.png" ALT="istr"></P>
+</TD>
+<TD>
+<B>string out</B> </TD>
+</TR>
+</Table>
+<Table>
+<TR valign=TOP>
+<TD>
+<P><IMG SRC="APIpng/iocrn.png" ALT="iocrn"></P>
+</TD>
+<TD>
+<B>wakeup occurrence</B> </TD>
+</TR>
+</Table>
+</BODY>
+</HTML>

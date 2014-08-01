@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:08:22.66. The functions in the list were obtained from source "\datalog\dynamic\DataLog Databases Module.txt".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#stripmeta">stripmeta</a></td>
+<td><a href="#DB.exists">DB.exists</a></td>
+<td><a href="#DB.lookup">DB.lookup</a></td>
+<td><a href="#DB.subsets">DB.subsets</a></td>
+</tr>
+
+<tr>
+<td><a href="#DB.config">DB.config</a></td>
+<td><a href="#DB.last">DB.last</a></td>
+<td><a href="#DB.mode">DB.mode</a></td>
+<td><a href="#DB.tags">DB.tags</a></td>
+</tr>
+
+<tr>
+<td><a href="#DB.create">DB.create</a></td>
+<td><a href="#DB.list">DB.list</a></td>
+<td><a href="#DB.reconfigure">DB.reconfigure</a></td>
+</tr>
+
+<tr>
+<td><a href="#DB.delete">DB.delete</a></td>
+<td><a href="#DB.logsize">DB.logsize</a></td>
+<td><a href="#DB.subset">DB.subset</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="stripmeta"><b>stripmeta</b></a></dt>
+<dd><code> str:base,str:meta=stripmeta(str:metatag)</code><br>
+Strips the meta specifier from the end of the name of a meta tag. This results in the name of the base tag to which the meta tag belongs.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:metatag, name of the meta tag.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:base, name of the base tag.<br>
+str:meta, meta specifier.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Not a meta tag.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.config"><b>DB.config</b></a></dt>
+<dd><code> tab:config=DB.config(obj:db,str:tag)</code><br>
+Retrieves the configuration of a tag in the database on which this method is called.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag whose configuration to retrieve.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:config, configuration table.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Database is locked.<br>
+Tag does not exist.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.create"><b>DB.create</b></a></dt>
+<dd><code> DB.create(obj:db,str:tag,tab:config,[any:initial])</code><br>
+Create a tag in the database on which this method is called. The value and temporal type of the tag being created can be specified via the configuration table parameter. For an example of a valid configuration table see the "config.lua" file of an existing tag log directory.<br>
+<br>
+When elements are omitted in the configuration table, default values will be used. Some elements of the configuration table are ignored because they are generated at run time. To see what configuration elements can be specified, refer to the dialogs that pop up when using the "Create" option of the tag manager. specified. To learn what elements in the configuration table can be specified, refer to the "Config" dialog<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, tag name.<br>
+tab:config, configuration table with optional entries.<br>
+[any:initial], initial number or string value. When not specified, the initial value is set to NaN or "UNDEFINED" respectively.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Database is locked.<br>
+Tag already exists.<br>
+Cannot create meta tag when parent tag does not exist.<br>
+Invalid tag name.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.delete"><b>DB.delete</b></a></dt>
+<dd><code> DB.delete(obj:db,str:tag)</code><br>
+Delete a tag from the database on which this method is called. When a tag has meta tags, it cannot be deleted. Delete its meta tags first.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag to delete.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Database is locked.<br>
+Tag does not exist.<br>
+Tag still has meta tags.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.exists"><b>DB.exists</b></a></dt>
+<dd><code> bool:exists=DB.exists(obj:db,str:tag)</code><br>
+Test whether a tag exists.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag whose existence to verify.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:exists, true when the tag exists, false otherwise.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.last"><b>DB.last</b></a></dt>
+<dd><code> any:value,num:time=DB.last(obj:db,str:tag)</code><br>
+Return the last logged value and its timestamp for a tag of the database on which this method is called. Depending on the value type, the returned value is either a number or a string.<br>
+<br>
+When the database is known to be live, use the Tag.last or StringTag.last method instead. The last value will be buffered, and can be read from the in-memory tag buffer with much less overhead as compared to a reading it from the on-disk tag log.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of tag.<br>
+<b><font color="#000080">Results:</font></b> <br>
+any:value, last logged string or number<br>
+num:time, timestamp<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Tag does not exist.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.list"><b>DB.list</b></a></dt>
+<dd><code> tab:tags=DB.list(obj:db,[str:pattern])</code><br>
+List the tags of the database on which this method is called. When the optional pattern using '?' or '*' wildcards is specified, only those tags matching the pattern will be returned. The tags are returned in case-independent sort order. This implies that base tags are listed before their meta tags.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+[str:pattern], pattern with which to filter the tag list.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:tags, list of tag names.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.logsize"><b>DB.logsize</b></a></dt>
+<dd><code> num:size=DB.logsize(obj:db,str:tag)</code><br>
+Returns the number of values (numbers or strings) contained in the tag's log.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag.<br>
+<b><font color="#000080">Results:</font></b> <br>
+num:size<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Tag does not exist.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.lookup"><b>DB.lookup</b></a></dt>
+<dd><code> obj:db=DB.lookup([str:name])</code><br>
+Looks up the database with the given name and returns a database object that allows method calls on that database. When no database name is specified, an object representing the current database is returned. Database objects have a "name" attribute which holds the database name.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+[str:name], name of the database.<br>
+<b><font color="#000080">Results:</font></b> <br>
+obj:db, database object.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No such database.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.mode"><b>DB.mode</b></a></dt>
+<dd><code> str:mode=DB.mode(obj:db)</code><br>
+Returns the mode of the database: "locked", "unlocked", "live", or "mirrored".<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:mode<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.reconfigure"><b>DB.reconfigure</b></a></dt>
+<dd><code> DB.reconfigure(obj:db,str:tag,tab:config)</code><br>
+Reconfigures a tag in the database on which this method is called. The tag will retain its prior settings for any omitted configuration elements. Some elements cannot be reconfigured after the tag has been created and, if specified, will be ignored. To see what elements can reconfigured refer to the "Configure" dialog of the tag manager.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag to configure.<br>
+tab:config, configuration table with optional entries.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Database is locked.<br>
+Tag does not exist.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.subset"><b>DB.subset</b></a></dt>
+<dd><code> tab:tags=DB.subset(obj:db,str:subset)</code><br>
+Returns the names of the tags in the specified subset.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:subset, name of subset.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:tags, tag names.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.subsets"><b>DB.subsets</b></a></dt>
+<dd><code> tab:subsets=DB.subsets(obj:db)</code><br>
+Returns the names of any tag subsets defined for the database.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:subsets, subset names.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.tags"><b>DB.tags</b></a></dt>
+<dd><code> I32:tags=DB.tags(obj:db)</code><br>
+Returns the number of tags present in the database (including meta tags).<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:tags<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

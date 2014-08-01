@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Datatypes</title>
+</head>
+
+<body>
+
+<h3>Data types</h3>
+
+<p>Data can be passed between
+the Lua and LabVIEW side by means of a Lua stack. To pass data to Lua, use <a href="API.html#LuaVIEW Push _poly_.vi">Push
+(poly)</a> to push data onto the stack. To retrieve data from Lua, use <a href="API.html#LuaVIEW Pull _poly_.vi">Pull
+(poly)</a> to pull elements off the stack. Both VIs are polymorphic and allow
+the type of data
+being pushed or pulled to be selected. This document details which types are
+supported and what conversions are made when translating them between Lua and
+LabVIEW: </p>
+
+<ul>
+  <li><a href="#Numerical types">Numerical types</a></li>
+  <li><a href="#Strings">Strings</a></li>
+  <li><a href="#Booleans">Booleans</a></li>
+  <li><a href="#Compound data">Compound data</a></li>
+  <li><a href="#Lots of compound data">Lots of compound data</a></li>
+  <li><a href="#Restrictions on compound data">Restrictions on compound data</a></li>
+  <li><a href="#Enums">Enums</a></li>
+  <li><a href="#Paths">Paths</a></li>
+  <li><a href="#32-bit refnums">32-bit refnums</a></li>
+  <li><a href="#String refnums">String refnums</a></li>
+  <li><a href="#LuaVIEW objects">LuaVIEW objects</a></li>
+</ul>
+<h4><a name="Numerical types">Numerical types</a> </h4>
+
+<p>Lua has just one numerical type, the &quot;number&quot; type, which uses
+double precision floating point representation. This implies that it can store
+all the LabVIEW integer types as well as single and double precision floats
+without loss of information. Use <a href="API.html#LuaVIEW Push _number_.vi"> Push
+(number)</a> and <a href="API.html#LuaVIEW Pull _number_.vi">
+Pull (number)</a> for both singles (wire with conversion dots) and doubles. All
+LabVIEW integer types have corresponding push and pull
+VIs. The <a href="lv_c-library_functions.html">&quot;lv&quot;
+C library</a>  contains functions to perform bit-wise and overflow-sensitive
+operations on Lua numbers that hold integer values. </p>
+
+<p>To avoid unintended information loss, no push and pull support is provided for extended
+precision floats, complex numbers, physical numbers (with associated units), and 128-bit
+timestamps. If such types must be passed and the information loss is tolerable,
+wire an explicit conversion to/from a
+supported type before/after pushing or pulling. </p>
+
+<h4><a name="Strings">Strings</a> </h4>
+
+<p>Lua has a string type that is precisely compatible with LabVIEW strings: like
+a LabVIEW string, a Lua string can be of arbitrary length and hold all 8 bit
+character values, including null characters. Use <a href="API.html#LuaVIEW Push _string_.vi"> Push
+(string)</a> and
+<a href="API.html#LuaVIEW Pull _string_.vi">
+Pull (string)</a>  to pass strings to/from Lua. </p>
+
+<h4><a name="Booleans">Booleans</a> </h4>
+
+<p>Both LabVIEW and Lua have Boolean types. Use <a href="API.html#LuaVIEW Push _boolean_.vi"> Push
+(boolean)</a> and
+<a href="API.html#LuaVIEW Pull _boolean_.vi">
+Pull (boolean)</a>  to pass Booleans to/from Lua. </p>
+
+<h4><a name="Compound data">Compound data</a> </h4>
+
+<p>Compound data (a combination of more primitive data elements) such as an
+array or cluster can be represented using a Lua table. To remove the need for
+passing such data element-by-element, LuaVIEW provides <a href="API.html#LuaVIEW Push _flat data_.vi">
+Push (flat data)</a> and <a href="API.html#LuaVIEW Pull _flat data_.vi">
+Pull (flat data)</a> for
+pushing and pulling compound data. These functions require a type descriptor
+as can be obtained from &quot;Flatten To String&quot;, &quot;Variant To
+Flattened String&quot;, or the &quot;Type Descriptor&quot; control/indictor
+property. To understand what these VIs do it helps to think of <a href="API.html#LuaVIEW Push _flat data_.vi">
+Push (flat data)</a> as &quot;Unflatten To Lua&quot; and <a href="API.html#LuaVIEW Pull _flat data_.vi">
+Pull (flat data)</a> as &quot;Flatten From Lua&quot;. By combining them with
+their LabVIEW unflatten and flatten complements, compound data of arbitrary
+complexity and nesting can be passed. </p>
+
+<p>To push an array or cluster to Lua, first use &quot;Flatten To String&quot;: </p>
+
+<p><img border="0" src="pics/pushing_compound.png" width="230" height="88"> </p>
+
+<p>To pull and array or cluster from Lua while requiring that it be fully
+specified, convert the pulled flat data using &quot;Unflatten From String&quot;
+and leave the default data input unwired: </p>
+
+<p><img border="0" src="pics/pulling_compound.png" width="459" height="121"> </p>
+
+<p>Note that there is no need to examine the error output of &quot;Unflatten
+From String&quot; since the pull is guaranteed to either return valid flat data
+matching the type descriptor, or an error and an empty string. To pull an array
+or cluster with optional substitution of default data, proceed as follows: </p>
+
+<p><img border="0" src="pics/pulling_default.png" width="503" height="117"> </p>
+
+<p>When the stack is empty or contains a nil, the entire default array/cluster
+is substituted. When a cluster is required, and the table is lacking some
+entries corresponding to cluster elements, the appropriate elements will be
+substituted from the default cluster. Think of it as a &quot;Bundle By
+Name&quot; that does not specify all cluster elements. This also works for
+nested clusters, but not for clusters contained in arrays. </p>
+
+<p>To push a variant <i>without</i> any attributes it may have, first use
+&quot;Variant To Flattened String&quot;: </p>
+
+<p><img border="0" src="pics/pushing_a_variant.png" width="177" height="85"> </p>
+
+<p>To pull data into a variant, convert the pulled flat data using
+&quot;Flattened String To Variant&quot;: </p>
+
+<p><img border="0" src="pics/pulling_a_variant.png" width="262" height="85"> </p>
+
+<p>Be sure to <i>wire the variant output</i> before testing your VI: there is a
+null pointer bug in LabVIEW 7.0 that manifests itself when executing
+&quot;Flattened String To Variant&quot; without a wired variant output. </p>
+
+<h4><a name="Lots of compound data">Lots of compound data</a> </h4>
+
+<p>The flat data push and pull VIs come in reentrant and non-reentrant versions that are otherwise equivalent. When lots of compound data is to be pushed or pulled,
+use the reentrant version so that the non-reentrant variant is never blocked for
+a prolonged time. Solely using the reentrant version is sure to prevent
+contention, but reentrant VIs use up more memory, particularly when placed on
+the diagram of a VI that is a template or itself reentrant. In general, the
+optimum compromise is to use reentrant VIs only when there is a real risk of
+contention. </p>
+
+<h4><a name="Restrictions on compound data">Restrictions on compound data</a> </h4>
+
+<p>Since Lua cannot represent all types that LabVIEW can, and vice versa, there
+are some restrictions on the compound data that can be handled: </p>
+
+<ul>
+  <li>Currently, compound data may contain only the following data types:
+    arrays, clusters, any of the integer types, single precision floats, double
+    precision floats, strings, paths, Booleans, enums, and most flavours of
+    refnum (see below).</li>
+  <li>All cluster elements must have unique names so that a table with string
+    keys can be used to represent them.</li>
+  <li>When converting a table into a cluster, it may only contain entries with
+    string keys, and these keys must match names of cluster elements.</li>
+  <li>When pushing a multi-dimensional array, it may not have zero-length
+    dimensions that precede dimensions of non-zero length since this cannot be
+    uniquely represented using tables. A multi-dimensional array with all
+    dimensions set to zero-length is represented with an empty table. Note that
+    the number of dimensions is contained in the type descriptor.</li>
+  <li> When pulling multi-dimensional arrays from a nested
+table, the tables at the same level of nesting must have the same number of
+array elements. For example, when an array with two dimensions and integer
+entries is required, the table <code>{{1,2},{3,4}}</code> is valid and the
+    table
+<code>{{1,2},{3}}</code>  is invalid.</li>
+</ul>
+
+<p> When one of
+these restrictions is violated, a descriptive error will be returned. There are
+also a couple of instances where there are less restrictions on the data than
+you might expect:</p>
+
+<ul>
+  <li>When pulling a table into an array, the entries
+at key [1], [2], [3], and so on, are converted until no further entry is found.
+Other entries, e.g. entries with string keys, are ignored. This
+implies that you can annotate an array-like table, but loose the annotation on
+conversion to a LabVIEW array.</li>
+  <li>Using <a href="API.html#LuaVIEW Push _flat data_.vi">
+Push (flat data)</a> and <a href="API.html#LuaVIEW Pull _flat data_.vi">
+Pull (flat data)</a>  it is also possible to pass single data elements
+    provided that they belong to one of the data types that are allowed as part
+    of compound data. This might seem useless since there are type-specific push
+    and pull VIs that are easier to wire. However, it is useful for generalizing
+    an implementation by having the data type to be passed be dynamically
+    determined through a type descriptor. See the implementation of <a href="luaview_functions.html#VI.get_control">VI.</a><a href="luaview_functions.html#VI.get_control">get_control</a>
+    for an example.</li>
+</ul>
+
+<p>Note that Lua tables with string keys as used for clusters do not have a defined
+    entry order: the keys are hashed for speedy lookup. When you need to process
+    entries based on the cluster order, use the <b>include cluster
+    order</b> option of <a href="API.html#LuaVIEW Push _flat data_.vi">
+Push (flat data)</a>.</p>
+
+<h4><a name="Enums">Enums</a> </h4>
+
+<p>Lua does not have an enum type. However, it is possible to convert an
+enum value into a string. The reverse is possible as long as the string
+corresponds to one of the enum items. Thus, it is possible to represent any
+LabVIEW enum as a Lua string. Representing the enum as a Lua number is not
+desirable since this makes for less readable scripts that become outdated when
+items are added or removed from the LabVIEW enum definition. </p>
+
+<p>To push an enum as a string to Lua use &quot;Format Into String&quot;
+followed by <a href="API.html#LuaVIEW Push _string_.vi">Push (string)</a> 
+as follows: </p>
+
+<p><img border="0" src="pics/pushing_an_enum.png" width="193" height="83"> </p>
+
+<p>To pull a string as an enum from Lua, use &quot;Flatten To String&quot;, <a href="API.html#LuaVIEW Pull _flat data_.vi">Pull (flat
+data)</a>, and &quot;Unflatten From String&quot; as follows: </p>
+
+<p><img border="0" src="pics/pulling_an_enum.png" width="347" height="121"> </p>
+
+<p>When <a href="#Compound data"> pushing and pulling compound data</a> containing an
+enum, the conversion to/from a string happens automatically. When a LuaVIEW
+function has an enum parameter or result, the <a href="creating_functions.html#The calling synopsis">calling
+synopsis</a> should specify a <b>str</b>  typecode. </p>
+
+<h4><a name="Paths">Paths</a> </h4>
+
+<p>LabVIEW paths are represented with Lua strings. Use <a href="API.html#LuaVIEW Pull _path_.vi">
+Push (path)</a> to push a Lua string converted from a LabVIEW path. The
+conversion is identical to LabVIEW's &quot;Path to String&quot; conversion
+function. Use <a href="API.html#LuaVIEW Pull _path_.vi">Pull (path)</a> to pull a Lua string and convert it into a LabVIEW path. By
+default, any occurrences of &quot;\&quot; and &quot;/&quot; in the string are
+first substituted with the platform-specific path separator. This behaviour may not
+be desirable because &quot;\&quot; and &quot;/&quot; can occur in file or
+directory names on some platforms. To disable substitution, use
+<a href="lv_c-library_functions.html#lv.substitute_separators"><code>lv.substitute_separators()</code></a>.
+The further string to path conversion is identical to LabVIEW's &quot;String to
+Path&quot; conversion function. When passing paths as part of compound data, the
+same conversions are performed on pushing and pulling. When a LuaVIEW
+function has a path parameter or result, the <a href="creating_functions.html#The calling synopsis">calling
+synopsis</a> should specify a <b>str</b>  typecode. Note that including a &quot;\&quot; in a string can be tricky because Lua
+uses backslash as the escape character inside quoted strings. Either escape
+the backslash, e.g. <code>"foo\\bar"</code>, or use a verbatim string, e.g. <code>[[foo\bar]]</code>. </p>
+
+<p>If you do not care about script portability, specify platform-specific
+paths as part of scripts and disable separator substitution. When script
+portability is important, the conversion of &quot;\&quot;
+and &quot;/&quot;, allows either to be used as a valid separator for all
+platforms. The substitution with the platform-specific separator is done
+automatically when pulling a path to LabVIEW.
+When passing a path to a C function (e.g. one of the functions in the &quot;io&quot; library) no
+substitution is performed. To force a conversion use the <a href="lv_c-library_functions.html#lv.topath"><code>lv.topath()</code></a>
+function. To assist with constructing valid paths through string concatenation, the global <code>_SEP</code> is defined when opening a LuaVIEW state. It holds the platform-specific
+path separator character as a string. </p>
+
+<p>Relative directory paths specified as string constants are not portable to
+the Mac: on Linux and Windows,
+relative paths start without a separator, on the Mac, a relative path must start
+with a separator. There are a few example scripts that include such paths. Add a leading
+separator in order to make them work on the Mac as well. Since Mac OS X is
+UNIX-based, it might well be that future LabVIEW versions for the Mac will adopt
+the UNIX path conventions. Note that the LabVIEW path data type is
+perfectly portable. An alternative road to portability is therefore to store paths on
+the LabVIEW side and have scripts fetch them as required. </p>
+
+<h4><a name="32-bit refnums">32-bit refnums</a> </h4>
+
+<p>LabVIEW refnums come in all kinds of flavours. Most are represented as a 32-bit
+value (the ones with thin grey-green wires). 32-bit refnums typically reflect C/C++ objects or data structures that are
+not meant to be visible to LabVIEW. In Lua, there is not much that can be done with refnums other than pass them
+back to LabVIEW. In particular, it is not allowed to modify refnums or otherwise
+interpret their value. To make this impossible, 32-bit refnums are
+represented on the Lua side as a &quot;light user data&quot;, which is an opaque 32 bit value.
+Two such values can be compared for equality when they belong to the same
+flavour. Refnums belonging to different flavours are not guaranteed to have
+different values. </p>
+
+<p>To pass a single 32-bit refnum to and from Lua, one option is to use <a href="API.html#LuaVIEW Push _refnum_.vi">Push
+(refnum)</a> or <a href="API.html#LuaVIEW Pull _refnum_.vi">Pull (refnum)</a>
+respectively. These VIs allow a &quot;Generic&quot; refnum to be passed. A
+specific flavour of 32-bit reference will therefore need to be converted to/from the &quot;Generic&quot; class before/after pushing/pulling. When the refnum
+you must pass is in a subclass of &quot;Generic&quot;, it is possible to use
+&quot;To More Specific Class&quot; after pulling and &quot;To More Generic
+Class&quot; before pushing. When the refnum is part of a different class
+hierarchy, LabVIEW requires some more persuasion. See the implementation of <a href="API.html#LuaVIEW Cast VI Ref to Gen Ref.vi">
+Cast VI Ref to Gen Ref</a>  for an example of how this can be made to work. Alternatively, 32-bit refnums can be passed as flat data, be it single refnums
+or as part of compound data. Most flavours are supported by <a href="API.html#LuaVIEW Push _flat data_.vi">
+Push (flat data)</a> and <a href="API.html#LuaVIEW Pull _flat data_.vi">
+Pull (flat data)</a>. To see if a flavour is supported, simply try to to push it
+as flat data. When this does not result in an error, it is supported. Be sure to
+not pull a refnum as the wrong flavour: though LabVIEW is likely to complain
+when given such a refnum, there is a small chance of terminal confusion. </p>
+
+<p>When you have some LabVIEW data structure that is not meant to be
+visible to Lua and can be referenced via a 32-bit value, for example an array
+index
+that points to that data structure, an interesting option is to pass it as a 32-bit refnum to
+Lua. By using a refnum instead of a 32-bit integer, you make explicit that the
+value is opaque and make it impossible for Lua to interpret or modify the value. </p>
+
+<h4><a name="String refnums">String refnums</a> </h4>
+
+<p>Some LabVIEW refnums are represented internally as a string value (the ones
+with thick purple-brown wires). VISA resource names and IVI logical names are
+examples of such refnums. String refnums typically reflect an instrument
+connected to some bus. The bus driver usually enumerates the connected
+instruments and assigns names to them. On Windows, this process can be monitored
+and influenced using the &quot;Measurement and Automation Explorer&quot; (MAX).
+As long as the set of connected instruments, their IDs (if any), and the MAX configuration
+are not changed,
+these refnum strings (resource names) can be assumed to remain invariant. </p>
+
+<p>On the Lua side, string refnums are also represented as strings. String
+refnums, be it single refnums or as part of compound data, can be passed as flat
+data. Most flavours are supported by <a href="API.html#LuaVIEW Push _flat data_.vi">
+Push (flat data)</a> and <a href="API.html#LuaVIEW Pull _flat data_.vi">
+Pull (flat data)</a>. To see if a flavour is supported, simply try to to push it
+as flat data. When this does not result in an error, it is supported. </p>
+
+<h4><a name="LuaVIEW objects">LuaVIEW objects</a> </h4>
+
+<p>When you have some LabVIEW-side object/data, and it must be possible to
+operate on or access information about this object/data from the Lua side, it is
+often convenient (for script authors) to be able to treat it as if it were a true Lua
+object. To this end, it is possible
+to create a &quot;LuaVIEW object&quot; using <a href="API.html#LuaVIEW Push _object_.vi"> Push
+(object)</a>. Such objects hold a 32-bit refnum to identify your LabVIEW-side
+object or data, and have an optional attached method table holding LuaVIEW functions
+that operate on that type of object. In addition, you can attach read-only
+attributes to the object using <a href="API.html#LuaVIEW Set Object Attribute.vi">
+Set Object Attribute</a>. Such objects are represented as &quot;user data&quot; in
+Lua, and are passed by reference. </p>
+
+<p>Given a LuaVIEW object, you can use the Lua method calling syntax
+(<code>&lt;object&gt;:&lt;method&gt;(&lt;arguments&gt;)</code>) or access attributes
+(<code>&lt;object&gt;.&lt;attribute&gt;</code>). Calling methods requires less typing since
+the first (object) argument can be omitted. Also, it is impossible to pass the
+wrong type of object to a function when calling it as a method. Use <a href="API.html#LuaVIEW Pull _object_.vi"> Pull
+(object)</a> 
+to retrieve the object/data refnum. For an example of LuaVIEW object usage, see the
+VIs that implement the <code>VI.*</code> LuaVIEW functions as well as the
+scripts in the &quot;luaview/examples/VI handling&quot; subdirectory. </p>
+
+<hr>
+<p><a href="manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

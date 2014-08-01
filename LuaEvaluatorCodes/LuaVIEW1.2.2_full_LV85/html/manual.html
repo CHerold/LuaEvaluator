@@ -1,0 +1,1052 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>LuaVIEW Manual</title>
+</head>
+
+<body>
+
+<h2><img border="0" src="pics/logo.png" width="128" height="128">     Manual for release
+1.2.0</h2>
+<p>The LuaVIEW toolkit can be used for <a href="http://en.wikipedia.org/wiki/Script_(computer_programming)"> scripting</a> LabVIEW
+and for creating scriptable LabVIEW applications. The toolkit embeds the simple yet powerful <a href="http://www.lua.org/about.html">Lua scripting language</a>
+into <a href="http://www.ni.com/labview/">LabVIEW</a>. It allows Lua scripts to
+be run inside the LabVIEW runtime.
+Custom LabVIEW-implemented functions can be called from Lua so that there are no
+limits to what can be scripted. LuaVIEW also provides tools for architecting modular LabVIEW applications with
+improved error handling.</p>
+<hr>
+<h3><a name="Contents">Contents</a></h3>
+<ul>
+  <li><a href="#About LuaVIEW">About LuaVIEW</a></li>
+  <li><a href="#About Lua">About Lua</a></li>
+  <li><a href="#Requirements">Requirements</a></li>
+  <li><a href="#Installation">Installation</a></li>
+  <li><a href="#Getting started">Getting started</a></li>
+  <li><a href="#What use is it">What use is it?</a></li>
+  <li><a href="#Typical use">Making an application scriptable</a></li>
+  <li><a href="#Why all the other stuff?">Why all the other stuff?</a></li>
+  <li><a href="#LuaVIEW reference">LuaVIEW reference</a>
+    <ul>
+      <li><a href="#Calling LabVIEW from Lua">Calling LabVIEW from Lua</a></li>
+      <li><a href="#Function libraries">Function libraries</a></li>
+      <li><a href="#Registering function VIs">Registering function VIs</a></li>
+      <li><a href="#The LabVIEW API">The LabVIEW API</a></li>
+      <li><a href="#Scripts">Scripts</a></li>
+      <li><a href="#Tasks">Tasks</a></li>
+      <li><a href="#Swapping tasks">Swapping tasks</a></li>
+      <li><a href="#Configuration">Configuration</a></li>
+      <li><a href="#Error handling">Error handling</a></li>
+      <li><a href="#User interfaces">User interfaces</a></li>
+      <li><a href="#Modules">Modules</a></li>
+      <li><a href="#Exporting module functions">Exporting module functions</a></li>
+      <li><a href="#Lua-driven state machines">Lua-driven state machines</a></li>
+      <li><a href="#Plug-ins">Plug-ins</a></li>
+      <li><a href="#Calling Lua from LabVIEW">Calling Lua from LabVIEW</a></li>
+      <li><a href="#Unexpected features">Unexpected features</a></li>
+    </ul>
+  </li>
+  <li><a href="#Glossary">Glossary</a></li>
+</ul>
+<h3>Appendices</h3>
+<ul>
+  <li><a href="datatypes.html">Data types</a></li>
+  <li><a href="luaview_functions.html">LuaVIEW functions</a>: lists the LabVIEW-side
+    functions included in the LuaVIEW distribution</li>
+  <li><a href="lv_c-library_functions.html">The &quot;lv&quot; C library</a>:
+    lists the LuaVIEW-specific C functions</li>
+  <li><a href="API.html">API VIs</a></li>
+  <li><a href="preprocessor_keywords.html">The pre-processor</a>: keywords for
+    configuring tasks</li>
+  <li><a href="creating_functions.html">How to create Lua-callable LabVIEW functions</a>
+  </li>
+  <li><a href="calling_lua.html">How to create LabVIEW-callable Lua functions</a>
+  </li>
+  <li><a href="performance.html">Performance considerations</a>
+  </li>
+  <li><a href="organization.html">Organization of the LuaVIEW distribution</a>
+  </li>
+  <li>
+<a href="calling_labview.html">The LuaVIEW calling
+mechanism</a>
+  </li>
+</ul>
+<hr>
+<h3><a name="About LuaVIEW">About LuaVIEW</a></h3>
+<p><a href="http://www.citengineering.com/LuaVIEW/">LuaVIEW</a> is copyright ©
+2003-2004 by <a href="http://www.citengineering.com">CIT Engineering</a>.
+Current and past releases can be <a href="http://www.citengineering.com/LuaVIEW/download.html">downloaded
+here</a>.
+LuaVIEW can be used free of charge for non-commercial purposes. Commercial use requires a
+<a href="http://www.citengineering.com/LuaVIEW/licensing.html">license</a>. LuaVIEW was implemented and documented by
+Albert-Jan Brouwer.</p>
+<h3><a name="About Lua">About Lua</a></h3>
+<p><a href="http://www.lua.org/about.html">Lua</a> 5.0 is an open sourced scripting language
+designed for embedding and extension. The language is copyright © 2003-2004
+Tecgraf, PUC-Rio and is licensed under the terms of the <a href="http://www.lua.org/license.html">MIT</a><a href="http://www.lua.org/license.html">
+license</a>.</p>
+<h3><a name="Requirements">Requirements</a></h3>
+<p> LuaVIEW requires LabVIEW 7.0 or higher for Linux, Mac OS X, or Windows.</p>
+<h3><a name="Installation">Installation</a></h3>
+<p>To install LuaVIEW, after having <a href="http://www.citengineering.com/LuaVIEW/download.html">downloaded</a> the
+distribution archive, unpack the archive to a directory of your choice. If
+desired, the root distribution directory can be renamed: when upgrading to a new
+release, using the same name and location as before ensures that LabVIEW will
+not have to search for VIs when loading your project. Inside the <a href="organization.html"> distribution directory</a> there is a VI named "Install
+CIN.vi&quot;. Load and run it to install the appropriate CIN
+for your OS. Next, recompile all VIs by starting a Tools&gt;Advanced&gt;Mass
+Compile of the distribution directory. Go
+fetch a cup of coffee while it runs.</p>
+<p>Now LuaVIEW should be ready for use. To verify that this is in fact the case,
+load "Unit Tester.vi" from the distribution directory and have
+it run all tests. All tests should pass. If not, please <a href="http://www.citengineering.com/luaview/bugs.html"> file a bug
+report</a>. When you find yourself making frequent use of LuaVIEW, it is handy to
+also install the API VI palette. Use
+Tools&gt;Advanced&gt;Edit Palette Views to do so. The file luaview/luaview.mnu
+holds the submenu to be inserted.</p>
+<h3><a name="Getting started">Getting started</a></h3>
+<p> Lua has
+all the typical features you might expect of a text-based language: a means of
+executing
+code conditionally (<code>if</code>, <code>then</code>, <code>else</code>),
+looping constructs (<code>for</code>, <code>while, repeat-until</code>), named variables, functions,
+and the ability to handle primitive
+types and compound data. To be suitable for
+scripting by relatively novice users, the language was specifically designed so
+that its basic features are simple, scripts are readable, and advanced features
+remain hidden until required.</p>
+<p>To quickly try out a script, load the &quot;Task Manager&quot; user interface
+VI located in the luaview/ directory and run it. The &quot;quick script&quot; tab
+together with the &quot;insert new&quot; and &quot;Run Quick&quot; buttons allow you to
+write and run a
+small script such as</p>
+<p><code>print(&quot;Hello world!&quot;)</code></p>
+<p>The first time you run a script there is a noticeable delay. This is caused
+by the loading of function VIs. Once loaded, they remain in memory. Use the
+&quot;Function Manager&quot; user interface VI in the luaview/ directory to
+examine the loaded function VIs.</p>
+<p>Lua has additional features that give it the conciseness and expressiveness
+expected of a modern scripting language. The official language book <a href="http://www.inf.puc-rio.br/~roberto/book/">&quot;Programming
+In Lua&quot;</a>    provides an excellent introduction to the language and also
+covers useful techniques and advanced features. A reference manual, a HTML
+version of the book,
+and other <a href="http://www.lua.org/docs.html">documentation</a>
+is available online. The <a href="http://lua-users.org/wiki/LuaTutorial">tutorial</a>
+offers a hands-on introduction. The <a href="http://lua-users.org/wiki/LuaShortReference">short
+reference</a> can be printed onto a couple of pages that serve as a handy
+reminder while programming. The parts
+of the Lua documentation that are concerned with the embedding and extension C
+API can be skipped because LuaVIEW handles those details for you.</p>
+<p>Though scripts can be modified using a LabVIEW string control, the use of a
+good text editor is recommended. There exist text editors with Lua-specific syntax highlighting,
+and even some integrated development environments (IDEs). See the <a href="http://lua-users.org/wiki/LuaAddons">Lua
+add-ons page</a> for details. The
+typical use of LuaVIEW will involve smallish scripts for which the <a href="http://www.scintilla.org/SciTE.html">SciTE</a>
+text editor offers a good compromise between features and ease of deployment: it does Lua syntax highlighting and code folding, deploys as a
+single executable, and is available for both Linux and Windows. As a convenience, have the file
+association for the &quot;.lua&quot; file extension point to the editor you
+choose.</p>
+<p>When you are not yet familiar with scripting, continue by reading the next few
+sections for a gradual introduction. When you are already familiar with
+scripting, you are probably wondering how your LabVIEW code can be called from
+Lua. This is done by creating Lua-callable LabVIEW functions as detailed in <a href="creating_functions.html">this
+appendix</a>. Function VIs must be <a href="#Registering function VIs">registered</a>
+before scripts can call them.</p>
+<p>Various examples are located in the luaview/examples/ directory. They demonstrate
+how Lua and LabVIEW can be made to interoperate, and how to use some of the LuaVIEW-specific <a href="luaview_functions.html">function VIs</a>
+and <a href="lv_c-library_functions.html">C functions</a>. The VIs in
+the examples directory can be loaded and run. The scripts (with a &quot;.lua&quot; extension) can be started using the
+&quot;Run Local&quot; button of the task manager. Beware that some of the
+examples demonstrate advanced features that make little sense without first
+having read the corresponding manual section. For an example of application
+design have a look at the <a href="clientsrv_manual.html">client-server
+framework</a>.</p>
+<h3><a name="What use is it">What use is it</a>?</h3>
+<p>LuaVIEW is intended for LabVIEW programmers in need of a scripting language.
+Programming languages are Turing-complete so that there is, in principle,
+nothing you cannot use Lua for. In practice, languages have particular strengths
+and weaknesses. Scripting languages are designed to minimize the time required
+to write or modify a program at the expense of speed of execution. Since programmer time is
+much more valuable than CPU time, this tends to be a worthwhile trade-off.</p>
+<p>However, if all you need is
+a scripting language, there are <a href="http://en.wikipedia.org/wiki/Scripting_programming_language">plenty</a> of other options. LuaVIEW makes sense
+only when you need a scripting language that works well <i> with</i> LabVIEW,
+that is, when you are working on some LabVIEW-based project or prefer the
+LabVIEW development environment over alternatives when programming. Since this
+implies that you are comfortable with programming in LabVIEW, it is clear that
+Lua should <i>not</i> be used
+for anything that is easy to implement in LabVIEW. Specifically, LabVIEW makes creating
+graphical user interfaces trivial, is good at high-throughput data acquisition and analysis,
+and allows for easy interfacing to instrumentation on account of the many available
+drivers. This leaves plenty of scope for scripting, as is
+best illustrated with some "use cases":</p>
+<ul>
+  <li>Making an application scriptable.</li>
+  <li>Application architecting through "deep scripting".</li>
+  <li>Run-time dynamics.</li>
+  <li>Error handling.</li>
+  <li>Unit tests and other development scripting.</li>
+  <li>Prototyping.</li>
+</ul>
+<p>Making an application scriptable involves exposing a subset of application
+functionality as Lua-callable functions so that the users of that application
+can write scripts that customize or drive the application, even when it is
+deployed as a built executable. Given the typical
+test and measurement use of LabVIEW, the scripting of test sequences is a likely
+example. Since Lua is well suited for data definition by virtue of
+its table syntax, using Lua for script-based configuration is another option. This type of use,
+which is further detailed in the next section, requires only shallow modifications to an application.</p>
+<p>There is a strategy called "deep scripting" that involves chopping
+up an application into small building blocks that are glued together
+using scripts. See the <a href="clientsrv_manual.html">client-server framework</a>
+for an example of how to glue together an application. Defining the application architecture and
+initialisation through glue scripts simplifies architectural revisions, allows for bottom-up design, and provides better chances for the reuse of
+building blocks between projects. The toolkit predefines a handful of types
+of mostly LabVIEW-implemented building block that cover the most common
+application design requirements. VI templates for easy creation of these
+building blocks as well
+as examples of Lua glue scripts are included. The most useful type of building
+block is the LuaVIEW function: a VI that binds some LabVIEW functionality for
+calling from Lua.</p>
+<p>Since Lua scripts are interpreted (compiled to byte code and executed on a
+virtual machine) at run time, there are opportunities for making
+an application behave more dynamically. The LuaVIEW toolkit makes
+use of both Lua and LabVIEW capabilities to provide methods for loading code on
+demand, late binding of functions, overriding functions, instantiation, and
+reloading/replacing/reprogramming functionality at run time.</p>
+<p>Error handling for non-trivial LabVIEW programs is difficult since LabVIEW
+has no built-in exception mechanism. This makes it hard to separate error
+handling from error sources. By providing a simple exception mechanism to LabVIEW code that is run or
+called from scripts, the toolkit can markedly ease the task of implementing
+proper error handling.</p>
+<p>During development there often are repetitive chores that could use some
+automation. Chores that are easy to handle with scripts include unit/regression
+testing of the software under development, and file management (shell
+scripting), e.g. to prepare for a build or prepare a distribution. See for
+example the unit tests that LuaVIEW uses to test itself.</p>
+<p>Lua can also serve for tasks other than scripting. Its conciseness makes it
+suited for prototyping new algorithms. Occasionally, there is
+need for an existing algorithm or data structure of which no implementation is
+included in the LabVIEW distribution. If performance is of little importance,
+using Lua is an easy solution since the vast
+majority of algorithms and data structures described in the literature translate
+readily into Lua. A dataflow implementation, on the other hand, will typically
+require a redesign.</p>
+<p>Lua is a language that is complementary in nature to LabVIEW. LabVIEW (<a href="#G">G</a>) is
+a graphical dataflow language, Lua is a text-based language that supports
+imperative, functional, and object oriented programming styles. LabVIEW is
+compiled at edit or build time to machine code, Lua is compiled at run time to
+virtual machine byte code. LabVIEW is strictly typed, Lua is dynamically typed.
+The features of the LuaVIEW toolkit are aimed at resolving "impedance mismatches"
+between both languages. The close integration of Lua with LabVIEW thus
+established allows a viable choice between Lua, LabVIEW,
+or a mix of both, when solving particular problems.</p>
+<p>Executive summary: when you are
+married to LabVIEW, you can have Lua as your mistress without risking divorce.</p>
+<h3><a name="Typical use">Making an application scriptable</a></h3>
+<p>To prevent the large feature set from being an obstacle, a guiding principle in implementing LuaVIEW has been to provide convenient
+or automatic mechanisms for the most common types of use while providing additional
+tools that allow for exceptional use cases to be dealt with. To minimize
+confusion, the most common usage scenario, that of making an application
+scriptable by the end users of the application, will be outlined first.</p>
+<p>A LabVIEW application can be made scriptable by exposing a subset of its functionality
+to Lua through custom LabVIEW-side functions that are callable from Lua. This
+allows users to automate repetitive application tasks
+without having to modify the LabVIEW source or having to rebuild and reinstall a
+new executable. Essentially, Lua and the set of exposed functions constitute an
+additional user interface to the application. As with any user interface, it is
+of importance that it "feels natural" and is properly documented.</p>
+<p>The first step is choosing what application actions and information should be
+available in scripts. This depends on the application. Some examples of what
+might need scripting are:</p>
+<ul>
+  <li>Sequences of test actions.</li>
+  <li>Repetitive user interface manipulation.</li>
+  <li>Complex configuration specifications.</li>
+  <li>Data queries.</li>
+</ul>
+<p>The sub VIs, top-level VIs, globals, and so on that contain functionality to
+be made scriptable can be <a href="creating_functions.html">bound</a> using a set of <a href="#Public function"> public function</a> 
+VIs: VIs that pull arguments from the Lua stack, execute LabVIEW
+functionality, and push any results back on the Lua stack. To Lua, these appear like normal functions. When a script starts, each registered public function
+is assigned to a variable so that it can be called via a descriptive name.
+Optionally, function names can be prefixed with a table so as to group
+related functions.</p>
+<p>It is important to reflect on how LabVIEW-side functions appear when used
+from Lua. Directly wrapping subVIs might not
+result in easy-to-use functions. In cases where a
+reference or some other identifier of a LabVIEW-side object is to be passed
+around, consider using the <a href="#LuaVIEW object">object</a>/<a href="#LuaVIEW method">method</a> idiom. Another option is to create a
+Lua library (a script containing a set of Lua function definitions) that wraps more basic LabVIEW-side functions and can be imported into
+the user's script. This has as additional advantage that it provides a
+non-LabVIEW means for users to customize their scripting environment with
+additional convenience functions by way of adjusting or adding library scripts.</p>
+<p>Once the functions are implemented, they must be documented. The LuaVIEW
+toolkit contains a "Function Manager" that assists in the creation and
+documentation of functions and provides for the exporting of overview
+documentation of multiple functions as HTML. This provides the users with an
+indexed reference document in which the details of the various functions can be
+looked up while writing scripts.</p>
+<p>Scripts will typically be run as a <a href="#LuaVIEW Task">LuaVIEW
+task</a>. Tasks can be managed through the "Task
+Manager" and can make use of task configuration and inter-task
+communication features. If your application is synchronous so that it supports
+only a single script at a time, the "Task Manager" is not required. If
+none of the other task-specific features are required, scripts can also be
+executed in-line (like a subVI).</p>
+<h3><a name="Why all the other stuff?">Why all the other stuff?</a></h3>
+<p>LuaVIEW includes features that go beyond providing Lua as an alternate
+language for the LabVIEW platform. The toolkit makes such advanced or
+specialised functionality available
+at development time yet optional at run time: only required functionality need
+be included into an application. This optional functionality is likely to be
+useful when you have a large-scale application with involved
+configuration and initialisation requirements, when you are trying to set up a
+lean server-side application, or when you are trying to
+maximise robustness and minimize latencies.</p>
+<p>This is no coincidence: LuaVIEW was created as
+a subsystem of a scriptable platform
+for implementing tests commissioned by the ESTEC battery test centre, and has
+been spun out as an independent product. The remainder of this section details how the
+additional features of the LuaVIEW toolkit met the needs of that
+particular application in order to provide a
+concrete example of their use.</p>
+<p>The application
+involves a
+platform for setting up and scripting battery and fuel cell tests. Requirements were that test
+stations should be able to manage the testing of multiple batteries, have
+minimal downtime since the tests are costly and can take years, have a low
+latency when initiating test actions, be re-programmable without interrupting
+ongoing tests, allow for configurations to be traceable, and be
+amenable to later customisation and extension with support for new
+instrumentation hardware.</p>
+<p> To reduce the risk of instability and be able to guarantee
+that any such issues are resolvable, the number and complexity of technologies
+other than LabVIEW and Lua was
+minimized. As part of this effort, the test station
+software runs as a built executable that does not include any graphical user interface
+code, which tends to cause
+latencies and increase complexity. Instead, the test station server software is
+accessed over the network via VI server from a remote client application that
+contains all graphical user interfaces.</p>
+<p>Simultaneous test sequences are run as separate tasks. Tasks are also used to
+create all other asynchronous (top-level) contexts on the server, e.g. tasks for
+handling alarms, tasks for logging data, and so on. This reuse makes the task
+features available throughout the system. <a href="#Task message">Task messages</a>
+are used to pass alarm events. Asynchronous operations for which pure LabVIEW is
+best suited, such as handling high-bandwidth data streams, are implemented as <a href="#LuaVIEW plug-in">LuaVIEW
+plug-ins</a>
+that are instantiated and configured from task scripts. Instrumentation
+management and other background services are implemented via <a href="#LuaVIEW module">LuaVIEW
+modules</a>. Downtime is minimized or avoided through <a href="manual.html#Swapping tasks">task swapping</a>
+in conjunction with the ability to replace in-use module <a href="#Exporting module functions">export
+functions</a> and <a href="API.html#re_LuaVIEW Incite.vi">incite</a> services. SCADA tags are made available as <a href="#LuaVIEW object">LuaVIEW
+objects</a> to scripts. <a href="calling_lua.html#Example: expression evaluation">Expression evaluation</a> is used to automatically update
+selected tags in terms of other tags.</p>
+<p>Binary configuration
+files and external configuration tools are avoided. Instead, where possible, the
+configuration of system components is moved into the main script of their task
+or into dedicated scripts containing <a href="calling_lua.html#Example: converting data to/from text">text-based
+configuration</a> definitions.
+By logging these scripts when run or used, the system configuration becomes traceable.
+Since scripts are easily edited, the creation of configuration panels was only
+necessary for the small subset of settings requiring frequent changes. <a href="API.html#LuaVIEW Bootstrap.vi">Bootstrapping</a>, initialisation, and cleanup are also performed via task
+scripts so as to provide convenient error handling and make that the architecture is largely defined and revisable via Lua
+scripts. A large part of the operations performed by such scripts involves the
+running and management of additional tasks.</p>
+<h3><a name="LuaVIEW reference">LuaVIEW reference</a></h3>
+<p>This reference section provides background information on the
+LuaVIEW feature set and links to more detailed documentation. Though mostly
+intended for reference, an attempt was made to order the presented information
+such that later subsections build on information presented in prior subsections.
+If you are new to LuaVIEW, it is advisable to give them a once over.</p>
+<h4><a name="Calling LabVIEW from Lua">Calling LabVIEW from Lua</a></h4>
+<p>The LuaVIEW toolkit provides a <a href="calling_labview.html"> mechanism</a> for calling LabVIEW-side
+functionality from Lua. This allows access to the speed and rich function
+libraries of LabVIEW while retaining the flexibility of the Lua execution
+environment. When LabVIEW is called, arguments and results can be passed. A <a href="datatypes.html">choice
+of data types</a> is available when passing information back and forth between
+LabVIEW and Lua. Obviously, there are some type translation issues that should
+be taken into account. Please refer to the linked document for details.</p>
+<p>Most of the actions that are required when Lua calls LabVIEW occur
+automatically inside C code. Still, there are some implementation requirements
+that LabVIEW-side functions should adhere to. Also, LabVIEW-side functions can
+be created in various flavours that are optimised for different types of use.
+Please refer to <a href="creating_functions.html">this appendix</a> for details
+on creating LabVIEW-side functions.</p>
+<h4><a name="Function libraries">Function libraries</a></h4>
+<p>Scripts can make use of the "base", "debug", "io",
+"math", "os", "string", and "table" C function libraries
+that are a standard part of Lua. For convenience, the functions in the math library
+are set as globals so that they can be called
+without a "math" table prefix. Refer to the
+<a href="http://www.lua.org/docs.html">Lua documentation</a> for information on these function
+libraries. In addition, a
+LuaVIEW-specific C library, the <a href="lv_c-library_functions.html">"lv"
+library</a>, is provided. It mostly contains
+functions that assist with interfacing Lua to LabVIEW, e.g. functions for manipulating LabVIEW-style integers.
+The aforementioned C function
+libraries are statically linked into the LuaVIEW CIN and are therefore always available.
+Further C libraries can be dynamically linked via the Lua-provided <code>loadlib</code> function.
+Several useful libraries with Lua bindings can be found <a href="http://lua-users.org/wiki/LibrariesAndBindings">here</a>.</p>
+<p>The toolkit contains a collection of <a href="#LuaVIEW function VI">LuaVIEW function
+VIs</a> which are <a href="luaview_functions.html">documented here</a>. For
+these functions to be available to scripts, they must first be registered. When
+building an executable, it is advisable to include only those function VIs that
+are of use to your application. The most generally useful functions do not have a
+table prefix to their name, as is the case for the "base" C library. Other functions are grouped under tables/libraries:</p>
+<ul>
+  <li>"dialog": pop-up dialogs for common user queries.</li>
+  <li>"msg": functions for task messaging.</li>
+  <li>"register": various means of registering
+    LuaVIEW function VIs.</li>
+  <li>"sig": functions for task signalling.</li>
+  <li>"task": functions for task manipulation.</li>
+  <li>"VI": methods for handling VIs as <a href="#LuaVIEW object">LuaVIEW
+    objects</a>.</li>
+  <li>&quot;xio&quot;: extra file I/O functions that complement the &quot;io&quot;
+    library.</li>
+</ul>
+<h4><a name="Registering function VIs">Registering function VIs</a></h4>
+<p>Function VIs are either public or private depending on how they are
+registered. Public functions are added to a public registry when registered.
+When a new LuaVIEW state is opened via the <a href="API.html#LuaVIEW Open.vi">Open</a> API VI, all public
+functions in the registry are set for that virtual machine instance. This is
+roughly the same as saying that the
+public functions are set when a script or task starts since this almost always
+happens immediately after creating a new LuaVIEW state. Public functions cannot
+be removed from the registry. They remain loaded while there are open LuaVIEW states that
+use public functions. When the last such LuaVIEW state is closed, the functions
+in the registry are either automatically unloaded or can be explicitly <a href="API.html#LuaVIEW Cleanup Public Registry.vi">cleaned
+up</a>, depending on how you <a href="#Configuration"> configure</a> LuaVIEW. API VIs and corresponding LuaVIEW
+functions (<a href="luaview_functions.html#register.public"><code>register.public</code></a>, <a href="luaview_functions.html#register.public_dir"><code>register.public_dir</code></a>)
+exist for public registration.</p>
+<p>Private functions are registered with a particular LuaVIEW state, typically by a script
+that executes under that state. Use the LuaVIEW
+functions <a href="luaview_functions.html#register.private"><code>register.private</code></a>
+and <a href="luaview_functions.html#register.private_dir"><code>register.private_dir</code></a>
+to do so from a script, or the corresponding API VIs to do so from LabVIEW. When the function VI being registered is not yet
+loaded, it will be on registration. When the LuaVIEW state is subsequently closed, typically
+when the script completes, all references to privately registered function VIs
+are automatically closed as well. This will cause each function VI that is no
+longer referenced from anywhere to be unloaded. The &quot;Function Manager&quot;
+shows the use count of privately registered function VIs.</p>
+<h4><a name="The LabVIEW API">The LabVIEW API</a></h4>
+<p>LuaVIEW provides an application programming interface (API) designed for use
+from LabVIEW. The API consists of callable VIs that are guaranteed to remain upwards
+compatible with future LuaVIEW releases. Use of LuaVIEW VIs that are not part of
+the API should be avoided. Upwards compatibility is ensured by preserving existing connector pane
+inputs and outputs as well as their connector positions. Additional outputs or
+optional inputs might be added to an API VI as these will not affect existing
+use. When an API VI has a typedef input or output, corresponding diagram
+constants should remain connected to that typedef. This allows enums to be
+extended and elements to be added to clusters. Clusters should be bundled and
+unbundled by name.</p>
+<p>The API VIs are documented through
+their built-in description strings and a corresponding <a href="API.html">indexed
+overview of the API</a>. Most included LuaVIEW functions VIs use this API: when a LuaVIEW function is provided
+that serves a particular end, a quick way to learn how to do the equivalent from
+LabVIEW is to look at the diagram of that function. Note that the VIs that
+reside in "private" directories are not part of the API. They are likely to
+change and should
+not be used. The user
+interface related sub VIs and the VIs in the "library" directory are
+not part of the API either, though the latter are unlikely to change much.</p>
+<p> Since Lua runs inside the LabVIEW runtime, all use of Lua must start out with
+a call to one of the LabVIEW API functions, e.g. so as to run a task script or
+compile and synchronously execute a script. Before doing so, the public
+functions used by that script must have been registered, e.g.
+via the registration API VIs. A flexible means of starting Lua from your LabVIEW
+application is to run a <a href="API.html#LuaVIEW Bootstrap.vi">bootstrap</a> script and arrange for all further
+registration and script execution from inside that script.</p>
+<h4><a name="Scripts">Scripts</a></h4>
+<p>To execute Lua code you must provide a script to a <a href="#LuaVIEW state">LuaVIEW
+state</a>. LuaVIEW will run this as a text string through the Lua compiler after
+which execution can commence. Convenience functions are provided that
+encapsulate the opening of a LuaVIEW state, and subsequent script compilation, and execution. These
+functions accept scripts either as strings or as paths pointing to script files.
+Script search directories can be <a href="#Configuration"> configured</a> for the resolution of relative script paths.</p>
+<p>It is advisable to use unique filenames for scripts even when these reside in
+separate directories. This avoids ambiguity when multiple script search
+directories are specified. Also, the name of script files is used when reporting
+errors but the path is omitted for brevity. Using unique filenames makes sure
+that the offending script can be tracked down given an error message. Though
+LuaVIEW does not enforce nor require use of the ".lua" extension for
+script files, its use is recommended.</p>
+<p>The <a href="API.html#re_LuaVIEW Do Script.vi">Do Script</a> API
+VI and corresponding <a href="luaview_functions.html#do_script"><code>do_script</code></a>
+function allow a script to be executed to completion inside the calling
+execution context. More refined control over script execution can be attained by
+using the low level API VIs. LuaVIEW provides an implementation of such control
+infrastructure in the form of tasks.</p>
+<h4><a name="Tasks">Tasks</a></h4>
+<p>It can be desirable to manage the execution of scripts, or to use an
+autonomous script to implement some process or series of actions (think of a
+script containing test steps). Also, a powerful strategy is to split an application architecture into multiple asynchronous
+contexts. This prevents operations that should be independent from blocking each
+other, and provides a further means of dividing up the implementation so as to
+conquer its complexity. LuaVIEW tasks allow for the easy creation of stand-alone script execution contexts
+and are provided with functionality for communication and management.</p>
+<p>A "Task Manager" graphical user interface is provided
+that allows tasks be run and managed manually. The <a href="API.html#re_LuaVIEW Run Task.vi">Run Task</a> and
+<a href="API.html#re_LuaVIEW Do Task.vi">Do Task</a> API VIs allow tasks to be started from LabVIEW. The <a href="luaview_functions.html#run_task"><code>run_task</code></a>
+and <a href="luaview_functions.html#do_task"><code>do_task</code></a> functions allow the
+same from Lua. Note that scripts that normally execute via "Do Script"
+can also be run as tasks, e.g. for testing purposes. The reverse is not
+necessarily the case since task scripts can make use of the task infrastructure
+and by doing so become incompatible with the simple execution context offered by
+<a href="API.html#re_LuaVIEW Do Script.vi">Do Script</a>. The execution context of a task is created by instantiating a VI
+and running it. Consequently, task
+    scheduling is done by the LabVIEW runtime. Each task is given its own <a href="#LuaVIEW state"> LuaVIEW state</a> for executing scripts.</p>
+<p>Several aspects of the execution environment of tasks are configurable. Since
+such configuration has to take place before the task script is executed, it
+cannot be set through executing the script. Still, it is desirable to make the
+task configuration part of the task script so that all information that
+determines the task's behaviour is grouped. To this end, LuaVIEW has a
+pre-processor that extracts <a href="preprocessor_keywords.html">task
+configuration keywords</a> from the task script before it is run. This also
+serves to import additional scripts such as Lua function libraries.</p>
+<p>Though the
+standard Lua C libraries contain functions that perform similar actions at run
+time (e.g. <code>require</code>), the up-front loading and compilation enabled by the pre-processor moves some likely errors from
+run time to
+initialisation time and allows for the modification of script files without
+affecting running tasks: each task caches its scripts in memory before
+commencing execution. This difference
+in philosophy stems from the fact that Lua is designed to run well on embedded
+systems with small amounts of memory. LuaVIEW, on the other hand, is guaranteed
+to be running on hardware that can handle the LabVIEW runtime so that the extra
+memory required for early compilation and script caching is likely to be small
+relative to the available memory.</p>
+<p>The list of tasks shown in the "Task Manager" displays a mode for
+each task. A task can determine it's own mode via the <a href="luaview_functions.html#task.mode"><code>task.mode</code></a>
+function. Tasks can be in one of the following modes:</p>
+<ul>
+  <li><b>initializing:</b> The task is busy loading, compiling, executing import
+    scripts, or doing any other initialisation work.</li>
+  <li><b>running:</b> The task is executing, its launching context has moved on
+    to do other things and might no longer exist.</li>
+  <li><b>executing:</b> The task is executing, but the launching context is
+    waiting for it to complete.</li>
+  <li><b>paused:</b> The task is temporarily interrupted and waiting for a
+    resume signal.</li>
+  <li><b>error:</b> The task has come to a halt because of a run-time error.</li>
+  <li><b>swapping:</b> The task is in the process of being <a href="#Swapping tasks">swapped</a>.</li>
+</ul>
+<p>Tasks can handle the following management
+signals. These can be sent programmatically or manually via the "Task
+Manager":</p>
+<ul>
+  <li><b>resume:</b> Instructs a task to resume when it is paused.</li>
+  <li><b>pause:</b> Pause execution.</li>
+  <li><b>swap:</b> Notifies a task that the current script(s) are to be <a href="#Swapping tasks">swapped</a>
+    with new script(s).</li>
+  <li><b>stop:</b> Stop execution and clean up.</li>
+  <li><b>confirm:</b> Confirm the error if the task is in error mode.</li>
+</ul>
+<p>Several options exist to allow or disallow signals and to implement custom
+handling of signals in Lua. There is no obligation to use tasks and their features. If you do
+not require the extra functionality offered by tasks, simply run scripts in-line, e.g. using the <a href="API.html#re_LuaVIEW Do Script.vi">Do Script</a> API
+VI, and use the standard C library functions that come with Lua to do script
+management from within scripts.</p>
+<h4><a name="Swapping tasks">Swapping tasks</a></h4>
+<p>Swapping a task involves replacing its script(s) without removing the task
+from the task list. This can be done manually
+        via the &quot;Task Manager&quot; or programmatically via the <a href="API.html#LuaVIEW Swap Task.vi">Swap
+        Task</a> API VI or <a href="luaview_functions.html#swap_task"><code>swap_task</code></a>
+ function. Though a task can be stopped after which a new script is run,
+swapping a task minimizes downtime and provides better opportunities for
+continuation of service. This is of importance when the task monitors, polls, or
+controls some critical resource or provides a message-based service that must
+remain available.</p>
+<p>When a task is
+swapped, the new script and any import scripts are first loaded and compiled.
+Only when this succeeds will the task be switched into <b>swapping</b> mode and sent the <b>swap</b> signal. The default handling of this signal causes
+script execution to be interrupted and any <a href="lv_c-library_functions.html#lv.addcleanup"><code>cleanup
+functions</code></a> to be run. Next, the virtual machine instance on which the
+old script(s) ran is closed. What is retained is the task execution context and message queue. The new
+script or scripts are then executed under a fresh virtual machine instance. The task
+remains in <b>swapping</b> mode for as long as it would remain in <b>initializing</b>
+mode when run normally: by default the task switches to <b>running </b>or <b>executing</b>
+mode when the first line of the main script is executed; when the <a href="preprocessor_keywords.html#defer">defer</a>
+pre-processor keyword is used, this is postponed until the task <a href="luaview_functions.html#task.active"><code>task.active</code></a>
+function is called.</p>
+<p>Some task scripts cannot be swapped because there is no conceivable means of
+cleaning up and restoring their service. Such scripts will want to disallow the swap signal. Other scripts will need to actively participate in the swapping
+process in order to be swappable. For example, a script that manages some external instrument will want
+to avoid resetting the instrument when it is swapped. Such scripts should either
+handle the swap signal themselves or perform initialisation and/or cleanup
+actions that are conditional on the result returned by the <a href="luaview_functions.html#task.mode"><code>task.mode</code></a> function.</p>
+<p>Swapping is one of several features designed for applications that need to
+keep on running while allowing for
+changes to the implementation of services that are in use. Other features that fall into this category are
+the ability to override LuaVIEW functions with alternate implementations and the
+ability to close and re open a module without breaking ongoing calls to its export
+functions.</p>
+<h4><a name="Configuration">Configuration</a></h4>
+<p>The behaviour of LuaVIEW can be tuned via a small set of configuration
+parameters. These parameters are implemented as LabVIEW globals contained in two
+files: luaview/glb_LuaVIEW Configuration Globals.vi and library/glb_Library Configuration Globals.vi.
+They can be adjusted at initialisation time. The default values were chosen to
+work well for most kinds of use. To learn more about individual parameters, read
+their description strings.</p>
+<p>To assist with specifying an alternate configuration at initialisation time,
+a <a href="API.html#LuaVIEW Bootstrap.vi">Bootstrap</a> API VI is provided. It
+allows the configuration to be set via an initialisation script. For an example
+of bootstrapping see luaview/examples/Bootstrapping.vi.</p>
+<h4><a name="Error handling">Error handling</a></h4>
+<p>Many languages have an exception mechanism for error handling. This causes the ongoing function call to be interrupted and the error to
+be passed up through the various calling contexts until a context is encountered
+that catches the error. This allows error handling to be separated from the code
+that defines normal execution. The data-flow nature of LabVIEW makes it unlikely that it
+will ever be able to support such an exception mechanism. Lua on the other hand
+can throw and catch errors. By using Lua scripts to drive initialisation and
+other error prone LabVIEW actions and passing LabVIEW-side errors back to Lua,
+you can build exception handling into a LabVIEW application. On the LabVIEW
+side, error handling is done in the usual manner by passing error clusters via
+dataflow. On the Lua side, errors are strings that are passed implicitly to the
+catching context.</p>
+<p>When an error occurs when executing a Lua script, the error is by default
+propagated to the context from which the script was started. Script execution is
+interrupted and the virtual machine instance and related state of the script is
+closed. It is up to the surrounding context to
+decide whether to process or further propagate the error. LuaVIEW functions for executing scripts (such as <a href="luaview_functions.html#do_task"><code>do_task</code></a>)
+propagate errors to the script they were called from, causing that
+script to throw an error as well. To allow error handling to be customised, Lua
+and LuaVIEW provide means of catching errors (<code>pcall</code> and <a href="lv_c-library_functions.html#lv.pcall"><code>lv.pcall</code></a>
+ functions), throwing errors (the <code>error</code> function), and performing cleanup
+actions irrespective of any errors (<a href="lv_c-library_functions.html#lv.addcleanup"><code>lv.addcleanup</code></a> function).
+The
+cleanup mechanism was implemented so as to remove the main reason for having to catch
+errors.</p>
+<p>When it comes to errors, running tasks are special since they are part of an asynchronous
+context that is detached from the launching context. Since the launching context
+might no longer exist, errors thrown by running tasks cannot be propagated. On
+the other hand, the launching context will often want to make sure that the task
+it runs makes it safely through its initialisation. To accommodate both needs,
+tasks that are programmatically run start out in
+<b>initializing</b> mode. While in this mode, the launching context is
+blocked and any errors that the task throws are passed back to it.
+This covers the often error prone but brief initialisation actions. After the
+task switches from <b>initializing</b> to <b>running</b>  or mode, the
+launching context is unblocked. Any errors thrown by the task from that time
+onwards cause the task to switch to <b>error</b> mode. Manually run tasks always
+switch to <b>error</b> mode on an error. Though no
+longer running, a task in <b>error</b>  mode remains accessible via the
+"Task Manager" for post-mortem analysis until the error is confirmed by a user.
+If you want such errors to be logged somewhere, specify a logging task via the
+&quot;task error logger&quot; global <a href="#Configuration">configuration</a>
+setting. If instead you want to programmatically handle errors of a running tasks, it is
+possible to specify an error handler via the <a href="preprocessor_keywords.html#handler">--#handler</a> pre-processor
+keyword.</p>
+<p>As opposed to LabVIEW convention, most error clusters returned by LuaVIEW
+    VIs are created with a description as the source string instead of
+    making use of the error code to specify the error. Only when the error
+    occurs inside some standard LabVIEW VI or node are error codes used, but
+such errors, when occurring as part of script execution, are immediately explained by
+means of the error code database. This was
+    done so as to be able to return the specific cause and context of the
+    error instead of being limited to some generic error as specified via a code:
+an error stating "could not open file" is pretty useless; it is much more useful
+to be presented with an
+    error message that includes the path to the file that could not
+    be opened, identifies the script that failed, and specifies the line number
+on which the offending call occurred. To indicate that these errors already are
+    self explanatory, the special user-defined error code 9876 is used so that
+    the handler displaying the error can be customized to skip access to the
+    error code database.</p>
+<p><a name="reading errors"></a>When an error occurs, not all information required to fully describe its
+cause and effect is available. For this reason, an error is
+progressively enhanced as it is propagated through the calling contexts up to
+the catching context. Additional explanatory information is added to the front of the
+error string and context information (call chain and/or stack trace) is appended
+to the end of the error string. This implies that the explanation of the root
+cause can be found in the middle of the error string before the first stack
+trace or call chain.</p>
+<p>As usual, call chains indicate the series of LabVIEW VI calls leading down to
+the error. Stack traces provide similar information for Lua: a list of nested
+function calls with function names and line numbers. An error can include
+multiple call chains and stack traces when it occurs inside nested calling
+contexts that refrain from catching it. This informs the user of all subsystems
+that were halted because of the error. Square brackets enclose script or
+function names and are followed by a semicolon and line number. This allows the
+script lines involved in an error to be located.</p>
+<p>What is missing from this picture is a means of displaying and storing
+errors. Server applications will typically want to log errors. GUI applications
+will want to show a dialog or window. LuaVIEW does not assume nor require a
+particular means since the best course of action will vary from application to
+application.</p>
+<h4><a name="User interfaces">User interfaces</a></h4>
+<p>All user interfaces are optional: they are not required by the scripting core
+which is made up of the API VIs and their subVIs. The &quot;Project
+Manager&quot; and &quot;Unit Tester&quot; are of use only during
+development. The project manager can be used to load collections of
+VIs into memory and perform some management operations on them. It is not
+specific to LuaVIEW, but is handy when used in conjunction with
+LuaVIEW because there can be a lot of dynamically loaded VIs, such as LuaVIEW
+functions, which renders the conventional solution of an "all
+top-level VIs" VI impractical. The unit tester allows the
+automated running of unit test VIs and scripts. A unit test verifies an
+implementation subset.</p>
+<p>The &quot;Task Manager&quot; and &quot;Function Manager&quot; can be useful
+both during development or as part of an application. The task manager allows manual running of tasks, provides
+an overview of active tasks, and allows tasks to be signalled and monitored.
+When an application makes use of multiple parallel scripts that must be manually
+managed by the user, including the task manager or a similar user interface
+might be of value. The function manager lists LuaVIEW or Lua
+functions and can be used to view, create, or export their documentation.
+Including the function manager in a build might be useful when the application
+is set up to allow loading of additional LuaVIEW function VIs or when it is
+anticipated that users will create their own Lua function libraries.</p>
+<p>All user interfaces show online help when the "F1" key is hit.
+Nearly all controls and indicators include a description which is shown in the
+floating context help window when hovering the mouse above them. All but the
+"Project Manager" persist their window size, window position, and the value of selected controls.
+The persistence data is stored in a subdirectory of the LabVIEW default data
+directory (whose location is platform and user specific). To assist with
+programmatically starting or restarting user interface windows, a session object
+is provided that also persists its data there.</p>
+<p>When you build a user interface for use with LuaVIEW, you will normally call
+the API directly. The &quot;Task Manager&quot; and &quot;Function Manager&quot;
+instead call API wrapper VIs through the VI-server protocol. This makes them suited for accessing a scripting environment
+running on a remote machine or in a separate LabVIEW runtime. The wrapper VIs
+also allow for server-side access checks and sometimes aggregate primitive operations so as to reduce network
+load and latency. This capability does however complicate the implementation of
+the &quot;Task Manager&quot; and &quot;Function Manager&quot; so that both are
+ill-suited as examples of building user interfaces that use LuaVIEW. Since
+isolating GUIs and/or remote access is usually not required, the client-server functionality
+is
+disabled in the default LuaVIEW install via stubs in the clientsrv/ subdirectory. To enable
+it, <a href="clientsrv_manual.html#Installation">install</a> the
+client-server application framework.</p>
+<h4><a name="Modules">Modules</a></h4>
+<p>Function VIs as used for public and private functions have some properties
+that can be cumbersome for particular types of use. They must be documented,
+they must be added to a registry before use, and you can implement only a single
+function per VI so that related functions require additional infrastructure in
+order to cooperate or exchange data. LuaVIEW modules provide a more convenient means of
+creating a set of cooperating LabVIEW-implemented functions. Essentially, a
+module is a VI that implements a set of related functions.
+Since all functions are part of the same diagram, they can easily operate on
+shared state. It is possible to open multiple instances of a single module
+implementation. Just as with non-reentrant subVIs, there can only be one caller
+of a module instance at any one time. Therefore, using modules avoids race conditions when
+operating on module state or on some external resource, such as an instrument,
+being managed via the module. To instantiate a module and make its functions available to a script, use the <a href="luaview_functions.html#VI.open_module"><code>VI.open_module</code></a>
+function. To learn how to implement a module, have a look at the <a href="creating_functions.html">guidelines
+for creating functions</a> and review "Module Template.vit" in the
+luaview/examples/VI templates/ directory.</p>
+
+<h4><a name="Exporting module functions">Exporting module functions</a></h4>
+
+<p>Sometimes it is desirable to make selected functions contained in a module
+available for public use by scripts other than the script that opened the
+module. Such exporting is possible simply by prefixing the <a href="creating_functions.html#The calling synopsis">synopsis</a> of the
+subset of functions to be exported with an exclamation mark. Any scripts that
+are started after the module is instantiated will be able to call those
+functions. Care should be taken to use unique names for these functions. In
+particular, when a module might be instantiated multiple times, the export
+functions should be placed in a table with a name that is unique per module
+instance.</p>
+<p>Exported functions provide a convenient synchronous interface to whatever
+resource the module is managing. A typical use case would be the management of
+an instrument. The script that instantiates the instrument module takes care of
+its configuration, initialisation, cleanup, and any periodic actions that must
+be performed with the instrument. The exported functions can then be used by
+test scripts to change experimental conditions. If multiple instruments of the
+same type are connected, multiple module instances can be opened from multiple
+script contexts, each supplying a unique configuration.</p>
+<p>When the the module is closed by its instantiating script, or that script
+comes to a halt, the VI reference of the module instance becomes invalid. One
+might therefore expect that any further calls to its exported functions, from
+other scripts, will fail. It is however possible to specify a timeout for such
+failure. If a new reconfigured instance or an updated version of the module is
+opened within the specified timeout, and it exports the same functions, such
+calls will proceed as usual. Thus, module instances can be swapped without
+bringing down other parts of a system. When allowing such swapping for a module,
+the implementation of its export functions should avoid relying on state
+coherence between calls.</p>
+<h4><a name="Lua-driven state machines">Lua-driven state machines</a></h4>
+<p>LabVIEW does not contain a programming construct that easily allow the
+scheduling of operations in a flexible manner. The conventional solution is to
+create a state machine, typically from a combination of a while loop and case
+structure holding the various states. States are then scheduled via a state
+selector or a state selection queue that is passed between successive states.
+This is fine for small numbers of states and simple scheduling needs. However,
+complex state machines are painful because it requires flipping from state to
+state, and remembering the scheduling actions of each, in order to figure out
+what they do.</p>
+<p>Obviously, a Lua script can be used as a much more flexible means of
+scheduling LabVIEW code. However for needs of moderate complexity, the separate
+script and functions, and the need to register the functions, or instantiate a
+module, is not as nicely self-contained as a LabVIEW state-machine that fits on a single diagram and does not
+require dynamic loading. To enable similar self-contained use, a construct for Lua-driven state machines is
+provided. To create one, specialize the template that can be found under luaview/examples/VI
+templates/. To see one in action, run luaview/examples/Fractal.vi. Top-level VIs
+that contain Lua-driven state machines somewhere in their subVI hierarchy can
+be saved to a development distribution or built without having to worry about
+including any dynamic VIs.</p>
+<h4><a name="Plug-ins">Plug-ins</a></h4>
+<p>LuaVIEW plug-ins can be used when some pure LabVIEW operation must take place
+for a prolonged or indefinite amount of time. A plug-in
+is implemented as a special type of LabVIEW-side function that is called via the
+<a href="luaview_functions.html#call_plugin"><code>call_plugin</code></a> 
+function. Plug-ins can be configured from the script from which they are called,
+and execute inside the context of the calling script, typically as a task. When
+run from a task, plug-ins should respond to task signals. When a plug-in is not
+in memory on being called, it will be loaded first and will be unloaded after it
+returns. Plug-ins are therefore useful in cases where normally a top-level VI
+would be loaded and run, but the same configuration and management as can be applied
+to tasks is desired. Only weak implementation constraints are placed on
+plug-ins. They should have the same connector pane as a function VI, pull the
+provided configuration table, push any results they return, output an error when
+they fail, and handle signals. A reference implementation of a plug-in can be
+found in luaview/examples/VI templates/. As is the case for modules, it is
+possible to have multiple instances of the same plug-in implementation.
+</p>
+<h4><a name="Calling Lua from LabVIEW">Calling Lua from LabVIEW</a></h4>
+<p>LabVIEW is provided with extensive VI libraries and toolkits that cover much
+more functionality than the C libraries included with Lua. The built-in Lua
+functionality therefore provides little cause for calling Lua. Also, LabVIEW diagrams are compiled to
+native machine code and therefore execute considerably faster than equivalent Lua
+code so that calling Lua from LabVIEW is not a good idea if performance is
+critical. Still, there are a few areas of functionality for which no good
+LabVIEW alternative exists and Lua can help out. These include:</p>
+<ul>
+  <li>Implementing an existing subroutine algorithm that as yet lacks a LabVIEW
+    implementation (most algorithms found in the literature cannot be adapted
+    easily to
+    dataflow yet translate directly into Lua).</li>
+  <li>Low-overhead dynamic data structures (those magical Lua tables).</li>
+  <li>Run-time adjustable expressions and routines (Lua comes with a built-in
+    parser/compiler, so why not
+    use that for other stuff?).</li>
+  <li>Recursive functions (LabVIEW is not stack based).</li>
+</ul>
+<p>To learn how to create LabVIEW-callable Lua functions read <a href="calling_lua.html">this
+appendix</a>. Currently, there is no means of having LabVIEW call a Lua function
+that can call back into LabVIEW. Such functionality might be added in a future
+LuaVIEW release, but it is not high on the list of priorities.</p>
+<h4><a name="Unexpected features">Unexpected features</a></h4>
+
+<p>LuaVIEW has some features that work differently from what a Lua, C, or
+LabVIEW programmer would expect:</p>
+
+<ul>
+  <li>When passing data between Lua and LabVIEW, it might seem that Lua has
+    suddenly sprouted LabVIEW numerical data types: I8, U8, I16, U16, I32, and
+    U32. This is not the case. All these types are stored as Lua numbers which
+    are represented as double precision floating point numbers. On going to Lua,
+    no loss of information occurs since a double is more general. On going to
+    LabVIEW, it will be verified that whatever is provided from the Lua side
+    fits without loss of information into the more restrictive LabVIEW
+    type.</li>
+  <li>The functions of the math library are also available in the global
+    namespace. So calling <code>sin</code> directly or calling <code>math.sin</code> via the math
+    library table is both possible. Scripts run with LuaVIEW will tend to be
+    short and make frequent use of math functions so that this trade off between
+    namespace pollution and more readable scripts was considered worthwhile.</li>
+  <li>Certain aspects of the Lua language are likely to catch out the unwary.
+    Numbers that are zero do not evaluate to <code>false</code> in a Boolean expression, as
+    opposed to C or Python. All values that are neither <code>nil</code> nor <code>false</code> evaluate to <code>true</code>.
+    Lua counts from 1 when indexing its array-alike tables, LabVIEW and C count
+    from 0. When using quoted strings, the backslash character serves as an
+    escape character. To add a backslash to a quoted string, use a double
+    backslash. Alternatively, a string can be specified verbatim by enclosing it
+    in a matched [[ and ]]
+    pair.</li>
+  <li>LabVIEW does not run as a console application and as such has no standard
+    I/O streams that work. Consequently the <code>io.read</code> and <code>io.write</code> functions do
+    nothing when used to operate on the default input or output streams as long
+    as these remains set to the standard input and output. Use <code>io.input</code> and
+    <code>io.output</code> to set files as default streams.</li>
+  <li>LabVIEW-side functions require a special <a href="calling_labview.html">calling
+    mechanism</a> that does not allow their calling via C functions (such as <code>pcall</code> or
+    <code>coroutine.resume</code>) or
+    as part of meta methods. A run-time error is thrown when such a call is
+    attempted. For the same reason, handling of task signals is postponed until any
+    ongoing C
+    function or meta method returns.</li>
+  <li>Lua performs automatic garbage collection of resources. Unfortunately,
+    LabVIEW-side or physical resources are not amenable to such automatic collection.
+    Consequently, scripts should take care to release any resources they acquire
+    through LabVIEW-implemented functions. The <a href="lv_c-library_functions.html#lv.addcleanup"><code>lv.addcleanup</code></a> function has been
+    provided to assist with this task.</li>
+  <li>Lua does not have a pre-processor. LuaVIEW does. Its keywords, which are
+    ignored by Lua since they use a comment prefix, serve to configure tasks and
+    allow for the importing of additional scripts before the task is started.</li>
+  <li>Since the Lua virtual machine is contained in a CIN, the experienced
+    LabVIEW programmer might assume that script execution uses an entire thread
+    so that multiple scripts cannot run simultaneously when LabVIEW is forced
+    to single-threading, or that in multi-threading mode the number of
+    simultaneous scripts running inside a LabVIEW execution system is limited to
+    the number of threads reserved per execution system. This is not the case.
+    By virtue of the <a href="calling_labview.html">LabVIEW calling mechanism</a>
+    and <a href="lv_c-library_functions.html#lv.setyielding">auto-yielding
+    functionality</a>, LuaVIEW
+    <u>does</u> support
+    cooperative scheduling in addition to pre-emptive scheduling when executing
+    scripts. Only when LabVIEW calls Lua, or a script calls into a C function or
+    meta method will
+    the current thread remain occupied until the call completes.</li>
+  <li>When running LabVIEW 7.1, 7.0, and some earlier releases in multi-threading mode,
+    the LabVIEW scheduler relies a bit too much on the OS scheduler. This can cause starvation of the user interface thread in a highly
+    time and OS dependent manner when more than a few threads running in other
+    execution systems are kept 100% busy. This problem, which is not LuaVIEW-specific, can be encountered when
+    starting multiple scripts or VIs that perform protracted calculations. Lowering
+    execution priorities makes little difference. Tuning the <a href="lv_c-library_functions.html#lv.setyielding">auto-yielding
+    functionality</a> of LuaVIEW so as to lower the CPU usage of busy scripts can
+    help to avert the problem.</li>
+  <li>LabVIEW ties resource tracking of VI references to the top-level context
+    in which they were opened. VI references get closed when you pass them to a
+    different context and then abort the context that opened them. Thus VI
+    references are not generally transferable between contexts. The same holds
+    for LuaVIEW references since scripts are likely to open associated VI
+    references: when opening a module, when registering a private function VI,
+    for the <a href="creating_functions.html#Reentrance">on-demand
+data space instantiation</a> done for reentrant function VIs, and so on.</li>
+</ul>
+
+<h3><a name="Glossary">Glossary</a></h3>
+<dl>
+  <dt>To qualify the different ways in which one bit of code can
+    be started from another, the following conventions are used:</dt>
+</dl>
+
+<dl>
+  <dt>Execute</dt>
+  <dd>To perform code synchronously (in-line with an existing execution
+    context).</dd>
+  <dt>Do</dt>
+  <dd>The combination of synchronously initialising (loading and/or
+    compilation), executing to completion, and cleaning up code.</dd>
+  <dt>Run</dt>
+  <dd>To have code execute asynchronously (inside a separately created
+    execution context).</dd>
+  <dt>Call</dt>
+  <dd>To execute code while being able to pass it arguments and have it return
+    results.</dd>
+</dl>
+
+<p>Instead of inventing a new vocabulary, constructs and building blocks
+provided by LuaVIEW were given names that mirror the naming of similar concepts
+available in other environments. These names are often but, for brevity, not
+consistently prefixed by "LuaVIEW" and other adjectives so as to
+indicate their more specific meaning.</p>
+<dl>
+  <dt><a name="G">G</a></dt>
+  <dd>The graphical language that is part of the LabVIEW distribution was
+    originally named &quot;G&quot; by National Instruments. These days, the
+    language tends to be called LabVIEW as well. The LuaVIEW documentation does
+    not attempt to fight this: wherever the word LabVIEW is used, you will have
+    to judge from the context whether it pertains to LabVIEW-the-language or
+    LabVIEW-the-platform.</dd>
+  <dt>C function</dt>
+  <dd>A Lua callable function implemented in C. The standard function libraries
+    that come with Lua and the additional "lv" library that comes with
+    LuaVIEW consist of C functions.</dd>
+  <dt>LuaVIEW function</dt>
+  <dd>A Lua callable function implemented in LabVIEW. These come in various
+    flavours.</dd>
+  <dt>LabVIEW-side function</dt>
+  <dd>Same as a LuaVIEW function.</dd>
+  <dt><a name="LuaVIEW function VI">LuaVIEW function VI</a></dt>
+  <dd>A LuaVIEW function implemented as a single VI that is called by reference.
+    To be callable, the VI must be registered, which in turn requires that the
+    VI is given a calling synopsis via the &quot;Edit Documentation&quot; option
+    of the "Function Manager". The name
+    of the VI determines the name of the function variable set on the Lua side.</dd>
+  <dt><a name="Public function">Public function</a></dt>
+  <dd>A LuaVIEW functionVI registered in the public registry. This makes it available to
+    scripts that are subsequently started. This is likely to be the most common
+    type of LabVIEW-side function as it makes things as convenient as possible
+    for the script writer.</dd>
+  <dt>Private function</dt>
+  <dd>A LuaVIEW function VI is specifically
+    registered with each LuaVIEW state that needs to call it. On first registration, the
+    function VI will be loaded into memory. This can be used to hide dangerous
+    functions from general use or make sure that functionality is loaded only
+    when in use.</dd>
+  <dt><a name="Indexed function">Indexed function</a></dt>
+  <dd>A LuaVIEW function specified via a numerical index. LuaVIEW does not
+    specify the LabVIEW mechanism via which the index locates the function.
+    This allows the programmer to implement custom calling mechanisms.</dd>
+  <dt>Lua-driven state machine</dt>
+  <dd>A state machine alike programming construct whose states constitute
+    indexed functions and whose state transitions are driven by a Lua script.</dd>
+  <dt>Lua function</dt>
+  <dd>A Lua callable function implemented in Lua.</dd>
+  <dt><a name="LuaVIEW Task">LuaVIEW Task</a></dt>
+  <dd>An asynchronous execution context for a Lua script. Tasks can be easily
+    instantiated and are provided with communication facilities and execution
+    configuration and management.</dd>
+  <dt>Task signal</dt>
+  <dd>A mechanism via which a task can be requested to perform a particular
+    action such as stopping, pausing, or resuming.</dd>
+  <dt><a name="Task message">Task message</a></dt>
+  <dd>Tasks are provided with a message queue and related functions that allow
+    the exchange of message strings between these asynchronous contexts.</dd>
+  <dt>Main script</dt>
+  <dd>The "top-level" script with which a task is started. This script
+    can configure the task and import further scripts via pre-processor
+    keywords.</dd>
+  <dt>Task script</dt>
+  <dd>Same as a main script.</dd>
+  <dt><a name="LuaVIEW module">LuaVIEW module</a></dt>
+  <dd>A VI implementing multiple Lua-callable functions that can easily share
+    configuration and state. Modules can be instantiated and their functions
+    used from a particular Lua script. In addition, modules can export selected
+    functions for use by any Lua script started after the module was
+    instantiated. It is possible to swap module instances, e.g. for a
+    reconfiguration or update, without risking errors on the part of scripts
+    that use the export functions.</dd>
+  <dt><a name="LuaVIEW plug-in">LuaVIEW plug-in</a></dt>
+  <dd>A protracted bit of pure LabVIEW functionality that is dynamically loaded
+    and called as a LabVIEW-side function that takes a configuration table as
+    its single argument. Plug-ins that are called from a task context and run
+    for an indefinite amount of time are expected to handle task signals.
+    Typically, the task script calling a plug-in serves only to instantiate and
+    configure the plug-in. No implementation is prescribed, but a template that
+    can serve a a starting point is provided. </dd>
+  <dt>Method</dt>
+  <dd>In Lua this denotes a special type of function that takes an object (a
+    table or userdata) as its first argument and is attached to the objects it
+    can operate on. By separating the object and the method key with a
+    ":" instead of ".", Lua allows methods to be called
+    while implicitly passing the attached object as the first argument. This
+    makes that Lua supports the compact method calling idiom familiar from
+    object oriented languages.</dd>
+  <dt><a name="LuaVIEW method">LuaVIEW method</a></dt>
+  <dd>A LuaVIEW function that can be called as a method. Typically, all LuaVIEW
+    methods of a particular LuaVIEW object class are grouped in a single table. It is
+    advisable to start the name of such function tables with an uppercase letter
+    so as to give it the appearance of a Java or Python class and discern it
+    from normal function tables.</dd>
+  <dt><a name="LuaVIEW object">LuaVIEW object</a></dt>
+  <dd>A <a href="datatypes.html#LuaVIEW objects">special data type</a> that allows a LabVIEW-side
+    object or data item to be given the appearance of a Lua-native object.</dd>
+  <dt>LuaVIEW reference</dt>
+  <dd>The reference number of a LuaVIEW state.</dd>
+  <dt><a name="LuaVIEW state">LuaVIEW state</a></dt>
+  <dd>To be able to compile and execute Lua code, a LuaVIEW state must first be opened. This involves the
+    creation of a new virtual machine instance and the allocation of state
+    needed for resource tracking and LabVIEW-side calls. API operations on different
+    states are either mutually independent and thread safe or serialized via a
+    spin lock. Operations on a single
+    state (as passed via a LuaVIEW reference) must be performed serially. For this
+    reason, all LuaVIEW API VIs that operate on individual states have a LuaVIEW
+    reference input and output terminal so that data-flow sequencing can be used
+    to ensure that no simultaneous operations on the same state are performed.</dd>
+</dl>
+
+<hr>
+<p><a href="#Contents">Go up to table of contents</a></p>
+<p><a href="index.html">Go to index of LuaVIEW documentation pages</a></p>
+
+</body>
+
+</html>

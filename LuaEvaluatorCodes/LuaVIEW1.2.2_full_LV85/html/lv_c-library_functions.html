@@ -1,0 +1,881 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:06:55.21. The functions in the list were obtained from source "C:\Projects\Estec Battery\C\lvlib.c".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#exit">exit</a></td>
+<td><a href="#lv.cinversion">lv.cinversion</a></td>
+<td><a href="#lv.orI8">lv.orI8</a></td>
+<td><a href="#lv.subI8">lv.subI8</a></td>
+</tr>
+
+<tr>
+<td><a href="#wait">wait</a></td>
+<td><a href="#lv.dump">lv.dump</a></td>
+<td><a href="#lv.orU16">lv.orU16</a></td>
+<td><a href="#lv.substitute_separators">lv.substitute_separators</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addcleanup">lv.addcleanup</a></td>
+<td><a href="#lv.exit">lv.exit</a></td>
+<td><a href="#lv.orU32">lv.orU32</a></td>
+<td><a href="#lv.subU16">lv.subU16</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addI16">lv.addI16</a></td>
+<td><a href="#lv.getyielding">lv.getyielding</a></td>
+<td><a href="#lv.orU8">lv.orU8</a></td>
+<td><a href="#lv.subU32">lv.subU32</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addI32">lv.addI32</a></td>
+<td><a href="#lv.invert32">lv.invert32</a></td>
+<td><a href="#lv.pcall">lv.pcall</a></td>
+<td><a href="#lv.subU8">lv.subU8</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addI8">lv.addI8</a></td>
+<td><a href="#lv.invertI16">lv.invertI16</a></td>
+<td><a href="#lv.print">lv.print</a></td>
+<td><a href="#lv.tickcount">lv.tickcount</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addU16">lv.addU16</a></td>
+<td><a href="#lv.invertI8">lv.invertI8</a></td>
+<td><a href="#lv.setyielding">lv.setyielding</a></td>
+<td><a href="#lv.topath">lv.topath</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addU32">lv.addU32</a></td>
+<td><a href="#lv.invertU16">lv.invertU16</a></td>
+<td><a href="#lv.setyieldingdefaults">lv.setyieldingdefaults</a></td>
+<td><a href="#lv.wait">lv.wait</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.addU8">lv.addU8</a></td>
+<td><a href="#lv.invertU32">lv.invertU32</a></td>
+<td><a href="#lv.shiftI16">lv.shiftI16</a></td>
+<td><a href="#lv.xorI16">lv.xorI16</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.andI16">lv.andI16</a></td>
+<td><a href="#lv.invertU8">lv.invertU8</a></td>
+<td><a href="#lv.shiftI32">lv.shiftI32</a></td>
+<td><a href="#lv.xorI32">lv.xorI32</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.andI32">lv.andI32</a></td>
+<td><a href="#lv.isinf">lv.isinf</a></td>
+<td><a href="#lv.shiftI8">lv.shiftI8</a></td>
+<td><a href="#lv.xorI8">lv.xorI8</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.andI32">lv.andI32</a></td>
+<td><a href="#lv.isnan">lv.isnan</a></td>
+<td><a href="#lv.shiftU16">lv.shiftU16</a></td>
+<td><a href="#lv.xorU16">lv.xorU16</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.andI8">lv.andI8</a></td>
+<td><a href="#lv.luaversion">lv.luaversion</a></td>
+<td><a href="#lv.shiftU32">lv.shiftU32</a></td>
+<td><a href="#lv.xorU32">lv.xorU32</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.andU16">lv.andU16</a></td>
+<td><a href="#lv.memusage">lv.memusage</a></td>
+<td><a href="#lv.shiftU8">lv.shiftU8</a></td>
+<td><a href="#lv.xorU8">lv.xorU8</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.andU8">lv.andU8</a></td>
+<td><a href="#lv.orI16">lv.orI16</a></td>
+<td><a href="#lv.subI16">lv.subI16</a></td>
+</tr>
+
+<tr>
+<td><a href="#lv.app_path">lv.app_path</a></td>
+<td><a href="#lv.orI32">lv.orI32</a></td>
+<td><a href="#lv.subI32">lv.subI32</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="exit"><b>exit</b></a></dt>
+<dd><code> exit()</code><br>
+Exit without error. This interrupts script execution, calls any cleanup functions that were set via <code><a href="#lv.addcleanup">lv.cleanup</a></code>, and brings the virtual machine instance on which the script executes to a halt.<br>
+<br>
+Be wary of using this function. It makes for more readable code to let a script run to completion or to use the lua <code>return</code> or <code>break</code> statements. But when execution must be stopped from inside a function call, exiting offers an easy solution. Make sure that users of that function are aware that it might not return. If you want to exit while throwing an error, use the standard Lua <code>error</code> function instead.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Cannot interrupt the virtual machine when called via a C function.<br>
+Calling <code>exit</code> inside a cleanup function makes no sense.<br>
+Cannot be called from a coroutine.<br>
+Not supported for a LuaVIEW base state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="wait"><b>wait</b></a></dt>
+<dd><code> wait(U32:millis)</code><br>
+Waits for the specified number of milliseconds before returning. This function uses the "Wait (ms)" node on the LabVIEW-side, which allows LabVIEW to do cooperative scheduling (this function is not a pure C-function).<br>
+<br>
+Beware that, as opposed to the sleep() LuaVIEW function, this function cannot be interrupted by a task wakeup occurrence. On returning from a wait, the auto-yielding timer is reset.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:millis, milliseconds to wait.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Cannot interrupt the virtual machine when called via a C function.<br>
+Cannot be called from a coroutine.<br>
+Not supported for a LuaVIEW base state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addcleanup"><b>lv.addcleanup</b></a></dt>
+<dd><code> lv.addcleanup(func:cleanup)</code><br>
+Adds a cleanup function to the list of cleanups. When Lua execution encounters an error, completes, or is interrupted, the added cleanup functions are called in reverse order. This can be used to ensure the release of external resources managed by the script. Releasing resources in reverse order prevents resources that depend on previously allocated resources from causing trouble.<br>
+<br>
+For technical reasons, cleanup functions must be Lua functions, though they may contain C and LuaVIEW functions. They are not passed any arguments and any returned results are discarded. A	convenient means of meeting these demands is to construct an anonymous function in-line with a call to this function. Example:<br>
+<br>
+<code>lv.addcleanup(function() release(resource) end)</code><br>
+<b><font color="#008000">Parameters:</font></b> <br>
+func:cleanup, a Lua function that does some cleanup work.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Cannot add a LabVIEW-side or C function.<br>
+Cannot be called from a coroutine.<br>
+Not supported for a LuaVIEW base state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addI16"><b>lv.addI16</b></a></dt>
+<dd><code> I16:sum=lv.addI16(I16:n1,I16:n2)</code><br>
+Add two numbers using signed 16 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n1<br>
+I16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:sum<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addI32"><b>lv.addI32</b></a></dt>
+<dd><code> I32:sum=lv.addI32(I32:n1,I32:n2)</code><br>
+Add two numbers using signed 32 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n1<br>
+I32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:sum<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addI8"><b>lv.addI8</b></a></dt>
+<dd><code> I8:sum=lv.addI8(I8:n1,I8:n2)</code><br>
+Add two numbers using signed 8 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n1<br>
+I8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:sum<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addU16"><b>lv.addU16</b></a></dt>
+<dd><code> U16:sum=lv.addU16(U16:n1,U16:n2)</code><br>
+Add two numbers using unsigned 16 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n1<br>
+U16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:sum<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addU32"><b>lv.addU32</b></a></dt>
+<dd><code> U32:sum=lv.addU32(U32:n1,U32:n2)</code><br>
+Add two numbers using unsigned 32 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n1<br>
+U32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:sum<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.addU8"><b>lv.addU8</b></a></dt>
+<dd><code> U8:sum=lv.addU8(U8:n1,U8:n2)</code><br>
+Add two numbers using unsigned 8 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n1<br>
+U8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:sum<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.andI16"><b>lv.andI16</b></a></dt>
+<dd><code> I16:and=lv.andI16(I16:n1,I16:n2)</code><br>
+Do a bit-wise AND of two signed 16 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n1<br>
+I16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:and<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.andI32"><b>lv.andI32</b></a></dt>
+<dd><code> I32:and=lv.andI32(I32:n1,I32:n2)</code><br>
+Do a bit-wise AND of two signed 32 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n1<br>
+I32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:and<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.andI32"><b>lv.andI32</b></a></dt>
+<dd><code> U32:and=lv.andI32(U32:n1,U32:n2)</code><br>
+Do a bit-wise AND of two unsigned 32 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n1<br>
+U32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:and<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.andI8"><b>lv.andI8</b></a></dt>
+<dd><code> I8:and=lv.andI8(I8:n1,I8:n2)</code><br>
+Do a bit-wise AND of two signed 8 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n1<br>
+I8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:and<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.andU16"><b>lv.andU16</b></a></dt>
+<dd><code> U16:and=lv.andU16(U16:n1,U16:n2)</code><br>
+Do a bit-wise AND of two unsigned 16 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n1<br>
+U16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:and<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.andU8"><b>lv.andU8</b></a></dt>
+<dd><code> U8:and=lv.andU8(U8:n1,U8:n2)</code><br>
+Do a bit-wise AND of two unsigned 8 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n1<br>
+U8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:and<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.app_path"><b>lv.app_path</b></a></dt>
+<dd><code> str:path=lv.app_path()</code><br>
+Return the path to the application directory.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:path, application path.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.cinversion"><b>lv.cinversion</b></a></dt>
+<dd><code> str:version=lv.cinversion()</code><br>
+Returns a verbose description of the LuaVIEW CIN version.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:version<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.dump"><b>lv.dump</b></a></dt>
+<dd><code> str:text=lv.dump()</code><br>
+Dump the printed text present in the per-LuaVIEW-state print buffer. See <code><a href="#lv.print">lv.print</a></code> for details.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:text<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.exit"><b>lv.exit</b></a></dt>
+<dd><code> lv.exit()</code><br>
+Same as the <code><a href="#exit">exit</a></code> function which was made a global to save some typing as it is a frequently used function.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.getyielding"><b>lv.getyielding</b></a></dt>
+<dd><code> U32:threshold,U32:time=lv.getyielding()</code><br>
+Gets the yielding threshold and time as set for the current virtual machine instance. Please refer to the documentation of <code><a href="#lv.setyielding">lv.setyielding</a></code> for details.<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:threshold, milliseconds that must pass before another yield happens.<br>
+U32:time, milliseconds to remain yielded.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Cannot be called from a coroutine.<br>
+Not supported for a LuaVIEW base state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.invert32"><b>lv.invert32</b></a></dt>
+<dd><code> I32:n_inv=lv.invert32(I32:n)</code><br>
+Do a bit-wise inversion of a signed 32 bit number. This flips all bits.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:n_inv<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.invertI16"><b>lv.invertI16</b></a></dt>
+<dd><code> I16:n_inv=lv.invertI16(I16:n)</code><br>
+Do a bit-wise inversion of a signed 16 bit number. This flips all bits.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:n_inv<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.invertI8"><b>lv.invertI8</b></a></dt>
+<dd><code> I8:n_inv=lv.invertI8(I8:n)</code><br>
+Do a bit-wise inversion of a signed 8 bit number. This flips all bits.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:n_inv<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.invertU16"><b>lv.invertU16</b></a></dt>
+<dd><code> U16:n_inv=lv.invertU16(U16:n)</code><br>
+Do a bit-wise inversion of an unsigned 16 bit number. This flips all bits.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:n_inv<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.invertU32"><b>lv.invertU32</b></a></dt>
+<dd><code> U32:n_inv=lv.invertU32(U32:n)</code><br>
+Do a bit-wise inversion of an unsigned 32 bit number. This flips all bits.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:n_inv<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.invertU8"><b>lv.invertU8</b></a></dt>
+<dd><code> U8:n_inv=lv.invertU8(U8:n)</code><br>
+Do a bit-wise inversion of an unsigned 8 bit number. This flips all bits.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:n_inv<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.isinf"><b>lv.isinf</b></a></dt>
+<dd><code> bool:infinite=lv.isinf(num:number)</code><br>
+Tests if a number is infinite, that is, an exceptional floating point number value as might result from dividing by zero. Example:<br>
+<br>
+<code>if (lv.isinf(n) and n<0) then print("minus infinity") end</code><br>
+<br>
+To help you pass infinite values, LuaVIEW defines an <code>_Inf</code> global. Simply negate it to obtain minus infinity.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+num:number, number that might be infinite.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:infinite, true if infinite, false otherwise.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.isnan"><b>lv.isnan</b></a></dt>
+<dd><code> bool:isit=lv.isnan(num:number)</code><br>
+Tests if a number is "not a number" (NaN), that is, an exceptional floating point number value as results from illegal operations such as tan(1/0). Sometimes, numbers that are NaN are used explicitly to mark that a value is invalid. To help you pass NaN values, LuaVIEW defines a <code>_NaN</code> global.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+num:number, number that might not be a number.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:isit, true if not a number, false otherwise.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.luaversion"><b>lv.luaversion</b></a></dt>
+<dd><code> str:version=lv.luaversion()</code><br>
+Returns a verbose description of the Lua version that has been linked into the LuaVIEW CIN. Note that a brief Lua version string is stored in the _VERSION global.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:version<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.memusage"><b>lv.memusage</b></a></dt>
+<dd><code> U32:usage=lv.memusage()</code><br>
+Returns the LabVIEW data space memory usage. This is not the sum total of memory in use by the LabVIEW process: the number excludes some runtime overhead, heap fragmentation holes, as well as memory in use by Lua. By comparing successive usage values, allocation overhead and memory leaks can be determined. Note that LabVIEW does not immediately deallocate memory that is no longer in use. This holds in particular for data passed to subVIs on prior calls. Consequently a short-term rise in memory usage is no proof of a leak.<br>
+<br>
+Beware: this function erroneously returns zero when used under LabVIEW 7.0 for Mac OS X. This is a Mac-specific LabVIEW bug: VI.lib/Platform/system.llb/Memstats.vi does not work either.<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:usage, in bytes.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.orI16"><b>lv.orI16</b></a></dt>
+<dd><code> I16:or=lv.orI16(I16:n1,I16:n2)</code><br>
+Do a bit-wise OR of two signed 16 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n1<br>
+I16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:or<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.orI32"><b>lv.orI32</b></a></dt>
+<dd><code> I32:or=lv.orI32(I32:n1,I32:n2)</code><br>
+Do a bit-wise OR of two signed 32 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n1<br>
+I32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:or<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.orI8"><b>lv.orI8</b></a></dt>
+<dd><code> I8:or=lv.orI8(I8:n1,I8:n2)</code><br>
+Do a bit-wise OR of two signed 8 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n1<br>
+I8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:or<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.orU16"><b>lv.orU16</b></a></dt>
+<dd><code> U16:or=lv.orU16(U16:n1,U16:n2)</code><br>
+Do a bit-wise OR of two unsigned 16 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n1<br>
+U16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:or<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.orU32"><b>lv.orU32</b></a></dt>
+<dd><code> U32:or=lv.orU32(U32:n1,U32:n2)</code><br>
+Do a bit-wise OR of two unsigned 32 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n1<br>
+U32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:or<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.orU8"><b>lv.orU8</b></a></dt>
+<dd><code> U8:or=lv.orU8(U8:n1,U8:n2)</code><br>
+Do a bit-wise OR of two unsigned 8 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n1<br>
+U8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:or<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.pcall"><b>lv.pcall</b></a></dt>
+<dd><code> bool:success,[any:res],...=lv.pcall(func:lvfunc,[any:arg],...)</code><br>
+Performs a protected call on a LuaVIEW function. For technical reasons, the Lua base library function <code>pcall</code> cannot protect functions that call into LabVIEW. To still be able to catch errors thrown on the LabVIEW side this function has been provided. Note that it only works when used to directly call a LuaVIEW function. Lua functions that in turn call LuaVIEW functions cannot be protected.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+func:lvfunc, the LuaVIEW function to perform a protected call on.<br>
+[any:arg], argument to pass to the LuaVIEW function.<br>
+...<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:success, true when the call did not throw an error.<br>
+[any:res], error message or result returned by the LuaVIEW function.<br>
+...<br>
+<b><font color="#800000">Errors:</font></b> <br>
+A Lua or C function is not an allowed argument.<br>
+Cannot be called from a coroutine.<br>
+Not supported for a LuaVIEW base state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.print"><b>lv.print</b></a></dt>
+<dd><code> lv.print([any:arg],...)</code><br>
+Print to a per-LuaVIEW-state print buffer. Display of the print buffer must be separately arranged for: this function is independent of any display update and therefore operates with little overhead. This function complements <a href="luaview_functions.html#print"><code>print</code></a>. Use the <code><a href="#lv.dump">lv.dump</a></code> function or the <a href="API.html#LuaVIEW Poll Print Buffer.vi">Poll Print Buffer</a> API VI to retrieve the printed text for display. The "Task Manager" can open a print console that displays the print buffer of a task.<br>
+<br>
+The provided arguments are converted to printable strings that are concatenated with spaces inserted between strings and a linefeed appended to the end. The result is appended to the print buffer. The print buffer is a circular buffer with a capacity of 32768 (2^15) characters: when more than this number of characters is printed to the buffer, only the most recent text is retained.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+[any:arg], argument to be printed.<br>
+...<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.setyielding"><b>lv.setyielding</b></a></dt>
+<dd><code> lv.setyielding(U32:threshold,U32:time)</code><br>
+Sets the yielding threshold and time for the current virtual machine instance provided that it was not opened as a base state (which cannot be interrupted nor call LabVIEW). This allow further tuning of the scheduling of the virtual machine beyond the execution system and priority settings offered by LabVIEW. Such tuning can help in case of scripts that perform protracted operations. Scripts that perform brief, periodic or event driven actions without polling will not be affected by the yielding settings.<br>
+<br>
+LuaVIEW implements automatic yielding of the virtual machine so as to assist with cooperative multitasking. This is essential for proper multitasking when the LabVIEW runtime runs in single-threading mode, and also allows some tuning of the CPU usage of a script. The virtual machine frequently checks how many milliseconds have passed since the last yield, wait, or re-entrant LuaVIEW function returned. If this value is equal to or larger than the set threshold, another yield will be performed. On a yield, the virtual machine is interrupted and a wait will be performed on the LabVIEW side that lasts the set yield time. Roughly, this allows LabVIEW to schedule other pending work, but the precise scheduling behaviour will vary depending on the threading mode, operating system, CPU load, and LabVIEW version. Refer to the LabVIEW documentation or perform some latency tests to learn more. Beware that the update	resolution of the LabVIEW millisecond counter, which is used to time the yields, can be worse than one millisecond on certain OS platforms.<br>
+<br>
+Typically, a yield time of zero will be specified so that the virtual machine will resume immediately if there is no other pending work. Note though that for LabVIEW 7.0 and 6.x in multi-threading mode, pending work in a different execution system does not get scheduled because of a wait(0). To limit the CPU usage of your script, or to allow better opportunities for multi-threaded scheduling, a non-zero yield time can be specified. Beware though that if there is pending work in the same execution system that takes up all of the yield time, there will still be no forced switch to work pending for other execution systems.<br>
+<br>
+To disable auto yielding, use a	threshold of zero. This might be useful for obtaining more consistent loop timings. Note though that in the absence of auto-yielding, the script will need to frequently wait at or call into the LabVIEW side unless it is allowed to hog a thread.<br>
+<br>
+The yields only interrupt virtual machine operations and not LabVIEW-side or C-side operations. Thus, scripts that spend most of their time inside LabVIEW-side or C functions cannot be accurately tuned. Note though that the scheduler will likely have plenty of other opportunities for cooperative scheduling while on the LabVIEW-side.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:threshold, milliseconds that must pass before another yield happens. When zero, yielding is disabled.<br>
+U32:time, milliseconds to remain yielded.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Cannot be called from a coroutine.<br>
+Not supported for a LuaVIEW base state.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.setyieldingdefaults"><b>lv.setyieldingdefaults</b></a></dt>
+<dd><code> lv.setyieldingdefaults(U32:threshold,U32:time)</code><br>
+Set the default values for the yielding threshold and time so as to globally tune the multitasking behaviour of LuaVIEW. Each new virtual machine instance will use the newly set defaults. The default values for the yielding defaults are a threshold of 2 milliseconds and a yielding time of 0 milliseconds. This function is typically called as part of a bootstrap script that prepares for the running of further scripts.	Please refer to the documentation of <code><a href="#lv.setyielding">lv.setyielding</a></code> for details on the auto-yielding mechanism.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:threshold, new millisecond value for the default yielding threshold.<br>
+U32:time, new millisecond value for the default yielding time.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.shiftI16"><b>lv.shiftI16</b></a></dt>
+<dd><code> I16:shifted=lv.shiftI16(I16:n,I32:p)</code><br>
+Shift a signed 16 bit number left or right by a given number of bit positions. Beware that the sign gets extended when shifting to the right.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n, the number holding the bit pattern to shift.<br>
+I32:p, the number of bit positions to shift by, to the left if positive, to the right if negative.<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:shifted<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.shiftI32"><b>lv.shiftI32</b></a></dt>
+<dd><code> I32:shifted=lv.shiftI32(I32:n,I32:p)</code><br>
+Shift a signed 32 bit number left or right by a given number of bit positions. Beware that the sign gets extended when shifting to the right.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n, the number holding the bit pattern to shift.<br>
+I32:p, the number of bit positions to shift by, to the left if positive, to the right if negative.<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:shifted<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.shiftI8"><b>lv.shiftI8</b></a></dt>
+<dd><code> I8:shifted=lv.shiftI8(I8:n,I32:p)</code><br>
+Shift a signed 8 bit number left or right by a given number of bit positions. Beware that the sign gets extended when shifting to the right.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n, the number holding the bit pattern to shift.<br>
+I32:p, the number of bit positions to shift by, to the left if positive, to the right if negative.<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:shifted<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.shiftU16"><b>lv.shiftU16</b></a></dt>
+<dd><code> U16:shifted=lv.shiftU16(U16:n,I32:p)</code><br>
+Shift an unsigned 16 bit number left or right by a given number of bit positions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n, the number holding the bit pattern to shift.<br>
+I32:p, the number of bit positions to shift by, to the left if positive, to the right if negative.<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:shifted<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.shiftU32"><b>lv.shiftU32</b></a></dt>
+<dd><code> U32:shifted=lv.shiftU32(U32:n,I32:p)</code><br>
+Shift an unsigned 32 bit number left or right by a given number of bit positions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n, the number holding the bit pattern to shift.<br>
+I32:p, the number of bit positions to shift by, to the left if positive, to	the right if negative.<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:shifted<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.shiftU8"><b>lv.shiftU8</b></a></dt>
+<dd><code> U8:shifted=lv.shiftU8(U8:n,I32:p)</code><br>
+Shift an unsigned 8 bit number left or right by a given number of bit positions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n, the number holding the bit pattern to shift.<br>
+I32:p, the number of bit positions to shift by, to the left if positive, to the right if negative.<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:shifted<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.subI16"><b>lv.subI16</b></a></dt>
+<dd><code> I16:difference=lv.subI16(I16:n1,I16:n2)</code><br>
+Subtract two numbers using signed 16 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n1<br>
+I16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:difference<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.subI32"><b>lv.subI32</b></a></dt>
+<dd><code> I32:difference=lv.subI32(I32:n1,I32:n2)</code><br>
+Subtract two numbers using signed 32 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n1<br>
+I32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:difference<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.subI8"><b>lv.subI8</b></a></dt>
+<dd><code> I8:difference=lv.subI8(I8:n1,I8:n2)</code><br>
+Subtract two numbers using signed 8 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n1<br>
+I8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:difference<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.substitute_separators"><b>lv.substitute_separators</b></a></dt>
+<dd><code> bool:prior=lv.substitute_separators(bool:enable)</code><br>
+Enable/disable path separator substitution. When enabled, a Lua string about to be converted to a LabVIEW path will first have all occurrences of both "\" and "/" replaced with the platform-specific path seperator. This will make path strings that use either type of seperator work on multiple platforms.<br>
+<br>
+By default, separator substitution is enabled. If you do not care for platform independence you might wish to disable this feature since, rarely, "\" or "/" are used as part of directory or filenames on platforms where either character does not serve as a seperator.<br>
+<br>
+To disable substitution, call this function when your application initialises, preferably before any paths are used. This can be done as part of a bootstrap script. For more information refer to the <a href="datatypes.html#Paths">path data type documentation</a>.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+bool:enable, true to enable, false to disable.<br>
+<b><font color="#000080">Results:</font></b> <br>
+bool:prior, prior setting.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.subU16"><b>lv.subU16</b></a></dt>
+<dd><code> U16:difference=lv.subU16(U16:n1,U16:n2)</code><br>
+Subtract two numbers using unsigned 16 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n1<br>
+U16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:difference<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.subU32"><b>lv.subU32</b></a></dt>
+<dd><code> U32:difference=lv.subU32(U32:n1,U32:n2)</code><br>
+Subtract two numbers using unsigned 32 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n1<br>
+U32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:difference<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.subU8"><b>lv.subU8</b></a></dt>
+<dd><code> U8:difference=lv.subU8(U8:n1,U8:n2)</code><br>
+Subtract two numbers using unsigned 8 bit arithmetic.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n1<br>
+U8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:difference<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.tickcount"><b>lv.tickcount</b></a></dt>
+<dd><code> U32:ms_count=lv.tickcount()</code><br>
+Reads the current value of the LabVIEW millisecond counter, which is an unsigned 32 bit value. Note that the counter overflows when it reaches 2^32. Thus, to properly determine the time difference between subsequent counter reads, the read values must be subtracted using unsigned 32 bit arithmetic, e.g. using <code>lv.subU32</code>. Beware that this works only for time differences up to 2^32-1 milliseconds. The update resolution of the counter can vary between OS platforms.<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:ms_count, current value of the millisecond counter.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.topath"><b>lv.topath</b></a></dt>
+<dd><code> str:path=lv.topath(str:path)</code><br>
+Convert a path to a platform-specific non-redundant path. This function converts a string to a LabVIEW path and back to a string. This will cause the equivalence-preserving modifications made on converting a string to a path to be applied, if any. In particular, "\" and "/" will have been replaced with the platform-specific path separator, if <a href="#lv.substitute_separators">so configured</a>, and any occurrences of "." and ".." will be contracted in the usual "String to Path" manner.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:path, path to platform.<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:path, platformed path.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.wait"><b>lv.wait</b></a></dt>
+<dd><code> lv.wait()</code><br>
+Same as the <code><a href="#wait">wait</a></code> function which was made a global to save some typing as it is a frequently used function.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.xorI16"><b>lv.xorI16</b></a></dt>
+<dd><code> I16:xor=lv.xorI16(I16:n1,I16:n2)</code><br>
+Do a bit-wise exclusive OR of two signed 16 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I16:n1<br>
+I16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I16:xor<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.xorI32"><b>lv.xorI32</b></a></dt>
+<dd><code> I32:xor=lv.xorI32(I32:n1,I32:n2)</code><br>
+Do a bit-wise exclusive OR of two signed 32 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I32:n1<br>
+I32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I32:xor<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.xorI8"><b>lv.xorI8</b></a></dt>
+<dd><code> I8:xor=lv.xorI8(I8:n1,I8:n2)</code><br>
+Do a bit-wise exclusive OR of two signed 8 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+I8:n1<br>
+I8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+I8:xor<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.xorU16"><b>lv.xorU16</b></a></dt>
+<dd><code> U16:xor=lv.xorU16(U16:n1,U16:n2)</code><br>
+Do a bit-wise exclusive OR of two unsigned 16 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U16:n1<br>
+U16:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U16:xor<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.xorU32"><b>lv.xorU32</b></a></dt>
+<dd><code> U32:xor=lv.xorU32(U32:n1,U32:n2)</code><br>
+Do a bit-wise exclusive OR of two unsigned 32 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U32:n1<br>
+U32:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U32:xor<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="lv.xorU8"><b>lv.xorU8</b></a></dt>
+<dd><code> U8:xor=lv.xorU8(U8:n1,U8:n2)</code><br>
+Do a bit-wise exclusive OR of two unsigned 8 bit numbers.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+U8:n1<br>
+U8:n2<br>
+<b><font color="#000080">Results:</font></b> <br>
+U8:xor<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Logging algorithms</title>
+</head>
+
+<body>
+
+<h3>Logging algorithms</h3>
+<p>This appendix describes the various logging algorithms that can be selected
+for a tag. These determine which of the points (timestamp value pairs) that were
+written to a tag get passed on to the on-disk tag log. Some logging algorithms
+take extra parameters that can be tuned to determine how frequently points are
+dropped or retained. Note that logging algorithms do not filter nor average.
+When required, signals should be filtered before they are written to tags. The following index lists the algorithms.</p>
+<ul>
+  <li><a href="#no">nothing</a></li>
+  <li><a href="#ch">changes</a></li>
+  <li><a href="#ev">everything</a></li>
+  <li><a href="#evn">every Nth</a></li>
+  <li><a href="#titr">time threshold</a></li>
+  <li><a href="#vatrpr">value threshold + prior</a></li>
+  <li><a href="#tovtr">t or v threshold</a></li>
+  <li><a href="#tovtrpr">t or v threshold + prior</a></li>
+</ul>
+
+<p> The objective of
+tuning a logging algorithm should be to reduce the amount of disk-space required
+by a log without causing significant differences between the interpolated values
+of the logged and buffered data. Whether this can be achieved depends on the
+details of the tag data: sampling frequency, signal bandwidth, noise level, jumps, spikes,
+and so on. To review the performance of the selected algorithm and its
+parameterisation, use the &quot;Tag Graph&quot; user interface while the tag is
+being written to. This allows the buffered and logged points to be compared. When in doubt, err on the side of caution and select the
+&quot;everything&quot; algorithm. Disk space is cheap.</p>
+
+<p>A special condition arises when a not a number (NaN) value is written to a
+number tag. All but the nothing and everything logging algorithm will log only
+the first point in a series of NaN-valued points. In addition, the last
+point with a non-NaN value prior to that series as well as the first point with
+a non-NaN value after that series are always logged.</p>
+
+<hr>
+
+<h4><a name="no">nothing</a></h4>
+
+<p>No points will be logged. Select this algorithm to disable logging for a tag.
+Applicable to all types of tag.&nbsp;This algorithm does not mind how many
+parameters are specified even though it does not require any. This allow those
+logging algorithms that do require parameters to be disabled and re-enabled
+without having to clear and re-enter their parameterisation.</p>
+
+<h4><a name="ch">changes</a></h4>
+
+<p>Log only points whose value has changed relative to the previously logged
+point. Can only applied to tags of <a href="datalog_manual.html#sethold">set&amp;hold</a>
+temporal type. Note that interpolating the logged data yields the same results
+as interpolating the buffered data. This does not imply that one should always
+select this algorithm for set&amp;hold tags: sometimes the time at which the tag
+is written to might be of interest to later queries even though that value does
+not change. If so, the everything algorithm is the proper choice.</p>
+
+<h4><a name="ev">everything</a></h4>
+
+<p>Log all points written to a tag. This is the safest choice. Applicable to all types of tag.</p>
+
+<hr>
+<p>The remaining logging algorithms applicable only to number tags of <a href="datalog_manual.html#sample">sample</a>
+ temporal type.
+</p>
+
+<h4><a name="evn">every Nth (N)</a></h4>
+
+<p>Log every Nth point. N must be an integer. Can be used for over-sampled
+signals acquired at a known fixed sampling rate.</p>
+
+<h4><a name="titr">time threshold (t)</a></h4>
+
+<p>Log a point whenever its timestamp is higher than the timestamp of the last
+logged point by an amount equal to or exceeding the set time threshold
+parameter. Can be used for over-sampled signals. Note that the logged points
+will be spaced unevenly in time when the sampling period is close to the
+threshold.</p>
+
+<h4><a name="vatrpr">value threshold + prior (v)</a></h4>
+
+<p>Log a point and the prior point whenever the absolute difference between its
+value and the value of the last logged point exceeds the set value threshold.
+Can be used for tags that jumps between discrete levels that are further apart
+than the set value threshold. E.g. a TTL signal.</p>
+
+<h4><a name="tovtr">t or v threshold (t, v)</a></h4>
+
+<p>Log a point when either its timestamp is higher than the timestamp of the
+last logged point by an amount equal to or exceeding the set time threshold or
+the absolute difference between its value and the value of the last logged point
+exceeds the set value threshold. Can be used for signals without jumps or spikes
+that can change both slowly and quickly. Typically, the value threshold is set a
+bit higher than the noise level.</p>
+
+<h4><a name="tovtrpr">t or v threshold + prior (t, v)</a></h4>
+
+<p>Log a point and the prior point whenever the absolute difference between its
+value and the value of the last logged point exceeds the set value threshold.
+Log a point without the prior point when the value threshold is not exceeded but
+instead the timestamp is higher than the timestamp of the last logged point by
+an amount equal to or exceeding the set time threshold. Can be used for signals
+that included steep jumps or spikes. Typically, the value threshold is set a bit
+higher than the noise level.&nbsp;</p>
+
+<hr>
+<p><a href="datalog_manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>

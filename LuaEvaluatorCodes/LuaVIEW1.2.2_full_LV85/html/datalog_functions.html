@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:07:39.68. The functions in the list were obtained from source "\datalog\functions".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#logstring">logstring</a></td>
+<td><a href="#StringTag.last">StringTag.last</a></td>
+<td><a href="#Tag.index">Tag.index</a></td>
+<td><a href="#Tag.seek">Tag.seek</a></td>
+</tr>
+
+<tr>
+<td><a href="#DB.indexrange">DB.indexrange</a></td>
+<td><a href="#StringTag.lookup">StringTag.lookup</a></td>
+<td><a href="#Tag.last">Tag.last</a></td>
+<td><a href="#Tag.value">Tag.value</a></td>
+</tr>
+
+<tr>
+<td><a href="#DB.interpolate">DB.interpolate</a></td>
+<td><a href="#StringTag.value">StringTag.value</a></td>
+<td><a href="#Tag.lookup">Tag.lookup</a></td>
+<td><a href="#Tag.write">Tag.write</a></td>
+</tr>
+
+<tr>
+<td><a href="#DB.timerange">DB.timerange</a></td>
+<td><a href="#StringTag.write">StringTag.write</a></td>
+<td><a href="#Tag.read">Tag.read</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="logstring"><b>logstring</b></a></dt>
+<dd><code> logstring(str:tag,str:string,[num:time])</code><br>
+This function is NOT for general use. It logs a string to a tag of the current database, but normally the <code>StringTag.write</code> function/method must be used for that. This function should be used only for those few logging requirements that must keep on working when datalogging is not active. This is desirable for logging errors or warnings to a string tag: before the system has reached the "datalogging" runlevel it must succeed in lots of configuration and initialisation actions that are prone to throwing errors that, when they do occur, should be logged somewhere. To support this requirement, this function is implemented such that it can log a string irrespective of whether the database is live or not.<br>
+<br>
+When the current database is live, the normal buffered logging mechanism is used. Otherwise the string tag log is directly appended to without in-memory buffering. This function is smart enough to keep on functioning when the system has only partially initialised towards or cleaned up from a live logging state: when the database is live, it first tries buffered string writing and, when that fails, it attempts the direct approach.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:tag, name of the tag.<br>
+str:string, string to log.<br>
+[num:time], timestamp for logged string, if omitted the current time is used.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Databases module not initialised.<br>
+Current database is locked.<br>
+Tag does not exist.<br>
+Tag is not a string tag.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.indexrange"><b>DB.indexrange</b></a></dt>
+<dd><code> tab:values,tab:times=DB.indexrange(obj:db,str:tag,num:index,num:number)</code><br>
+Read an index range of values and their corresponding timestamps from a tag's log. Use an index of zero to read from the start of the tag log. By reading a moderate number of values and incrementing the index in a loop, it is possible to efficiently process more values than will fit in memory. To process all values in a log, first use <code>DB.logsize</code> to determine the number of logged values.<br>
+<br>
+Beware that this function may take a while to complete. Because of contention this can happen even when the amount of data being queried is small.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag.<br>
+num:index, starting index to read from. May not exceed the log size minus the number values being read.<br>
+num:number, number of values (points or strings) to read as of the specified index.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:values, number values, in case of a number tag, or string values, in case of a string tag.<br>
+tab:times, timestamps of the read values.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Tag does not exist.<br>
+Databases module not initialised.<br>
+Cannot read more than "max points" values.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.interpolate"><b>DB.interpolate</b></a></dt>
+<dd><code> tab:values=DB.interpolate(obj:db,str:tag,tab:times)</code><br>
+Interpolate tag values at the specified times. When the tag is a number tag of "sample" temporal type, the interpolation is linear between the two points nearest to each time being interpolated at. When the tag is either a numer or a string tag of "set&hold" temporal type, interpolation returns the last value logged prior to the specified time since such tags hold their value until changed.<br>
+<br>
+Note that this function tries to read the timerange covered by the specified times from the tag log before commencing with interpolation. This fails when the timerange contains more than "max points" points. In such an event, the specified times are divided in increasingly smaller chunks until the reads succeed. In this eventuality, it helps performance when the specified times increase or decrease monitonically.<br>
+<br>
+Beware that this function may take a while to complete. Because of contention this can happen even when the amount of data being queried is small.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag.<br>
+tab:times, timestamps to interpolate at.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:values, values interpolated at the given timestamps.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Tag does not exist.<br>
+Databases module not initialised.<br>
+Cannot interpolate more than "max points" times in one go.<br>
+Cannot interpolate tags of "event" temporal type.<br>
+Cannot interpolate string tags of "sample" temporal type.<br>
+Cannot interpolate a timerange containing more than "max points" values.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="DB.timerange"><b>DB.timerange</b></a></dt>
+<dd><code> tab:values,tab:times=DB.timerange(obj:db,str:tag,num:begin,num:end)</code><br>
+Read a time range of values and their corresponding timestamps from a tag's log. Use -_Inf as begin time to make sure that the earliest logged tag data is read. Use _Inf as end time to make sure that the latest logged tag data is read.<br>
+<br>
+Beware that this function may take a while to complete. Because of contention this can happen even when the amount of data being queried is small.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+str:tag, name of the tag.<br>
+num:begin, begin time of time range.<br>
+num:end, end time of time range.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:values, number values, in case of a number tag, or string values, in case of a string tag.<br>
+tab:times, timestamps of the read values.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Tag does not exist.<br>
+Cannot read more than "max points" values.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="StringTag.last"><b>StringTag.last</b></a></dt>
+<dd><code> str:value,num:time=StringTag.last(obj:strtag)</code><br>
+Returns the last string written to the tag as well as its timestamp. On initialisation, the datalogger rebuffers the last string and its timestamp which is therefore guaranteed to be available without requiring disk I/O.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:strtag<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:value, last string written to the tag.<br>
+num:time, timestamp of last written string.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="StringTag.lookup"><b>StringTag.lookup</b></a></dt>
+<dd><code> obj:strtag=StringTag.lookup(str:name)</code><br>
+Looks up the string tag with the provided name in the collection of live tags and returns a new tag object that allows that tag to be operated upon. This function is typically called in the initialisation section of a script for all required tags so as to ensure that the script fails at an early stage when not all these tags exist.<br>
+<br>
+Since tag names are guaranteed to be valid Lua identifiers, it is possible to assign the returned object to a variable with the same name as the tag. This is <b>not</b> advisable when the tag might change, or it is likely that a copy of the script will be made to serve a different set of tags, since then the script would have to be changed in multiple places (to keep the tag name and various uses of the object variable mutually consistent) instead of just a single place. In such cases it is better to use a short generic variable name, or a name that reflects the role of the tag in the context of the script's actions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:name, name of the string tag for which to return an object.<br>
+<b><font color="#000080">Results:</font></b> <br>
+obj:strtag, LuaVIEW object referencing the specified string tag.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No live tag with the provided name exists.<br>
+Specified tag is not a string tag.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="StringTag.value"><b>StringTag.value</b></a></dt>
+<dd><code> str:value=StringTag.value(obj:strtag)</code><br>
+Returns the current value of a string tag. This equals the last string written to the tag. On initialisation, the datalogger rebuffers the last string which is therefore guaranteed to be available without requiring disk I/O.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:strtag<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:value, last written string.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="StringTag.write"><b>StringTag.write</b></a></dt>
+<dd><code> StringTag.write(obj:strtag,str:value,[num:time])</code><br>
+Write a string with the given value and an optional timestamp to a string tag. Note that there are no restrictions on the content so that it can be used to store arbitrary data. The only limitation is that the string should fit comfortably in memory since the most recently written strings are buffered in-memory for each tag.<br>
+<br>
+Beware that this function is likely to cause immediate disk access: the strings are stored in a separate file per tag which will be appended to when the string being written does not equal either a recently written string that is still buffered in memory, an empty string, or the special string "UNDEFINED". The frequency with which novel strings can be written to multiple string tags will therefore be limited by the seek period of the head of the harddisk on which the logging database is stored.<br>
+<br>
+To apply the timestamp and later be able to retrieve the string, a point with the specified or current time is logged with a value equal to the byte offset in the strings file at which the string was stored. These points are subject to buffering, aggregation, and flushing in the very same manner as points of numerical tags. The "UNDEFINED" string is specified via the special NaN point value and serves the same purpose as NaN values of numerical tags.<br>
+<br>
+Timestamps of subsequently written strings may not decrease. When no timestamp is specified, the time in seconds since the LabVIEW epoch (1-Jan-1904) as obtained via the "Library Time.vi" is used. This VI exists to allow custom time sources. Its default implementation simply calls "Get Date/Time In Seconds"  LabVIEW node, which in turn obtains its time from the system clock. Beware that the system clock has a platform dependent resolution and will drift unless corrected for, e.g. using the ntp protocol.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:strtag<br>
+str:value, string value to write.<br>
+[num:time], optional timestamp, when omitted the current time is used.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.index"><b>Tag.index</b></a></dt>
+<dd><code> Tag.index(obj:tag,I32:delta)</code><br>
+Set the read_index relative to the write position. This changes the read position in the tag buffer that will be used during the next <code>read</code>. When delta is zero, the read_index is set to the next point to be written. When the delta is negative and equals -N, the read_index will point to the Nth most recently written point. When the delta is positive and equals N, N upcoming points will be skipped. Note that the number of available earlier points equals the minimum of either the tag's buffer capacity or the number of written points. Therefore do not move the read_index backward too far or else the subsequent <code>read</code> will fail.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:tag<br>
+I32:delta, number of point positions by which to change the read_index.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.last"><b>Tag.last</b></a></dt>
+<dd><code> num:value,num:time=Tag.last(obj:tag)</code><br>
+Reads the last point written to the tag from its in-memory buffer. On initialisation, the datalogger rebuffers the last point which is therefore guaranteed to be available.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:tag<br>
+<b><font color="#000080">Results:</font></b> <br>
+num:value, value of last written point.<br>
+num:time, timestamp of last written point.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.lookup"><b>Tag.lookup</b></a></dt>
+<dd><code> obj:tag=Tag.lookup(str:name,[str:unit])</code><br>
+Looks up the number tag with the provided name in the collection of live tags and returns a new tag object that allows that tag to be operated upon. This function is typically called in the initialisation section of a script for all required tags so as to ensure that the script fails at an early stage when not all these tags exist.<br>
+<br>
+The returned tag object has an I32:read_index attribute that, after this function returns, is set to the write index, that is, it specifies the position of the next point to be written to the tag. The read_index is used to determine what point to read when calling the <code>read</code> method. Use the <code>seek</code> or <code>index</code> methods to change read_index. Note that each call to this function returns a new tag object with its own private read_index. This allows there to be multiple independent readers of tag.<br>
+<br>
+The read_index overflows to -2^31 at +2^31. The buffering and reading is designed to continue without a hitch when this occurs, but it means that the read_index <b>cannot</b> be interpreted as an absolute value. It only makes sense as a value relative to another buffer index, with differences calculable via signed 32 bit integer arithmetic only.<br>
+<br>
+In addition, the returned tag object has a str:unit attribute that specifies the physical unit of the tag, or is an empty string when the tag is dimensionless. The optional second argument causes verification that the unit of the tag is as the script expects. It is advisable to specify it when your script makes assumptions as to the unit of the tag.<br>
+<br>
+Since tag names are guaranteed to be valid Lua identifiers, it is possible to assign the returned object to a variable with the same name as the tag. This is <b>not</b> advisable when the tag might change, or it is likely that a copy of the script will be made to serve a different set of tags, since then the script would have to be changed in multiple places (to keep the tag name and various uses of the object variable mutually consistent) instead of just a single place. In such cases it is better to use a short generic variable name, or a name that reflects the role of the tag in the context of the script's actions.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:name, name of the tag for which to return an object.<br>
+[str:unit], expected unit.<br>
+<b><font color="#000080">Results:</font></b> <br>
+obj:tag, LuaVIEW object referencing the specified number tag.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+No live tag with the provided name exists.<br>
+Actual unit does not match expected unit.<br>
+Specified tag is not a number tag.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.read"><b>Tag.read</b></a></dt>
+<dd><code> num:value,num:time,bool:available=Tag.read(obj:tag)</code><br>
+Attempts to read the point located at the tag object's read_index from the tag's in-memory buffer. When available, the read_index attribute is incremented to the next point. Typical use is for reading points written to a tag without skipping a point. To do so, set up a loop that calls this method. The loop should stop and sleep for a bit when no more points are available.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:tag<br>
+<b><font color="#000080">Results:</font></b> <br>
+num:value, value of the read point. NaN if not available.<br>
+num:time, timestamp of the read point. NaN if not available.<br>
+bool:available, false when the point is not yet available.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Indexed point is no longer present in the circular tag buffer.<br>
+Invalid or dead tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.seek"><b>Tag.seek</b></a></dt>
+<dd><code> Tag.seek(obj:tag,I32:delta)</code><br>
+Seek the read_index relative to its current value. This changes the read position in the tag buffer that will be used during the next <code>read</code>. A positive delta moves the read position to later points, a negative delta moves the read position to earlier points. Note that the number of available earlier points equals the minimum of either the tag's buffer capacity or the number of written points. Therefore do not move the read_index backward too far or else the subsequent <code>read</code> will fail.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:tag<br>
+I32:delta, number of point positions by which to change the read_index.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.value"><b>Tag.value</b></a></dt>
+<dd><code> num:value=Tag.value(obj:tag)</code><br>
+Returns the current value of a tag. This equals the value of the last point written to the tag's in-memory buffer. On initialisation, the datalogger rebuffers the last point which is therefore guaranteed to be available.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:tag<br>
+<b><font color="#000080">Results:</font></b> <br>
+num:value, value of last written point.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="Tag.write"><b>Tag.write</b> (reentrant)</a></dt>
+<dd><code> Tag.write(obj:tag,num:value,[num:time])</code><br>
+Write a point with the given value and an optional timestamp. If the tag has bounds (max and/or min) the value will be clipped to that range. Next the (potentially clipped) value is compared to any limits that are set for the tag. When limits are exceeded, the corresponding handlers are triggered. Exceeded limits do not cause this function to return with an error or prevent the point from being written to the tag.<br>
+<br>
+When no timestamp is specified, the time in seconds since the LabVIEW epoch (1-Jan-1904) as obtained via the "Library Time.vi" is used. This VI exists to allow custom time sources. Its default implementation simply calls "Get Date/Time In Seconds"  LabVIEW node, which in turn obtains its time from the system clock. Beware that the system clock has a platform dependent resolution and will drift unless corrected for, e.g. using the ntp protocol.<br>
+<br>
+Explicitly specifying the timestamp might be required when the timing of the values needs a delay correction or is derived from some other source. For example, when the value is derived from other tags, the most recent timestamp of the points used to calculate the value can be copied. When the value is associated with an instrument that uses hardware timing and buffering, the timestamps are best derived from a mutual synchronisation of that hardware clock and the system time.<br>
+<br>
+Timestamps of subsequent points may not decrease and should reflect the time of events in the experimental setup when the value is associated with a sensor or physical setpoint. In practical terms this implies that the timing of sensor values should be lowered by the delay introduced by the sensor-filtering-buffering-driver path, if appreciable.  Similarly, the timing of a setpoint should be incremented with the delay introduced by the driver-buffering-filtering-actuator path, if appreciable. <br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:tag<br>
+num:value, value of the point to write.<br>
+[num:time], optional timestamp, when omitted the current time is used.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Dead or invalid tag object.<br>
+Data logger not initialized.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

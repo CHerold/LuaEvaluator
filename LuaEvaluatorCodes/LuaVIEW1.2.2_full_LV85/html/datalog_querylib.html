@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Function documentation</title>
+</head>
+<p align="Center"><b><a name="index">
+Function documentation exported on 2005/06/26 15:09:10.94. The functions in the list were obtained from source "\datalog\resources\import\querylib.lua".
+</a></b></p>
+<hr>
+
+<p align="Center">
+<b>Index of functions</b>
+</p>
+
+<table width="100%">
+<tr>
+<td><a href="#csv">csv</a></td>
+<td><a href="#s2t">s2t</a></td>
+<td><a href="#tcsv">tcsv</a></td>
+<td><a href="#units">units</a></td>
+</tr>
+
+<tr>
+<td><a href="#interpolations">interpolations</a></td>
+<td><a href="#t2s">t2s</a></td>
+<td><a href="#timeseries">timeseries</a></td>
+</tr>
+
+</table>
+<hr>
+<p align="Center"><b>Background</b></p>
+<p>
+The documentation of each function is headed by a synopsis that summarizes how the function can be called. Optional parameters are surrounded with square brackets. An arbitrary number of repeats, including zero repeats, of the preceding parameter is denoted by an ellipsis (three subsequent dots).  As per the Lua calling conventions, the caller is not obliged to process all results.
+</p>
+<hr>
+
+<p align="center">
+<b>Function documentation</b>
+</p>
+
+<dl>
+<dt><a name="csv"><b>csv</b></a></dt>
+<dd><code> csv(obj:db,tab:tags,tab:times)</code><br>
+Output a comma separated file named "results.csv" for the given tags interpolated at the given times. The header will include both tag names and units. The first column includes the times converted in hours since the first specified time.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+tab:tags, array of tag names.<br>
+tab:times, times to interpolate at.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Non-existing tag.<br>
+Wrong temporal type for interpolation.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="interpolations"><b>interpolations</b></a></dt>
+<dd><code> tab:values_per_tag=interpolations(obj:db,tab:tags,tab:times)</code><br>
+Returns a table of tables containing the values of a series of tags interpolated at the specified times.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+tab:tags, array of tags to interpolate.<br>
+tab:times, array of times to interpolate at.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:values_per_tag, table of tables containing the interpolated tag values.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="s2t"><b>s2t</b></a></dt>
+<dd><code> num:t=s2t(str:s)</code><br>
+Convert a BTC-format time string into a LabVIEW timestamp.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+str:s, string to convert.<br>
+<b><font color="#000080">Results:</font></b> <br>
+num:t, time in seconds since the LabVIEW epoch.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+String too short.<br>
+Missing separation dot between days and hours.<br>
+Value out of range.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="t2s"><b>t2s</b></a></dt>
+<dd><code> str:s=t2s(num:t)</code><br>
+Convert a LabVIEW timestamp into a BTC-format time string.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+num:t, time in seconds since the LabVIEW epoch..<br>
+<b><font color="#000080">Results:</font></b> <br>
+str:s, converted time string.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="tcsv"><b>tcsv</b></a></dt>
+<dd><code> tcsv(obj:db,tab:tags,tab:times)</code><br>
+Output a comma separated file named "results.csv" for the given tags interpolated at the given times. The header will include both tag names and units. The first two columns include the times converted a BTC time string and hours since the first specified time.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+obj:db, database object.<br>
+tab:tags, array of tag names.<br>
+tab:times, times to interpolate at.<br>
+<b><font color="#800000">Errors:</font></b> <br>
+Non-existing tag.<br>
+Wrong temporal type for interpolation.<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="timeseries"><b>timeseries</b></a></dt>
+<dd><code> tab:times=timeseries(num:be,num:en,num:step)</code><br>
+Return a series of times starting from the begin time and incremented by the specified step up to the end time. The last returned value does not exceed the specified end time.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+num:be, begin time in seconds since the LabVIEW epoch.<br>
+num:en, end time in seconds since the LabVIEW epoch.<br>
+num:step, time step size in seconds.<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:times<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<dl>
+<dt><a name="units"><b>units</b></a></dt>
+<dd><code> tab:units=units(tab:tags)</code><br>
+Return the unit strings of the given tags.<br>
+<b><font color="#008000">Parameters:</font></b> <br>
+tab:tags<br>
+<b><font color="#000080">Results:</font></b> <br>
+tab:units<br>
+<a href="#index">Up to function index</a></dd>
+</dl>
+
+<hr>
+</body></html>

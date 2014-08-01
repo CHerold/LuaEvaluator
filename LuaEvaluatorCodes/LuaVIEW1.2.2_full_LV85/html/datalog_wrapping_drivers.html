@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Wrapping instrumentation drivers</title>
+</head>
+
+<body>
+
+<h3>Wrapping instrumentation drivers</h3>
+<p>LabVIEW offers a rich environment for instrumentation programming and has
+many features for analysis and display. By closely integrating the data logger
+and Lua with LabVIEW, it was ensured that the full power of the LabVIEW
+development environment remains available: the limitations inherent in combining
+loosely coupled systems are avoided. This is of particular value when new
+instrumentation must be integrated.</p>
+
+<p>Instead of calling an instrument driver directly, it is often useful to wrap
+it in some code so as to abstract or simplify access, or encapsulate instrument
+management. <u>Abstraction</u> is possible by exposing the physical values or
+parameters sensed or controlled by the instrument in a manner that hides
+instrument-specific details. This makes the code that uses the wrapper more
+readable and less dependent on the particulars of the instrument. By exposing a <u>simplified</u>
+view of the instrument, a wrapper can hide the full complexity of the
+instrumentation driver and provide an interface tailored to the subset of the
+instrument's functionality that is actually being used. By <u>encapsulating</u>
+the configuration, initialisation, state tracking, and so on, a wrapper can hide
+instrument management operations from the rest of the system.</p>
+<p>As is clear from the above, it is impossible to provide a one-size-fits-all
+wrapper solution: the best choice depends not just on the details of the
+instrument, but also on the needs of the application using the instrument.
+Still, there are some common issues that arise when trying to talk to
+instrumentation. This appendix aims to bring those issues into focus and assist with programming wrappers.
+Some general advice is given in the first two sections:</p>
+
+<ul>
+  <li><a href="#Exploring the instrument">Exploring the instrument</a></li>
+  <li><a href="#Managing and tracking instrument state">Managing and tracking instrument state</a></li>
+</ul>
+
+<p>The later sections detail how to make use of the partial solutions provided
+by LuaVIEW and the
+LuaVIEW data logger to construct wrappers:</p>
+
+<ul>
+  <li><a href="#Providing an asynchronous interface through tags">Providing an asynchronous interface through tags</a></li>
+  <li><a href="#Providing a synchronous interface through functions or subVIs">Providing a synchronous interface through functions or subVIs</a></li>
+  <li><a href="#Wrapping with a task and a module">Wrapping with a task and a module</a></li>
+</ul>
+
+<h4><a name="Exploring the instrument">Exploring the instrument</a></h4>
+
+<p>When the instrument is complicated, it is necessary to become familiar
+with its capabilities and quirks before commencing with writing a wrapper. This
+typically involves writing little LabVIEW test programs that use the
+instrument's driver to explore the various required operations. This section lists some random tips and
+warnings
+to aid with this task:</p>
+
+<ul>
+  <li>Before buying instrumentation, verify the availability and quality of
+    LabVIEW drivers. Most manufacturers offer some LabVIEW support.</li>
+  <li>If the instrument connects via an interface, bus, or protocol that is
+    well-supported by LabVIEW (serial, GPIB, and TCP/IP in particular) and
+    has a simple command set, it will be fairly easy to program the instrument
+    from LabVIEW. In such cases the absence of a manufacturer-supplied or third-party
+    LabVIEW driver is inconvenient but not a show-stopper.</li>
+  <li>When no LabVIEW driver is provided with an instrument, and it does not
+    accept text-formatted commands or operate according to a standard protocol
+    either, the instrument will nearly always ship with a DLL that is
+    designed to be called from C. LabVIEW and Lua can make calls to DLLs and
+    support
+    most, though not all, of the kinds parameters these DLL calls might require.
+    But using DLL calls is fairly involved and error-prone. Expect to invest more
+    time in getting things to run.</li>
+  <li>National Instrument hardware tends to come with good LabVIEW support. This
+    saves time, and thus money.</li>
+  <li>The best choice of hardware is in part based on the number of instruments
+    to be deployed. For small quantities, paying a premium for instrumentation with good driver support is usually more cost-effective than
+    spending time doing a custom implementation just because the hardware is
+    cheaper.</li>
+  <li>Read the manual of the instrument to determine its functionality and
+    decide what subset of that functionality is required for your application.</li>
+  <li>Verify the instrument's operational performance. Most instruments have
+    quirks. Some instruments do not perform according to their specifications.
+    Many instruments require properly conditioned signals. Often, instrument
+    operations have timing or state dependencies and thus might not work
+    consistently without appropriate delays or preparations.</li>
+  <li>Verify the driver's performance. Measure how many I/Os per
+    second the driver supports. Some drivers are just too slow. Some
+    drivers operate efficiently only when running in buffered or DMA mode. Some
+    drivers block the current thread by calling into CINs or DLLs for prolonged
+    periods of time. Depending on the execution system the driver is run under,
+    this might block other operations of your application.</li>
+  <li>Be wary of using convenience VIs. Often, convenience VIs are provided that
+    encapsulate instrument initialisation, operation, and cleanup. Repeated use
+    of such VIs can cause a lot unnecessary overhead. In such cases the lower-level VIs should be used so that the initialisation and cleanup can be
+    performed only once.</li>
+  <li>External configuration tools such as NI's
+    &quot;Measurement and Automation Explorer&quot; or &quot;FieldPoint
+    Explorer&quot; help make instrumentation available to LabVIEW while also providing for
+    scaling and channel naming and mapping. This is fine when exploring the
+    instrument, but avoid making the wrapper depend on such tools if possible: their configuration
+    is stored externally, tends to lack or offer a limited programmatic
+    interface, and muddles together the distinct concepts of
+    physical value, sensor, channel, and scaling.</li>
+  <li>Measure acquisition latency. When writing to data logger tags, the signal and/or set
+    points of the instrument must be time stamped. This can be done by applying
+    the current system clock, but such a simple approach can introduce
+    inaccuracies depending on the type of instrument. Some instruments have a
+    long latency e.g. because of buffering and filtering. If this latency is
+    appreciable relative to the precision of temporal correlation you need, it
+    must be corrected for.</li>
+  <li>Decide whether and how to use any timing and synchronisation features
+    provided the instrument. Some have a built in clock for time stamping. Some
+    have a clock that drives I/O conversions. Some accept an external clock
+    source or a trigger. This can help avoid inaccurate software timing.
+    However, a lot of effort can be sunk into mutually synchronizing
+    instruments, or synchronizing instruments to the system clock.</li>
+</ul>
+
+<h4><a name="Managing and tracking instrument state">Managing and tracking instrument state</a></h4>
+
+<p>To encapsulate as many instrumentation-specific details as possible, wrappers
+for complex instruments need to manage and keep track of the state. Where
+possible, the wrapper should hide the details of this management from its
+interface to the wider system. Management and tracking can include:</p>
+<ul>
+  <li><b>Initialisation</b> of the instrumentation when the wrapper is
+    loaded/instantiated.</li>
+  <li><b>Resetting</b> the instrumentation when the
+    wrapper is unloaded/cleaned up.</li>
+  <li><b>Keeping track of response delays.</b> Often, an instrument will take a while
+    to respond to a command, and it might even drop further commands in the mean
+    time. In such a case, the wrapper should wait for a completion response with
+    an appropriate timeout . If
+    the instrument does not support such confirmation, further commands should
+    be delayed until the instrument can be assumed to be ready.</li>
+  <li><b>Recovering from errors.</b> Some driver errors can be ignored or
+    handled by retrying. Whether an error is recoverable or intermittent is
+    highly dependent on the instrument and its interfacing. To prevent such
+    details from leaking into the wider application, retries and eating spurious
+    errors should be taken care of by the wrapper.</li>
+  <li><b>Explaining errors.</b> Driver errors are usually unintelligible. When they do occur,
+    adding state and
+    configuration information as available to the wrapper can help turn them
+    into something that an operator is capable of understanding and acting upon.</li>
+  <li><b><a name="Locking and arbitration">Locking and arbitration</a>.</b> When instrument operations can mutually
+    conflict, or when aggregate operations must proceed in a particular order,
+    it is necessary to block access to the device for the duration of an
+    operation or series of operations. The simplest solution is to wrap such
+    operations in a single non-reentrant subVI since these can have only one
+    caller at a time. A more advanced alternative is to use a semaphore.</li>
+</ul>
+<p>Note that there is not necessarily a one-on-one relation between wrappers and
+instruments. Sometimes, the only way to effectively hide instrumentation details
+is to jointly manage the state of multiple instruments. Consider
+for example a digital multimeter fronted by a separate multiplexer. A simple
+interface can only be presented by having a single wrapper encapsulate the drivers of
+both these co-operating instruments.</p>
+
+<h4><a name="Providing an asynchronous interface through tags">Providing an asynchronous interface through tags</a></h4>
+
+<p>The important physical parameters and signals controlled or acquired by an
+instrument often need to be exposed to allow things like monitoring, test
+scripting, signal analysis, and so on. Instead of inventing an ad-hoc interface
+for each wrapper, it is preferable to have wrappers of various
+instruments present a more general and uniform interface. <a href="datalog_manual.html#Representing%20state%20as%20tags">Tags</a>
+allow just that. By writing acquired physical values to tags, or reading
+parameter settings from tags, an instrument wrapper can provide an abstract
+interface to the rest of the system that is made up of a set of tags. This
+interface is accessible from both Lua and LabVIEW. Because writing and reading
+are decoupled, tags provide an asynchronous interface. The writer is free to
+proceed and let the read process the data at its own pace. Note that tags can be used as
+variables (by reading only the current value) or as queues (by exhaustively
+reading the written values).</p>
+<p>If possible, try to avoid exposing instrument-specific details through tags.
+For example, writing calibrated values instead of raw sensor readings hides the
+instrumentation-specific scaling. Ideally, only state that generalises, such as
+physical values, is included in the tag interface. This makes it easier to
+replace or simulate instruments because a sufficiently abstract tag interface can remain unchanged
+when doing so.</p>
+
+<h4><a name="Providing a synchronous interface through functions or subVIs">Providing a synchronous interface through functions or subVIs</a></h4>
+
+<p>For certain tasks, an asynchronous interface is inconvenient or insufficient. For example, when performing a step in a test sequence, the corresponding instrumentation operation
+has to be known to have completed before the next step can commence.
+Asynchronous interfaces can be extended to support synchronous operation, for
+example by having a message and reply queue and having the sender of the message
+wait for a reply before commencing. This is
+unnecessarily complicated. It is much simpler to use a callable interface
+such that the operation is complete when the call returns without an error. For
+example, a function that can be called from Lua, or a subVI that can be called
+from LabVIEW. Since a wrapper is likely to be used by multiple test scripts or
+control loops, investing some effort to provide a simple synchronous interface tends to pay for itself.</p>
+<p>When providing a callable interface, the first question to answer is what
+language it is to be called from. When calling from LabVIEW, having the wrapper
+expose instrument operations through a set of subVIs is a simple solution. It is however
+incompatible with dynamically loading the instrument wrapper. Also, when multiple
+instruments of the same type are in use, it is desirable to avoid code
+duplication by instantiating the same wrapper multiple times. This makes the use
+of a direct subVI interface impossible as well. For objected-oriented languages,
+this would be a trivial problem since these include class loaders and can
+instantiate objects that expose methods. To get around this LabVIEW limitation,
+several frameworks have been developed that leverage VI-server and
+call-by-reference functionality to provide a limited object-oriented-programming
+(OOP) capability. However OOP is fundamentally different from data-flow
+programming. Mixing the two leads to ugly code that does not look like what it
+does, thus defeating the whole point of graphical programming. Instead of trying to make a dog
+walk on its hind legs, consider calling wrappers from Lua when dynamic loading and
+instantiation are prerequisites.</p>
+<p>When calling from Lua, expose the synchronous instrument operations by <a href="creating_functions.html">binding</a>
+LabVIEW driver code as LuaVIEW functions. All types of LuaVIEW function are
+compatible with dynamic loading. <a href="manual.html#Modules">Module</a> functions and
+methods attached to <a href="datatypes.html#LuaVIEW objects">LuaVIEW objects</a>
+are compatible with instantiation.
+Since Lua is suited for OOP, the calling code will look pretty.</p>
+<p>Sometimes it is useful to log information on a synchronous operation. If so,
+the wrapper should write to a corresponding tag when performing that operation.
+To provide the most choice, make the tag name and the enabling of tag writing
+configurable.
+Though the data logger also allows disk logging to be disabled per tag, disabling the in-memory writes to a tag reduces overhead even further and makes
+that the tag need not exist until writing is enabled.</p>
+<h4><a name="Wrapping with a task and a module">Wrapping with a task and a
+module</a></h4>
+<p>Wrappers can be implemented in pure LabVIEW or as some mix of Lua and
+LabVIEW. A combination of a <a href="manual.html#Tasks">LuaVIEW task</a> and a <a href="manual.html#Modules"> LuaVIEW
+module</a> is likely to be a particularly efficient choice provided that:</p>
+<ol>
+  <li>The wrapper does not need to expose a synchronous interface to LabVIEW.</li>
+  <li>The wrapper has to manage a non-trivial bit of instrumentation.</li>
+</ol>
+<p>When these conditions are met, create a customised module (for an example,
+see luaview/examples/VI templates/Module Template.vit) and write a task
+script that opens or instantiates the module while passing the required
+configuration parameters as a table. Typical examples of such parameters are
+instrument IDs, scaling factors, channel mappings, and so on. When required,
+define module <a href="manual.html#Exporting module functions">export functions</a> to expose a synchronous Lua-callable interface.
+The remainder of the task script can be used to perform periodic or event-driven
+actions. Private module functions can be defined to support these actions.</p>
+<p>For example, the task script can do one or some combination of the following:</p>
+<ul>
+  <li>Periodically poll an attached sensor by calling a module function and
+    write the result to a tag.</li>
+  <li>Read new values from a set point tag and call a module function to update
+    the corresponding instrument setting.</li>
+  <li>Wait for command messages to arrive on the task message queue and call an
+    appropriate module function or series of module functions to execute the
+    command. This is an alternative asynchronous interface with minimal response latency and no polling
+    overhead.</li>
+  <li>Define a <a href="lv_c-library_functions.html#lv.addcleanup">cleanup
+    function</a> that resets the instrumentation.</li>
+</ul>
+<p>This mix is efficient for several reasons:</p>
+<ul>
+  <li>It can make do with just a single script and a single VI.</li>
+  <li>It leverages the task and module infrastructure.</li>
+  <li>It separates the wrapper
+into a set of LabVIEW-implemented instrumentation operations and Lua-implemented
+configuration and scheduling actions, thus playing into the strengths of both languages.</li>
+  <li>Both a module or module instance allows only a single ongoing call thereby
+    providing <a href="#Locking and arbitration">locking and arbitration</a> of
+    the driver operations.</li>
+  <li>Because the module passes errors out to Lua on completion of each function
+    call, error handling is simplified.</li>
+</ul>
+<p>The resulting wrapper can be loaded by starting its task script, reconfigured by editing its task script, reloaded with a new configuration at
+run time by <a href="manual.html#Swapping tasks">swapping</a> its task, and integrated into a
+<a href="clientsrv_manual.html#Server">
+server</a> by making the task script part of a <a href="clientsrv_manual.html#Runlevels">runlevel</a>.</p>
+
+<hr>
+
+<p><a href="datalog_manual.html#Contents">Go to table of contents</a></p>
+
+
+</body>
+
+</html>

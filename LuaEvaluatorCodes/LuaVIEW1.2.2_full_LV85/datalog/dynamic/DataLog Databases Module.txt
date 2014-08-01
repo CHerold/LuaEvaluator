@@ -1,0 +1,189 @@
+-- Documentation of the export functions in the databases
+-- module. Can be exported to HTML using the function
+-- manager.
+
+--[[docstring DB.lookup
+Looks up the database with the given name and returns
+a database object that allows method calls on that
+database. When no database name is specified, an object
+representing the current database is returned. Database
+objects have a "name" attribute which holds the database
+name.
+Parameters:
+[str:name], name of the database.
+Results:
+obj:db, database object.
+Errors:
+No such database.
+]]
+
+--[[docstring DB.create
+Create a tag in the database on which this method is called.
+The value and temporal type of the tag being created can
+be specified via the configuration table parameter. For an
+example of a valid configuration table see the "config.lua" file
+of an existing tag log directory.
+
+When elements are omitted in the configuration table, default
+values will be used. Some elements of the configuration table
+are ignored because they are generated at run time. To see
+what configuration elements can be specified, refer to the
+dialogs that pop up when using the "Create" option of the
+tag manager.
+specified. 
+To learn what elements in the configuration table can be
+specified, refer to the "Config" dialog 
+Parameters:
+obj:db, database object.
+str:tag, tag name.
+tab:config, configuration table with optional entries.
+[any:initial], initial number or string value. When not specified, the initial value is set to NaN or "UNDEFINED" respectively.
+Errors:
+Database is locked.
+Tag already exists.
+Cannot create meta tag when parent tag does not exist.
+Invalid tag name.
+]]
+
+--[[docstring DB.config
+Retrieves the configuration of a tag in the database on
+which this method is called.
+Parameters:
+obj:db, database object.
+str:tag, name of the tag whose configuration to retrieve.
+Results:
+tab:config, configuration table.
+Errors:
+Database is locked.
+Tag does not exist.
+]]
+
+--[[docstring DB.delete
+Delete a tag from the database on which this method is called.
+When a tag has meta tags, it cannot be deleted. Delete its
+meta tags first.
+Parameters:
+obj:db, database object.
+str:tag, name of the tag to delete.
+Errors:
+Database is locked.
+Tag does not exist.
+Tag still has meta tags.
+]]
+
+--[[docstring DB.exists
+Test whether a tag exists.
+Parameters:
+obj:db, database object.
+str:tag, name of the tag whose existence to verify.
+Results:
+bool:exists, true when the tag exists, false otherwise.
+]]
+
+--[[docstring DB.last
+Return the last logged value and its timestamp for a tag
+of the database on which this method is called.
+Depending on the value type, the returned value is either
+a number or a string.
+
+When the database is known to be live, use the Tag.last
+or StringTag.last method instead. The last value will
+be buffered, and can be read from the in-memory tag
+buffer with much less overhead as compared to a
+reading it from the on-disk tag log.
+Parameters:
+obj:db, database object.
+str:tag, name of tag.
+Results:
+any:value, last logged string or number
+num:time, timestamp
+Errors:
+Tag does not exist.
+]]
+
+--[[docstring DB.list
+List the tags of the database on which this method is called.
+When the optional pattern using '?' or '*' wildcards
+is specified, only those tags matching the pattern will be
+returned. The tags are returned in case-independent sort
+order. This implies that base tags are listed before their
+meta tags.
+Parameters:
+obj:db, database object.
+[str:pattern], pattern with which to filter the tag list.
+Results:
+tab:tags, list of tag names.
+]]
+
+--[[docstring DB.logsize
+Returns the number of values (numbers or strings) contained in the tag's log.
+Parameters:
+obj:db, database object.
+str:tag, name of the tag.
+Results:
+num:size
+Errors:
+Tag does not exist.
+]]
+
+--[[docstring DB.mode
+Returns the mode of the database: "locked", "unlocked", "live", or "mirrored".
+Parameters:
+obj:db, database object.
+Results:
+str:mode
+]]
+
+--[[docstring DB.reconfigure
+Reconfigures a tag in the database on which this method is called.
+The tag will retain its prior settings for any omitted configuration
+elements. Some elements cannot be reconfigured after the
+tag has been created and, if specified, will be ignored. To see
+what elements can reconfigured refer to the "Configure" dialog
+of the tag manager.
+Parameters:
+obj:db, database object.
+str:tag, name of the tag to configure.
+tab:config, configuration table with optional entries.
+Errors:
+Database is locked.
+Tag does not exist.
+]]
+
+--[[docstring DB.subset
+Returns the names of the tags in the specified subset.
+Parameters:
+obj:db, database object.
+str:subset, name of subset.
+Results:
+tab:tags, tag names.
+]]
+
+--[[docstring DB.subsets
+Returns the names of any tag subsets defined for the database.
+Parameters:
+obj:db, database object.
+Results:
+tab:subsets, subset names.
+]]
+
+--[[docstring DB.tags
+Returns the number of tags present in the database (including meta tags).
+Parameters:
+obj:db, database object.
+Results:
+I32:tags
+]]
+
+--[[docstring stripmeta
+Strips the meta specifier from the end of the name of a meta
+tag. This results in the name of the base tag to which the
+meta tag belongs.
+Parameters:
+str:metatag, name of the meta tag.
+Results:
+str:base, name of the base tag.
+str:meta, meta specifier.
+Errors:
+Not a meta tag.
+]]

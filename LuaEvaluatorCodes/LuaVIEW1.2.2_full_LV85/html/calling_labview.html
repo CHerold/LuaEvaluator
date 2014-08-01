@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"> 
+<html>
+
+<head>
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="Content-Language" content="en-gb">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>LuaVIEW Calling Mechanism</title>
+</head>
+
+<body>
+
+<h3>The LuaVIEW calling mechanism</h3>
+<p>The problem with integrating scripting languages into LabVIEW such that
+LabVIEW can be called, and thus scripted, is that there is no API for
+calling back into LabVIEW from C code called by LabVIEW. LuaVIEW solves this by
+calling LabVIEW from LabVIEW via a specially constructed C function that
+interrupts the virtual machine so that a LabVIEW to LabVIEW call can take place
+instead.
+This is evident when an error occurs inside a LabVIEW-side function that is
+being called from Lua: the error message will contain both a Lua stack trace
+that claims the error happened inside a C function, which is true from Lua's
+perspective, and a call chain that claims that LabVIEW failed while calling
+LabVIEW, which is true from LabVIEW's perspective. This mechanism is made
+possible by the versatile virtual machine control and customisation features
+offered by Lua.</p>
+<p>One alternative means of scripting LabVIEW is to implement a scripting
+language in LabVIEW (G). This has in fact been done for several specialized
+scripting systems, but creating a general purpose language in LabVIEW that approaches
+the quality of existing C-based scripting languages is a nearly impossible task.
+Another alternative is to run scripts as part of&nbsp; an external
+process, and implement a calling mechanism based on inter-process communication,
+e.g. over TCP/IP. This is cumbersome in terms of deployment, initialisation, and
+binding.
+It also carries a large amount of overhead since two process switches are
+required per call and arguments and results will have to be passed across
+process boundaries. Advantages of the LuaVIEW approach are:</p>
+<ul>
+  <li>Scripts run inside the LabVIEW runtime: this enables a close integration
+    between Lua and LabVIEW.</li>
+  <li>No external processes need to be started.</li>
+  <li>No external libraries need to be called.</li>
+  <li>No limits on the number of simultaneous LabVIEW calls from scripts.</li>
+  <li>Lua can call anything that LabVIEW can call.</li>
+  <li>Interruption of the virtual machine can also be used to yield the current
+    thread so that an unlimited number of scripts can run simultaneously.</li>
+  <li>No process
+    boundaries are crossed, no context switches need to be made.</li>
+</ul>
+<p>The lack of provisions for calling LabVIEW from C code running under the
+LabVIEW runtime has to do with the special nature of
+scheduling in LabVIEW. Instead of an execution context being defined by a thread
+with an associated stack, LabVIEW is able to multiplex the available threads in
+a cooperative and pre-emptive manner over the various bits of LabVIEW code that
+require execution. Execution in a dataflow system is required when all input
+data is available, and this has allowed LabVIEW to be designed to exploit
+parallel processing for run-of-the-mill diagram code that has no special
+provisions. This is an amazing and excellent feature. It makes that LabVIEW code
+will happily scale along in these days of simultaneous multi threading and cheap
+simultaneous multi processing without requiring
+any further investment on the part of the programmer.</p>
+<p>The above does suggest, with a high degree of confidence, that LabVIEW does
+not store and restore C stack frames when it reschedules threads as this would
+be both costly and a misfit of the data-flow paradigm. Instead LabVIEW looks at
+the data structures associated with the compiled diagram to determine what has
+to happen next. One consequence is that LabVIEW does not support recursive VI
+calls. Another consequence is that when LabVIEW calls into C code (which does
+require the C stack), the calling thread is blocked for the duration of the
+execution of the C code. Furthermore, that C code will have difficulty with
+calling back into LabVIEW. The reason is that, once called back to the LabVIEW
+side, the thread stack holds the calling frames of all underlying C calls. Thus,
+LabVIEW would either need to support a mechanism that stores and restores this
+stack so that the thread can participate in normal scheduling (which is
+technically difficult), or the thread must remain reserved while the
+LabVIEW-side call is ongoing. The latter would limit the number of LabVIEW-side
+calls to one less than the number of available threads, which makes it
+incompatible with single threading mode and, in case of multi-threading, would
+bring the runtime to a grinding halt when having more than a couple of active
+scripts.</p>
+<p>A disadvantage of the LuaVIEW calling mechanism is that LabVIEW cannot be
+called via an additional C function: while a normal C function is being called,
+the Lua virtual machine cannot be interrupted because the C stack cannot be
+unwound. There are in fact a couple of C functions in the Lua C libraries that
+take a function as a parameter and make calls on the passed function. When
+passing a LabVIEW-side function to such a C function, a runtime error is thrown.
+The same occurs when trying to call LabVIEW from a meta method: these are
+implemented as internal C functions. You are
+unlikely to encounter this issue unless you use meta tables, coroutines, or
+elaborate
+functional programming techniques. The most useful of
+the offending C library functions is <code>pcall</code> which allows function
+calls to be protected by catching their errors. To compensate, LuaVIEW provides
+an alternate means of protecting LabVIEW calls (the <code><a href="lv_c-library_functions.html#lv.pcall">lv.pcall</a></code>
+function) that works without making use of the C stack. Note that it is often possible to implement
+equivalents of C functions in Lua, and Lua functions have no trouble with
+calling into LabVIEW.</p>
+
+<hr>
+<p><a href="manual.html#Contents">Go to table of contents</a></p>
+
+</body>
+
+</html>
